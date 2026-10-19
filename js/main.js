@@ -1,0 +1,2 @@
+App.initBtnCart();
+App.initBtnAccount();
