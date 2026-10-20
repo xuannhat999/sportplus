@@ -1,15 +1,17 @@
 .header {
   display: flex;
   background-color: var(--color-surface);
+  color: var(--color-on-surface);
   padding: var(--space-md) var(--space-lg) var(--space-md) var(--space-lg);
   align-items: center;
-  min-height: 96px;
+  min-height: 72px;
   gap: var(--space-md);
 }
 
 /* BUTTON MENU */
 .btn-menu {
   background-color: transparent;
+  color: var(--color-on-surface);
   outline: transparent;
   border: none
 }
@@ -21,7 +23,7 @@
 /* TITLE */
 .header__name {
   font-size: var(--font-size-xl);
-  color: var(--color-text);
+  color: var(--color-on-surface);
   text-decoration: none;
   padding-left: var(--space-md);
 }
@@ -33,7 +35,7 @@
 /* SEARCH BAR */
 .search-bar {
   border: 1px solid;
-  border-color: var(--color-text);
+  border-color: var(--color-on-surface);
   display: flex;
   align-items: center;
   padding: var(--space-sm);
@@ -41,21 +43,28 @@
 }
 
 .search-bar__icon {
-  color: var(--color-text);
+  color: var(--color-on-surface);
 }
 
 .search-bar__input {
   background-color: transparent;
+  color: var(--color-on-surface);
   font-size: var(--font-size-md);
   border: none;
   outline: transparent;
   min-width: 320px;
 }
 
+.search-bar__input::placeholder {
+  color: var(--color-on-surface);
+  opacity: .7;
+}
+
 /* BUTTON ACCOUNT */
 .btn-account,
 .btn-cart {
   background-color: transparent;
+  color: var(--color-on-surface);
   outline: transparent;
   display: flex;
   border: none;
@@ -65,5 +74,5 @@
 .btn-account__icon,
 .btn-cart__icon {
   font-size: var(--font-size-xl);
-  color: var(--color-primary);
+  color: var(--color-on-surface);
 }

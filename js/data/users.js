@@ -1,4 +1,4 @@
-[
+const USERS = [
   {
     "id": 1,
     "name": "Admin Tong",

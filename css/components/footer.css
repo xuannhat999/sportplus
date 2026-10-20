@@ -2,7 +2,7 @@
   background-color: var(--color-surface);
   padding: var(--space-lg);
   margin-top: var(--space-lg);
-  color: var(--color-text);
+  color: var(--color-on-surface);
 }
 
 .footer__grid {
@@ -18,7 +18,7 @@
 .footer__name {
   font-size: var(--font-size-lg);
   font-weight: var(--font-weight-bold);
-  color: var(--color-text);
+  color: var(--color-on-surface);
   text-decoration: none;
 }
 
@@ -49,7 +49,7 @@
 
 .footer__link {
   font-size: var(--font-size-sm);
-  color: var(--color-link);
+  color: var(--color-on-surface);
   text-decoration: none;
 }
 

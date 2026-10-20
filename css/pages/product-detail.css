@@ -1,0 +1,115 @@
+#product-detail {
+  width: 100%;
+  padding: var(--space-md);
+  box-sizing: border-box;
+}
+
+.product-detail {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(320px, 1fr);
+  gap: var(--space-lg);
+  width: 100%;
+  margin: 0 auto;
+}
+
+.product-detail__images {
+  grid-column: 1;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-sm);
+  max-width: 1000px;
+}
+
+.product-detail__image__main {
+  display: block;
+  flex: 2 1 0;
+  min-width: 0;
+  aspect-ratio: 1 / 1;
+}
+
+.product-detail__images__other {
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) minmax(0, 1fr);
+  flex: 1 1 0;
+  min-width: 0;
+  aspect-ratio: 1 / 2;
+  gap: var(--space-sm);
+}
+
+.product-detail__image__other-1,
+.product-detail__image__other-2 {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  object-fit: scale-down;
+}
+
+.product-detail__info {
+  grid-column: 2;
+}
+
+.product-detail__price-old {
+  text-decoration: line-through;
+  opacity: 0.5;
+}
+
+.product-detail__sizes {
+  margin-top: var(--space-lg);
+}
+
+.product-detail__sizes-label {
+  margin: 0 0 var(--space-sm);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+}
+
+.product-detail__size-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+}
+
+.product-detail__size {
+  position: relative;
+  display: inline-flex;
+  cursor: pointer;
+}
+
+.product-detail__size input {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.product-detail__size span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  height: 44px;
+  padding: 0 var(--space-sm);
+  border: 1px solid color-mix(in srgb, currentColor 35%, transparent);
+  border-radius: var(--radius);
+  font-size: var(--font-size-md);
+  line-height: 1;
+  user-select: none;
+  font-weight: bold;
+}
+
+.product-detail__size:hover span {
+  border-color: currentColor;
+}
+
+.product-detail__size input:checked+span {
+  background-color: var(--color-primary);
+  color: var(--color-on-primary);
+  border-color: var(--color-primary);
+}
+
+.product-detail__size input:focus-visible+span {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
