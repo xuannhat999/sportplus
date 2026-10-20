@@ -5,6 +5,61 @@ const CATEGORY_LABELS = {
 
 const DEFAULT_SIZES = ["S", "M", "L", "XL", "XXL"];
 
+const MIN_QUANTITY = 1;
+const MAX_QUANTITY = 99;
+
+function setupQuantity(root) {
+  const input = root.querySelector(".product-detail__qty-input");
+  const minus = root.querySelector(".product-detail__qty-minus");
+  const plus = root.querySelector(".product-detail__qty-plus");
+  if (!input || !minus || !plus) return;
+
+  const clamp = value => Math.min(MAX_QUANTITY, Math.max(MIN_QUANTITY, value));
+
+  const current = () => {
+    const value = Number.parseInt(input.value, 10);
+    return Number.isNaN(value) ? MIN_QUANTITY : clamp(value);
+  };
+
+  const syncButtons = qty => {
+    minus.disabled = qty <= MIN_QUANTITY;
+    plus.disabled = qty >= MAX_QUANTITY;
+  };
+
+  const apply = value => {
+    const qty = clamp(value);
+    input.value = qty;
+    syncButtons(qty);
+  };
+
+  minus.addEventListener("click", () => apply(current() - 1));
+  plus.addEventListener("click", () => apply(current() + 1));
+
+  input.addEventListener("input", () => {
+    const value = Number.parseInt(input.value, 10);
+    if (Number.isNaN(value)) {
+      syncButtons(MIN_QUANTITY);
+      return;
+    }
+
+    if (value < MIN_QUANTITY) input.value = MIN_QUANTITY;
+    else if (value > MAX_QUANTITY) input.value = MAX_QUANTITY;
+
+    syncButtons(clamp(value));
+  });
+
+  input.addEventListener("blur", () => apply(current()));
+
+  input.addEventListener("keydown", event => {
+    if (event.key === "Enter") {
+      apply(current());
+      input.blur();
+    }
+  });
+
+  apply(MIN_QUANTITY);
+}
+
 function renderProductSizes(product, root) {
   const list = root.querySelector(".product-detail__size-list");
   if (!list) return;
@@ -96,8 +151,9 @@ function renderProductDetail(product) {
   }
 
   renderProductSizes(product, node);
+  setupQuantity(node);
 
-  node.querySelector(".product-detail__add").dataset.id = product.id;
+  node.querySelector(".product-detail__add-to-cart").dataset.id = product.id;
 
   document.title = `${product.name} - SportPlus`;
   container.replaceChildren(node);

@@ -35,7 +35,15 @@
             <p class="product-detail__sizes-label">Size</p>
             <div class="product-detail__size-list"></div>
           </div>
-          <button class="btn-add-to-cart product-detail__add" type="button">Thêm vào giỏ</button>
+          <div class="product-detail__quantity">
+            <p class="product-detail__quantity-label">Số lượng</p>
+            <div class="product-detail__qty">
+              <button class="product-detail__qty-btn product-detail__qty-minus" type="button" aria-label="Giảm số lượng">−</button>
+              <input class="product-detail__qty-input" type="number" value="1" min="1" max="99" step="1" inputmode="numeric" aria-label="Số lượng">
+              <button class="product-detail__qty-btn product-detail__qty-plus" type="button" aria-label="Tăng số lượng">+</button>
+            </div>
+          </div>
+          <button class="product-detail__add-to-cart" type="button">Thêm vào giỏ</button>
         </div>
       </article>
     </template>
