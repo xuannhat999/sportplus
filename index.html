@@ -11,6 +11,7 @@
 <body data-root="./" data-page="home">
   <div id="header-container"></div>
   <main>
+    <p class="products-empty" data-products-empty hidden>Chưa có sản phẩm nào.</p>
     <div id="products" class="all-products"></div>
     <template id="products-tpl">
       <article class="product__article">
@@ -33,6 +34,7 @@
   <div id="footer-container"></div>
 
   <script src="js/data/products.js"></script>
+  <script src="js/data/users.js"></script>
   <script src="js/data/brands.js"></script>
   <script src="js/data/categories.js"></script>
   <script src="js/data/teams.js"></script>
@@ -44,6 +46,9 @@
   <script src="js/utils/product.js"></script>
   <script src="js/services/storage_service.js"></script>
   <script src="js/services/products_service.js"></script>
+  <script src="js/data/models/cart_item_model.js"></script>
+  <script src="js/services/cart_service.js"></script>
+  <script src="js/services/user_service.js"></script>
 
   <script src="js/components/header.js"></script>
   <script src="js/components/footer.js"></script>

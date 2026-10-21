@@ -1,63 +1,19 @@
-const CATEGORY_LABELS = {
-  international: "Đội tuyển quốc gia",
-  club: "Câu lạc bộ"
-};
-
-const DEFAULT_SIZES = ["S", "M", "L", "XL", "XXL"];
-
 const MIN_QUANTITY = 1;
 const MAX_QUANTITY = 99;
 
 function setupQuantity(root) {
-  const input = root.querySelector(".p-detail__summary__purchase__quantity__input");
-  const minus = root.querySelector(".p-detail__summary__purchase__quantity__btn-minus");
-  const plus = root.querySelector(".p-detail__summary__purchase__quantity__btn-plus");
-  if (!input || !minus || !plus) return;
+  const container = root.querySelector(".p-detail__summary__purchase__quantity__control");
+  if (!container) return null;
 
-  const clamp = value => Math.min(MAX_QUANTITY, Math.max(MIN_QUANTITY, value));
-
-  const current = () => {
-    const value = Number.parseInt(input.value, 10);
-    return Number.isNaN(value) ? MIN_QUANTITY : clamp(value);
-  };
-
-  const syncButtons = qty => {
-    minus.disabled = qty <= MIN_QUANTITY;
-    plus.disabled = qty >= MAX_QUANTITY;
-  };
-
-  const apply = value => {
-    const qty = clamp(value);
-    input.value = qty;
-    syncButtons(qty);
-  };
-
-  minus.addEventListener("click", () => apply(current() - 1));
-  plus.addEventListener("click", () => apply(current() + 1));
-
-  input.addEventListener("input", () => {
-    const value = Number.parseInt(input.value, 10);
-    if (Number.isNaN(value)) {
-      syncButtons(MIN_QUANTITY);
-      return;
-    }
-
-    if (value < MIN_QUANTITY) input.value = MIN_QUANTITY;
-    else if (value > MAX_QUANTITY) input.value = MAX_QUANTITY;
-
-    syncButtons(clamp(value));
+  const control = App.createQuantityControl({
+    value: MIN_QUANTITY,
+    min: MIN_QUANTITY,
+    max: MAX_QUANTITY
   });
 
-  input.addEventListener("blur", () => apply(current()));
+  container.replaceChildren(control.element);
 
-  input.addEventListener("keydown", event => {
-    if (event.key === "Enter") {
-      apply(current());
-      input.blur();
-    }
-  });
-
-  apply(MIN_QUANTITY);
+  return control;
 }
 
 function renderProductSizes(product, root) {
@@ -68,7 +24,7 @@ function renderProductSizes(product, root) {
     ? product.sizes
     : DEFAULT_SIZES;
 
-  list.replaceChildren(...sizes.map(size => {
+  list.replaceChildren(...sizes.map((size, index) => {
     const label = document.createElement("label");
     label.className = "p-detail__summary__purchase__size";
 
@@ -76,6 +32,7 @@ function renderProductSizes(product, root) {
     input.type = "radio";
     input.name = "product-size";
     input.value = size;
+    input.checked = index === 0;
 
     const text = document.createElement("span");
     text.textContent = size;
@@ -83,6 +40,20 @@ function renderProductSizes(product, root) {
     label.append(input, text);
     return label;
   }));
+}
+
+// Thông báo ngắn sau khi thêm vào giỏ hàng
+function showPurchaseMessage(root, message) {
+  const box = root.querySelector(".p-detail__summary__purchase__message");
+  if (!box) return;
+
+  box.textContent = message;
+  box.hidden = false;
+
+  clearTimeout(box._timer);
+  box._timer = setTimeout(() => {
+    box.hidden = true;
+  }, 2500);
 }
 
 function renderProductDetail(product) {
@@ -153,9 +124,20 @@ function renderProductDetail(product) {
   }
 
   renderProductSizes(product, node);
-  setupQuantity(node);
+  const quantityControl = setupQuantity(node);
 
-  node.querySelector(".p-detail__summary__purchase__btn-add-to-cart").dataset.id = product.id;
+  const addToCartBtn = node.querySelector(".p-detail__summary__purchase__btn-add-to-cart");
+  addToCartBtn.dataset.id = product.id;
+  addToCartBtn.addEventListener("click", () => {
+    if (!requireLogin(`pages/product_detail.html?id=${product.id}`)) return;
+
+    const sizeInput = root.querySelector('input[name="product-size"]:checked');
+    const size = sizeInput ? sizeInput.value : DEFAULT_SIZES[0];
+    const quantity = quantityControl ? quantityControl.getValue() : MIN_QUANTITY;
+
+    CartService.add(product, size, quantity);
+    showPurchaseMessage(root, `Đã thêm ${product.name} vào giỏ hàng.`);
+  });
 
   document.title = `${product.name} - SportPlus`;
   container.replaceChildren(node);
@@ -163,12 +145,14 @@ function renderProductDetail(product) {
 
 
 function renderProductNotFound(container) {
-  container.innerHTML = `
-    <div class="p-detail__empty">
-      <p>Không tìm thấy sản phẩm.</p>
-      <a class="p-detail__back" href="${getAssetPath("index.html")}">← Về trang chủ</a>
-    </div>
-  `;
+  const tpl = document.getElementById("product-not-found-tpl");
+  if (!tpl) return;
+
+  const node = tpl.content.cloneNode(true);
+  const link = node.querySelector("[data-back-home]");
+  if (link) link.href = getAssetPath("index.html");
+
+  container.replaceChildren(node);
   document.title = "Không tìm thấy sản phẩm - SportPlus";
 }
 

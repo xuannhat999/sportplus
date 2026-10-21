@@ -19,11 +19,25 @@ function initProductsSearchPage() {
   initProductFilters(ProductService.getAll());
 }
 
-// TODO: bổ sung initCartPage khi trang giỏ hàng đã có markup
+function initAccountPage() {
+  App.initAccount();
+}
+
+function initCartPage() {
+  App.initCart();
+}
+
+function initAuthPage() {
+  App.initAuth();
+}
+
 const PAGES = {
   home: initHomePage,
   product_detail: initProductDetailPage,
   products_search: initProductsSearchPage,
+  account: initAccountPage,
+  cart: initCartPage,
+  auth: initAuthPage,
 };
 
 document.addEventListener("DOMContentLoaded", () => {

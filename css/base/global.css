@@ -11,3 +11,9 @@ main {
   flex-direction: column;
   flex: 1;
 }
+
+/* Thuộc tính hidden phải ẩn element kể cả khi class đã đặt display
+   (rule của class sẽ đè lên [hidden] mặc định của trình duyệt) */
+[hidden] {
+  display: none !important;
+}

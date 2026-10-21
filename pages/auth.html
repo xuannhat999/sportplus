@@ -4,29 +4,67 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Đăng nhập - SportPlus</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link href="../css/main.css" rel="stylesheet">
 </head>
 
-<body data-root="../" data-page="login">
+<body data-root="../" data-page="auth">
   <div id="header-container"></div>
   <main class="page-auth">
-    <div class="div-input">
-      <form class="form-email">
-        <input class="form-email__input" placeholder="Email" type="email">
+    <section class="auth" id="auth">
+      <header class="auth__header">
+        <h1 class="auth__title">Đăng nhập</h1>
+        <p class="auth__subtitle" data-auth-subtitle>Đăng nhập để tiếp tục mua sắm.</p>
+      </header>
+
+      <form class="auth__form" novalidate>
+        <div class="auth__field">
+          <label class="auth__label" for="auth-email">Email</label>
+          <input class="auth__input" id="auth-email" name="email" type="email" placeholder="Email"
+            autocomplete="email" required>
+        </div>
+
+        <div class="auth__field">
+          <label class="auth__label" for="auth-password">Mật khẩu</label>
+          <input class="auth__input" id="auth-password" name="password" type="password" placeholder="Mật khẩu"
+            autocomplete="current-password" required>
+        </div>
+
+        <div class="auth__field" data-auth-confirm hidden>
+          <label class="auth__label" for="auth-confirm-password">Xác nhận mật khẩu</label>
+          <input class="auth__input" id="auth-confirm-password" name="confirmPassword" type="password"
+            placeholder="Nhập lại mật khẩu" autocomplete="new-password">
+        </div>
+
+        <p class="auth__error" data-auth-error role="alert" hidden></p>
+
+        <div class="auth__actions">
+          <button class="auth__btn auth__btn--primary" type="submit" data-auth-submit>Đăng nhập</button>
+          <button class="auth__btn auth__btn--ghost" type="button" data-auth-switch>Đăng kí</button>
+        </div>
       </form>
-      <form class="form-password">
-        <input class="form-password__input" placeholder="Password" type="password">
-      </form>
-      <button class="btn-forget">Quên mật khẩu?</button>
-      <button class="btn-sign_in">Đăng nhập</button>
-      <button class="btn-sign_up">Đăng kí</button>
-    </div>
+    </section>
   </main>
   <div id="footer-container"></div>
 
+  <script src="../js/data/products.js"></script>
+  <script src="../js/data/users.js"></script>
+  <script src="../js/utils/path.js"></script>
+  <script src="../js/services/storage_service.js"></script>
+  <script src="../js/services/products_service.js"></script>
+  <script src="../js/services/user_service.js"></script>
+  <script src="../js/data/models/cart_item_model.js"></script>
+  <script src="../js/services/cart_service.js"></script>
+
   <script src="../js/components/header.js"></script>
   <script src="../js/components/footer.js"></script>
+  <script src="../js/components/btnCart.js" defer></script>
+  <script src="../js/components/btnAccount.js" defer></script>
+  <script src="../js/components/auth.js"></script>
+
+  <script src="../js/init.js"></script>
+  <script src="../js/main.js" defer></script>
 </body>
 
 </html>

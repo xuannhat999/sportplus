@@ -12,11 +12,97 @@
 <body data-root="../" data-page="account">
   <div id="header-container"></div>
   <main>
+    <section class="account-page" id="account-page">
+      <div id="account-info" class="account-page__info"></div>
+
+      <!-- CHƯA ĐĂNG NHẬP -->
+      <template id="account-empty-tpl">
+        <div class="account__empty">
+          <p class="account__empty-text"></p>
+          <button class="account__btn-login" type="button">Đăng nhập</button>
+        </div>
+      </template>
+
+      <template id="account-tpl">
+        <article class="account">
+          <header class="account__header">
+            <h1 class="account__title">Thông tin tài khoản</h1>
+            <p class="account__subtitle">Tài khoản đang đăng nhập trên hệ thống</p>
+          </header>
+
+          <dl class="account__list">
+            <div class="account__row">
+              <dt class="account__label">Họ và tên</dt>
+              <dd class="account__value" data-field="name"></dd>
+            </div>
+            <div class="account__row">
+              <dt class="account__label">Email</dt>
+              <dd class="account__value account__value--field">
+                <div class="field">
+                  <input class="field__input" id="account-email" data-field="email" type="email"
+                    autocomplete="email" placeholder="Email" aria-label="Email">
+                  <p class="field__hint field__hint--error" data-error="email" role="alert" hidden></p>
+                </div>
+              </dd>
+            </div>
+            <div class="account__row">
+              <dt class="account__label">Địa chỉ</dt>
+              <dd class="account__value account__value--field">
+                <div class="field">
+                  <input class="field__input" id="account-address" data-field="address" type="text"
+                    autocomplete="street-address" placeholder="Nhập địa chỉ" aria-label="Địa chỉ">
+                  <p class="field__hint" data-hint="address" hidden></p>
+                </div>
+              </dd>
+            </div>
+            <div class="account__row">
+              <dt class="account__label">Phương thức thanh toán</dt>
+              <dd class="account__value account__value--field">
+                <div class="field">
+                  <select class="field__select" id="account-pay-method" data-field="pay_method"
+                    aria-label="Phương thức thanh toán">
+                    <option value="online">Thanh toán trực tuyến</option>
+                    <option value="cash">Thanh toán khi nhận hàng</option>
+                  </select>
+                  <p class="field__hint" data-hint="pay_method" hidden></p>
+                </div>
+              </dd>
+            </div>
+            <div class="account__row">
+              <dt class="account__label">Vai trò</dt>
+              <dd class="account__value" data-field="role"></dd>
+            </div>
+            <div class="account__row">
+              <dt class="account__label">Trạng thái</dt>
+              <dd class="account__value" data-field="status"></dd>
+            </div>
+          </dl>
+
+          <button class="account__btn-logout" type="button">Đăng xuất</button>
+        </article>
+      </template>
+    </section>
   </main>
   <div id="footer-container"></div>
 
+  <script src="../js/data/products.js"></script>
+  <script src="../js/data/users.js"></script>
+  <script src="../js/utils/path.js"></script>
+  <script src="../js/services/storage_service.js"></script>
+  <script src="../js/services/products_service.js"></script>
+  <script src="../js/data/models/cart_item_model.js"></script>
+  <script src="../js/services/cart_service.js"></script>
+  <script src="../js/services/user_service.js"></script>
+
   <script src="../js/components/header.js"></script>
   <script src="../js/components/footer.js"></script>
+  <script src="../js/components/btnCart.js" defer></script>
+  <script src="../js/components/btnAccount.js" defer></script>
+  <script src="../js/components/userFields.js"></script>
+  <script src="../js/components/account.js"></script>
+
+  <script src="../js/init.js"></script>
+  <script src="../js/main.js" defer></script>
 </body>
 
 </html>

@@ -3,12 +3,12 @@ function renderProducts(products) {
   const tpl = document.getElementById("products-tpl");
   if (!container || !tpl) return;
 
-  container.innerHTML = "";
-
-  if (!Array.isArray(products) || products.length === 0) {
-    container.innerHTML = '<p class="products-empty">Chưa có sản phẩm nào.</p>';
-    return;
+  const emptyEl = document.querySelector("[data-products-empty]");
+  if (emptyEl) {
+    emptyEl.hidden = Array.isArray(products) && products.length > 0;
   }
+
+  container.replaceChildren();
 
   const fragment = document.createDocumentFragment();
 

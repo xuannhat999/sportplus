@@ -1,0 +1,63 @@
+/* BỘ CHỈNH SỐ LƯỢNG (dùng chung cho product-detail và cart) */
+.qty {
+  --qty-btn-size: 40px;
+  --qty-height: 44px;
+  --qty-input-width: 52px;
+
+  display: inline-flex;
+  align-items: stretch;
+  border: 1px solid color-mix(in srgb, currentColor 35%, transparent);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.qty--sm {
+  --qty-btn-size: 36px;
+  --qty-height: 40px;
+  --qty-input-width: 46px;
+}
+
+.qty__btn {
+  width: var(--qty-btn-size);
+  height: var(--qty-height);
+  border: none;
+  background-color: transparent;
+  color: inherit;
+  font-size: var(--font-size-lg);
+  line-height: 1;
+  cursor: pointer;
+}
+
+.qty__btn:hover:not(:disabled) {
+  background-color: color-mix(in srgb, currentColor 10%, transparent);
+}
+
+.qty__btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.qty__input {
+  width: var(--qty-input-width);
+  height: var(--qty-height);
+  border: none;
+  border-left: 1px solid color-mix(in srgb, currentColor 20%, transparent);
+  border-right: 1px solid color-mix(in srgb, currentColor 20%, transparent);
+  border-radius: 0;
+  background-color: transparent;
+  color: inherit;
+  font-size: var(--font-size-md);
+  text-align: center;
+  appearance: textfield;
+  -moz-appearance: textfield;
+}
+
+.qty__input:focus {
+  outline: none;
+}
+
+.qty__input::-webkit-outer-spin-button,
+.qty__input::-webkit-inner-spin-button {
+  appearance: none;
+  margin: 0;
+}

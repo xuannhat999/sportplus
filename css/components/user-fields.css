@@ -1,0 +1,55 @@
+/* Ô THÔNG TIN DÙNG CHUNG (địa chỉ, phương thức thanh toán) */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.field__label {
+  font-size: var(--font-size-sm);
+  opacity: .8;
+}
+
+.field__input,
+.field__select {
+  width: 100%;
+  min-height: 44px;
+  box-sizing: border-box;
+  padding: 0 var(--space-sm);
+  font-size: var(--font-size-md);
+  font-family: inherit;
+  color: var(--color-text);
+  background-color: transparent;
+  border: 1px solid color-mix(in srgb, var(--color-text) 25%, transparent);
+  border-radius: var(--radius);
+  outline: none;
+}
+
+.field__select {
+  cursor: pointer;
+}
+
+.field__input::placeholder {
+  color: color-mix(in srgb, var(--color-text) 50%, transparent);
+}
+
+.field__input:focus,
+.field__select:focus {
+  border-color: var(--color-text);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-text) 15%, transparent);
+}
+
+.field__hint {
+  margin: 0;
+  font-size: var(--font-size-sm);
+  opacity: .7;
+}
+
+.field__hint[hidden] {
+  display: none;
+}
+
+.field__hint--error {
+  color: var(--color-error);
+  opacity: 1;
+}

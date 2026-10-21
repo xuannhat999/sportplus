@@ -13,6 +13,13 @@
   <div id="header-container"></div>
   <main>
     <section class="product-detail" id="product-detail">
+      <template id="product-not-found-tpl">
+        <div class="p-detail__empty">
+          <p>Không tìm thấy sản phẩm.</p>
+          <a class="p-detail__back" href="#" data-back-home>← Về trang chủ</a>
+        </div>
+      </template>
+
       <template id="product-detail-tpl">
         <article class="p-detail">
           <div class="p-detail__media">
@@ -43,16 +50,10 @@
               </div>
               <div class="p-detail__summary__purchase__quantity">
                 <p class="p-detail__summary__purchase__quantity-label">Số lượng</p>
-                <div class="p-detail__summary__purchase__quantity__control">
-                  <button class="p-detail__summary__purchase__quantity__btn-minus" type="button"
-                    aria-label="Giảm số lượng">−</button>
-                  <input class="p-detail__summary__purchase__quantity__input" type="number" value="1" min="1" max="99"
-                    step="1" inputmode="numeric" aria-label="Số lượng">
-                  <button class="p-detail__summary__purchase__quantity__btn-plus" type="button"
-                    aria-label="Tăng số lượng">+</button>
-                </div>
+                <div class="p-detail__summary__purchase__quantity__control" data-quantity></div>
               </div>
               <button class="p-detail__summary__purchase__btn-add-to-cart" type="button">Thêm vào giỏ</button>
+              <p class="p-detail__summary__purchase__message" hidden></p>
             </div>
           </div>
         </article>
@@ -60,6 +61,7 @@
     </section>
     <section class="r-products">
       <p class="r-products__title">Sản phẩm liên quan</p>
+      <p class="products-empty" data-products-empty hidden>Chưa có sản phẩm nào.</p>
       <div id="products" class="r-products__products">
         <template id="products-tpl">
           <article class="products-article">
@@ -80,17 +82,23 @@
   </main>
   <div id="footer-container"></div>
   <script src="../js/data/products.js"></script>
+  <script src="../js/data/users.js"></script>
+  <script src="../js/data/categories.js"></script>
   <script src="../js/utils/format.js"></script>
   <script src="../js/utils/path.js"></script>
   <script src="../js/utils/product.js"></script>
 
   <script src="../js/services/storage_service.js"></script>
   <script src="../js/services/products_service.js"></script>
+  <script src="../js/data/models/cart_item_model.js"></script>
+  <script src="../js/services/cart_service.js"></script>
+  <script src="../js/services/user_service.js"></script>
 
   <script src="../js/components/header.js"></script>
   <script src="../js/components/footer.js"></script>
   <script src="../js/components/btnCart.js" defer></script>
   <script src="../js/components/btnAccount.js" defer></script>
+  <script src="../js/components/quantity.js"></script>
   <script src="../js/components/products.js"></script>
   <script src="../js/components/productDetail.js"></script>
   <script src="../js/init.js"></script>

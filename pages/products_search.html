@@ -26,15 +26,15 @@
         <select class="filter-panel__select" id="filter-sort">
           <option value="az">A - Z</option>
           <option value="za">Z - A</option>
-          <option value="price-asc">Giá: thấp đến cao</option>
-          <option value="price-desc">Giá: cao đến thấp</option>
+          <option value="price_asc">Giá: thấp đến cao</option>
+          <option value="price_desc">Giá: cao đến thấp</option>
         </select>
       </div>
 
       <div class="filter-panel__group">
         <button class="filter-panel__toggle" type="button" aria-expanded="false" aria-controls="filter-brand">
           <span class="filter-panel__toggle__text">
-            <span class="filter-panel__label">Brand</span>
+            <span class="filter-panel__label">Hãng</span>
             <span class="filter-panel__label-count" hidden>0</span>
           </span>
           <i class="fa-solid fa-chevron-down filter-panel__toggle-icon"></i>
@@ -45,7 +45,7 @@
       <div class="filter-panel__group">
         <button class="filter-panel__toggle" type="button" aria-expanded="false" aria-controls="filter-category">
           <span class="filter-panel__toggle__text">
-            <span class="filter-panel__label">Category</span>
+            <span class="filter-panel__label">Thể loại</span>
             <span class="filter-panel__label-count" hidden>0</span>
           </span>
           <i class="fa-solid fa-chevron-down filter-panel__toggle-icon"></i>
@@ -56,7 +56,7 @@
       <div class="filter-panel__group">
         <button class="filter-panel__toggle" type="button" aria-expanded="false" aria-controls="filter-kit-type">
           <span class="filter-panel__toggle__text">
-            <span class="filter-panel__label">Kit type</span>
+            <span class="filter-panel__label">Loại áo đấu</span>
             <span class="filter-panel__label-count" hidden>0</span>
           </span>
           <i class="fa-solid fa-chevron-down filter-panel__toggle-icon"></i>
@@ -67,7 +67,7 @@
       <div class="filter-panel__group">
         <button class="filter-panel__toggle" type="button" aria-expanded="false" aria-controls="filter-league">
           <span class="filter-panel__toggle__text">
-            <span class="filter-panel__label">League</span>
+            <span class="filter-panel__label">Giải đấu</span>
             <span class="filter-panel__label-count" hidden>0</span>
           </span>
           <i class="fa-solid fa-chevron-down filter-panel__toggle-icon"></i>
@@ -78,7 +78,7 @@
       <div class="filter-panel__group">
         <button class="filter-panel__toggle" type="button" aria-expanded="false" aria-controls="filter-team">
           <span class="filter-panel__toggle__text">
-            <span class="filter-panel__label">Team</span>
+            <span class="filter-panel__label">Đội</span>
             <span class="filter-panel__label-count" hidden>0</span>
           </span>
           <i class="fa-solid fa-chevron-down filter-panel__toggle-icon"></i>
@@ -89,7 +89,7 @@
       <div class="filter-panel__group">
         <button class="filter-panel__toggle" type="button" aria-expanded="false" aria-controls="filter-season">
           <span class="filter-panel__toggle__text">
-            <span class="filter-panel__label">Season</span>
+            <span class="filter-panel__label">Mùa giải</span>
             <span class="filter-panel__label-count" hidden>0</span>
           </span>
           <i class="fa-solid fa-chevron-down filter-panel__toggle-icon"></i>
@@ -99,7 +99,8 @@
     </aside>
 
     <section class="search-page__results">
-      <div id="products" class="all-products"></div>
+      <p class="products-empty" data-products-empty hidden>Chưa có sản phẩm nào.</p>
+    <div id="products" class="all-products"></div>
     </section>
 
     <template id="products-tpl">
@@ -123,6 +124,7 @@
   <div id="footer-container"></div>
 
   <script src="../js/data/products.js"></script>
+  <script src="../js/data/users.js"></script>
   <script src="../js/data/brands.js"></script>
   <script src="../js/data/categories.js"></script>
   <script src="../js/data/teams.js"></script>
@@ -134,6 +136,9 @@
   <script src="../js/utils/product.js"></script>
   <script src="../js/services/storage_service.js"></script>
   <script src="../js/services/products_service.js"></script>
+  <script src="../js/data/models/cart_item_model.js"></script>
+  <script src="../js/services/cart_service.js"></script>
+  <script src="../js/services/user_service.js"></script>
 
   <script src="../js/components/header.js"></script>
   <script src="../js/components/footer.js"></script>

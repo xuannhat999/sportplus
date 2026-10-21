@@ -1,19 +1,17 @@
-// Bộ lọc cho trang products-search: tìm kiếm + sắp xếp + lọc theo field.
-// Toàn bộ trạng thái được lưu trong query string để F5 không mất state.
 const FILTER_FIELDS = [
-  { field: "brand", label: "Brand", values: () => BRANDS },
-  { field: "category", label: "Category", values: () => CATEGORIES },
-  { field: "kit_type", label: "Kit type", values: () => KIT_TYPES },
-  { field: "league", label: "League", values: () => LEAGUES },
-  { field: "team", label: "Team", values: () => TEAMS },
-  { field: "season", label: "Season", values: () => SEASONS }
+  { field: "brand", label: "Hãng", values: () => BRANDS },
+  { field: "category", label: "Thể loại", values: () => CATEGORIES, labels: () => CATEGORY_LABELS },
+  { field: "kit_type", label: "Loại áo đấu", values: () => KIT_TYPES, labels: () => KIT_TYPE_LABELS },
+  { field: "league", label: "Giải đấu", values: () => LEAGUES, labels: () => LEAGUE_LABELS },
+  { field: "team", label: "Đội", values: () => TEAMS, labels: () => TEAM_LABELS },
+  { field: "season", label: "Mùa giải", values: () => SEASONS }
 ];
 
 const FILTER_SORTERS = {
   az: (a, b) => a.name.localeCompare(b.name),
   za: (a, b) => b.name.localeCompare(a.name),
-  "price-asc": (a, b) => a.price - b.price,
-  "price-desc": (a, b) => b.price - a.price
+  price_asc: (a, b) => a.price - b.price,
+  price_desc: (a, b) => b.price - a.price
 };
 
 const FILTER_DEFAULT_SORT = "az";
@@ -25,7 +23,6 @@ function initProductFilters(products) {
   const list = Array.isArray(products) ? products : [];
   const params = new URLSearchParams(location.search);
 
-  // --- đọc trạng thái từ URL ---
   const sortParam = params.get("sort");
   const validSort = sortParam && Object.prototype.hasOwnProperty.call(FILTER_SORTERS, sortParam);
 
@@ -41,7 +38,6 @@ function initProductFilters(products) {
     state.selected[item.field] = new Set(picked);
   });
 
-  // --- ghi trạng thái ngược lại URL ---
   function syncUrl() {
     const next = new URLSearchParams();
 
@@ -61,7 +57,6 @@ function initProductFilters(products) {
     try {
       history.replaceState(null, "", url);
     } catch (e) {
-      // một số trình duyệt chặn replaceState khi mở file://
     }
   }
 
@@ -73,7 +68,11 @@ function initProductFilters(products) {
     return `filter-${field.replace(/_/g, "-")}`;
   }
 
-  // Mở / thu gọn một nhóm filter
+  function getFilterLabel(item, value) {
+    const labels = item.labels ? item.labels() : null;
+    return (labels && labels[value]) || value;
+  }
+
   function setGroupExpanded(field, expanded) {
     const id = fieldBoxId(field);
     const toggle = panel.querySelector(`.filter-panel__toggle[aria-controls="${id}"]`);
@@ -90,7 +89,6 @@ function initProductFilters(products) {
     }
   }
 
-  // Badge số giá trị đang chọn của 1 nhóm
   function updateFieldBadge(item) {
     const toggle = panel.querySelector(`.filter-panel__toggle[aria-controls="${fieldBoxId(item.field)}"]`);
     if (!toggle) return;
@@ -127,13 +125,9 @@ function initProductFilters(products) {
       });
 
       const text = document.createElement("span");
-      text.textContent = value;
+      text.textContent = getFilterLabel(item, value);
 
-      const count = document.createElement("span");
-      count.className = "filter-panel__option-count";
-      count.textContent = countByField(item.field, value);
-
-      label.append(input, text, count);
+      label.append(input, text);
       return label;
     }));
 
@@ -178,7 +172,6 @@ function initProductFilters(products) {
   FILTER_FIELDS.forEach(renderOptions);
   initToggles();
 
-  // Mở sẵn nhóm đang có giá trị được chọn để sau khi reload vẫn thấy đúng trạng thái
   FILTER_FIELDS.forEach(item => {
     if (state.selected[item.field].size > 0) {
       setGroupExpanded(item.field, true);
