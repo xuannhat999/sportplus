@@ -66,7 +66,10 @@ window.App = window.App || {};
 
     if (totalPages <= 1) {
       el.hidden = true;
-      el.replaceChildren();
+      // chỉ xoá danh sách số trang, giữ nguyên markup của nav
+      // (xoá cả el sẽ phá vĩnh viễn nút Trước/Sau và thẻ ul)
+      const emptyList = el.querySelector("[data-page-list]");
+      if (emptyList) emptyList.replaceChildren();
       return;
     }
 

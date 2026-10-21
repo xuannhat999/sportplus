@@ -18,7 +18,7 @@ const FILTER_DEFAULT_SORT = "az";
 
 // Lưới kết quả luôn 5 cột, mỗi trang tối đa 6 dòng
 const FILTER_PAGE_COLUMNS = 5;
-const FILTER_PAGE_ROWS = 6;
+const FILTER_PAGE_ROWS = 5;
 const FILTER_PAGE_SIZE = FILTER_PAGE_COLUMNS * FILTER_PAGE_ROWS;
 
 function initProductFilters(products) {

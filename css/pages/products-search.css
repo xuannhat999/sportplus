@@ -156,7 +156,6 @@
 
 .search-page__results .all-products {
   padding: var(--space-md);
-  /* lưới kết quả luôn 5 cột */
   grid-template-columns: repeat(5, minmax(0, 1fr));
 }
 

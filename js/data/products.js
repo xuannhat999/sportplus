@@ -1,4 +1,4 @@
-const PRODUCTS_SEED_VERSION = 3;
+const PRODUCTS_SEED_VERSION = 4;
 
 const PRODUCTS_SEED = [
   {
@@ -1295,5 +1295,1067 @@ const PRODUCTS_SEED = [
     "league": "La Liga",
     "kit_type": "third",
     "season": "2022-2023"
+  },
+  {
+    "id": 73,
+    "name": "Nike England 2026 Dri-FIT Stadium Home Shirt with Kane 9",
+    "brand": "Nike",
+    "price": 3360000,
+    "oldPrice": 3360000,
+    "images": [
+      "assets/images/ao-237.jpg",
+      "assets/images/ao-238.jpg",
+      "assets/images/ao-239.jpg"
+    ],
+    "sourceUrl": "https://www.prodirectsport.com/products/nike-england-2026-dri-fit-stadium-home-shirt-with-kane-9-white-speed-red-obsidian-mens-replica-4004714",
+    "category": "international",
+    "team": "England",
+    "league": "international",
+    "kit_type": "home",
+    "season": "2025-2026"
+  },
+  {
+    "id": 74,
+    "name": "Nike England 2026 Dri-FIT ADV Match Away Shirt",
+    "brand": "Nike",
+    "price": 4320000,
+    "oldPrice": 4320000,
+    "images": [
+      "assets/images/ao-240.jpg",
+      "assets/images/ao-241.jpg",
+      "assets/images/ao-242.jpg"
+    ],
+    "sourceUrl": "https://www.prodirectsport.com/products/nike-england-2026-dri-fit-adv-match-away-shirt-speed-red-obsidian-white-mens-replica-1053498",
+    "category": "international",
+    "team": "England",
+    "league": "international",
+    "kit_type": "away",
+    "season": "2025-2026"
+  },
+  {
+    "id": 75,
+    "name": "Nike Brazil 2026 Dri-FIT ADV Match Home Shirt",
+    "brand": "Nike",
+    "price": 3520000,
+    "oldPrice": 4320000,
+    "images": [
+      "assets/images/ao-243.jpg",
+      "assets/images/ao-244.jpg",
+      "assets/images/ao-245.jpg"
+    ],
+    "sourceUrl": "https://www.prodirectsport.com/products/nike-brazil-2026-dri-fit-adv-match-home-shirt-canary-light-menta-geode-teal-mens-replica-1053623",
+    "category": "international",
+    "team": "Brazil",
+    "league": "international",
+    "kit_type": "home",
+    "season": "2025-2026"
+  },
+  {
+    "id": 76,
+    "name": "Jordan Brazil 2026 Dri-FIT Stadium Away Shirt",
+    "brand": "Jordan",
+    "price": 2240000,
+    "oldPrice": 2880000,
+    "images": [
+      "assets/images/ao-246.jpg",
+      "assets/images/ao-247.jpg",
+      "assets/images/ao-248.jpg"
+    ],
+    "sourceUrl": "https://www.prodirectsport.com/products/jordan-brazil-2026-dri-fit-stadium-away-shirt-old-royal-black-mens-replica-1045891",
+    "category": "international",
+    "team": "Brazil",
+    "league": "international",
+    "kit_type": "away",
+    "season": "2025-2026"
+  },
+  {
+    "id": 77,
+    "name": "adidas Japan 2026 Authentic Home Shirt",
+    "brand": "adidas",
+    "price": 4160000,
+    "oldPrice": 4160000,
+    "images": [
+      "assets/images/ao-249.jpg",
+      "assets/images/ao-250.jpg",
+      "assets/images/ao-251.jpg"
+    ],
+    "sourceUrl": "https://www.prodirectsport.com/products/adidas-japan-2026-authentic-home-shirt-japanblue-ash-blue-mens-replica-1043071",
+    "category": "international",
+    "team": "Japan",
+    "league": "international",
+    "kit_type": "home",
+    "season": "2025-2026"
+  },
+  {
+    "id": 78,
+    "name": "adidas Liverpool 25/26 Authentic Home Shirt",
+    "brand": "adidas",
+    "price": 3840000,
+    "oldPrice": 3840000,
+    "images": [
+      "assets/images/ao-252.jpg",
+      "assets/images/ao-253.jpg",
+      "assets/images/ao-254.jpg"
+    ],
+    "sourceUrl": "https://www.prodirectsport.com/products/adidas-liverpool-25-26-authentic-home-shirt-strawberry-red-mens-replica-1036275",
+    "category": "club",
+    "team": "Liverpool",
+    "league": "Premier League",
+    "kit_type": "home",
+    "season": "2025-2026"
+  },
+  {
+    "id": 79,
+    "name": "adidas Liverpool 25/26 Authentic Away Shirt",
+    "brand": "adidas",
+    "price": 3840000,
+    "oldPrice": 3840000,
+    "images": [
+      "assets/images/ao-255.jpg",
+      "assets/images/ao-256.jpg",
+      "assets/images/ao-257.jpg"
+    ],
+    "sourceUrl": "https://www.prodirectsport.com/products/adidas-liverpool-25-26-authentic-away-shirt-wonder-white-mens-replica-1036285",
+    "category": "club",
+    "team": "Liverpool",
+    "league": "Premier League",
+    "kit_type": "away",
+    "season": "2025-2026"
+  },
+  {
+    "id": 80,
+    "name": "adidas Liverpool 26/27 Third LS Shirt",
+    "brand": "adidas",
+    "price": 2432000,
+    "oldPrice": 2880000,
+    "images": [
+      "assets/images/ao-258.jpg",
+      "assets/images/ao-259.jpg",
+      "assets/images/ao-260.jpg"
+    ],
+    "sourceUrl": "https://www.prodirectsport.com/products/adidas-liverpool-26-27-third-ls-shirt-black-mens-replica-4004802",
+    "category": "club",
+    "team": "Liverpool",
+    "league": "Premier League",
+    "kit_type": "third",
+    "season": "2026-2027"
+  },
+  {
+    "id": 81,
+    "name": "adidas Spain 2026 Authentic Home Shirt",
+    "brand": "adidas",
+    "price": 3840000,
+    "oldPrice": 3840000,
+    "images": [
+      "assets/images/ao-261.jpg",
+      "assets/images/ao-262.jpg",
+      "assets/images/ao-263.jpg"
+    ],
+    "sourceUrl": "https://www.prodirectsport.com/products/adidas-spain-2026-authentic-home-shirt-vivid-red-mens-replica-1043102",
+    "category": "international",
+    "team": "Spain",
+    "league": "international",
+    "kit_type": "home",
+    "season": "2025-2026"
+  },
+  {
+    "id": 82,
+    "name": "adidas Originals Spain 2026 Authentic Away Shirt",
+    "brand": "adidas Originals",
+    "price": 3840000,
+    "oldPrice": 3840000,
+    "images": [
+      "assets/images/ao-264.jpg",
+      "assets/images/ao-265.jpg",
+      "assets/images/ao-266.jpg"
+    ],
+    "sourceUrl": "https://www.prodirectsport.com/products/adidas-originals-spain-2026-authentic-away-shirt-off-white-mens-replica-1043123",
+    "category": "international",
+    "team": "Spain",
+    "league": "international",
+    "kit_type": "away",
+    "season": "2025-2026"
+  },
+  {
+    "id": 83,
+    "name": "adidas Jamaica 2026 Authentic Home Shirt",
+    "brand": "adidas",
+    "price": 3840000,
+    "oldPrice": 3840000,
+    "images": [
+      "assets/images/ao-267.jpg",
+      "assets/images/ao-268.jpg",
+      "assets/images/ao-269.jpg"
+    ],
+    "sourceUrl": "https://www.prodirectsport.com/products/adidas-jamaica-2026-authentic-home-shirt-bold-gold-mens-replica-1043038",
+    "category": "international",
+    "team": "Jamaica",
+    "league": "international",
+    "kit_type": "home",
+    "season": "2025-2026"
+  },
+  {
+    "id": 84,
+    "name": "adidas Originals Jamaica 2026 Authentic Away Shirt",
+    "brand": "adidas Originals",
+    "price": 3840000,
+    "oldPrice": 3840000,
+    "images": [
+      "assets/images/ao-270.jpg",
+      "assets/images/ao-271.jpg",
+      "assets/images/ao-272.jpg"
+    ],
+    "sourceUrl": "https://www.prodirectsport.com/products/adidas-originals-jamaica-2026-authentic-away-shirt-black-mens-replica-1043046",
+    "category": "international",
+    "team": "Jamaica",
+    "league": "international",
+    "kit_type": "away",
+    "season": "2025-2026"
+  },
+  {
+    "id": 85,
+    "name": "adidas Mexico 2026 Authentic Home Shirt",
+    "brand": "adidas",
+    "price": 4160000,
+    "oldPrice": 4160000,
+    "images": [
+      "assets/images/ao-273.jpg",
+      "assets/images/ao-274.jpg",
+      "assets/images/ao-275.jpg"
+    ],
+    "sourceUrl": "https://www.prodirectsport.com/products/adidas-mexico-2026-authentic-home-shirt-bold-green-mens-replica-1043078",
+    "category": "international",
+    "team": "Mexico",
+    "league": "international",
+    "kit_type": "home",
+    "season": "2025-2026"
+  },
+  {
+    "id": 86,
+    "name": "adidas Originals Mexico 2026 Authentic Away Shirt",
+    "brand": "adidas Originals",
+    "price": 4160000,
+    "oldPrice": 4160000,
+    "images": [
+      "assets/images/ao-276.jpg",
+      "assets/images/ao-277.jpg",
+      "assets/images/ao-278.jpg"
+    ],
+    "sourceUrl": "https://www.prodirectsport.com/products/adidas-originals-mexico-2026-authentic-away-shirt-white-mens-replica-1043087",
+    "category": "international",
+    "team": "Mexico",
+    "league": "international",
+    "kit_type": "away",
+    "season": "2025-2026"
+  },
+  {
+    "id": 87,
+    "name": "adidas Mexico 2026 Authentic Third Shirt",
+    "brand": "adidas",
+    "price": 3840000,
+    "oldPrice": 3840000,
+    "images": [
+      "assets/images/ao-279.jpg",
+      "assets/images/ao-280.jpg",
+      "assets/images/ao-281.jpg"
+    ],
+    "sourceUrl": "https://www.prodirectsport.com/products/adidas-mexico-2026-authentic-third-shirt-black-mens-replica-1043902",
+    "category": "international",
+    "team": "Mexico",
+    "league": "international",
+    "kit_type": "third",
+    "season": "2025-2026"
+  },
+  {
+    "id": 88,
+    "name": "adidas Manchester United 25/26 Authentic Home Shirt",
+    "brand": "adidas",
+    "price": 3840000,
+    "oldPrice": 3840000,
+    "images": [
+      "assets/images/ao-282.jpg",
+      "assets/images/ao-283.jpg",
+      "assets/images/ao-284.jpg"
+    ],
+    "sourceUrl": "https://www.prodirectsport.com/products/adidas-manchester-united-25-26-authentic-home-shirt-mufc-red-mens-replica-1036073",
+    "category": "club",
+    "team": "Manchester United",
+    "league": "Premier League",
+    "kit_type": "home",
+    "season": "2025-2026"
+  },
+  {
+    "id": 89,
+    "name": "adidas Manchester United 25/26 Authentic Away Shirt",
+    "brand": "adidas",
+    "price": 1920000,
+    "oldPrice": 3840000,
+    "images": [
+      "assets/images/ao-285.jpg",
+      "assets/images/ao-286.jpg",
+      "assets/images/ao-287.jpg"
+    ],
+    "sourceUrl": "https://www.prodirectsport.com/products/adidas-manchester-united-25-26-authentic-away-shirt-white-mens-replica-1036058",
+    "category": "club",
+    "team": "Manchester United",
+    "league": "Premier League",
+    "kit_type": "away",
+    "season": "2025-2026"
+  },
+  {
+    "id": 90,
+    "name": "adidas Manchester United 26/27 Authentic Third Shirt",
+    "brand": "adidas",
+    "price": 3840000,
+    "oldPrice": 3840000,
+    "images": [
+      "assets/images/ao-288.jpg",
+      "assets/images/ao-289.jpg",
+      "assets/images/ao-290.jpg"
+    ],
+    "sourceUrl": "https://www.prodirectsport.com/products/adidas-manchester-united-26-27-authentic-third-shirt-ivory-mens-replica-4005038",
+    "category": "club",
+    "team": "Manchester United",
+    "league": "Premier League",
+    "kit_type": "third",
+    "season": "2026-2027"
+  },
+  {
+    "id": 91,
+    "name": "adidas Germany 2026 Authentic Home Shirt",
+    "brand": "adidas",
+    "price": 2560000,
+    "oldPrice": 3840000,
+    "images": [
+      "assets/images/ao-291.jpg",
+      "assets/images/ao-292.jpg",
+      "assets/images/ao-293.jpg"
+    ],
+    "sourceUrl": "https://www.prodirectsport.com/products/adidas-germany-2026-authentic-home-shirt-white-mens-replica-1042960",
+    "category": "international",
+    "team": "Germany",
+    "league": "international",
+    "kit_type": "home",
+    "season": "2025-2026"
+  },
+  {
+    "id": 92,
+    "name": "adidas Originals Germany 2026 Authentic Away Shirt",
+    "brand": "adidas Originals",
+    "price": 3840000,
+    "oldPrice": 3840000,
+    "images": [
+      "assets/images/ao-294.jpg",
+      "assets/images/ao-295.jpg",
+      "assets/images/ao-296.jpg"
+    ],
+    "sourceUrl": "https://www.prodirectsport.com/products/adidas-originals-germany-2026-authentic-away-shirt-collegiate-navy-mens-replica-1042982",
+    "category": "international",
+    "team": "Germany",
+    "league": "international",
+    "kit_type": "away",
+    "season": "2025-2026"
+  },
+  {
+    "id": 93,
+    "name": "adidas Originals Germany 2026 Third LS Shirt",
+    "brand": "adidas Originals",
+    "price": 2880000,
+    "oldPrice": 2880000,
+    "images": [
+      "assets/images/ao-297.jpg",
+      "assets/images/ao-298.jpg",
+      "assets/images/ao-299.jpg"
+    ],
+    "sourceUrl": "https://www.prodirectsport.com/products/adidas-originals-germany-2026-third-ls-shirt-black-mens-replica-4005131",
+    "category": "international",
+    "team": "Germany",
+    "league": "international",
+    "kit_type": "third",
+    "season": "2025-2026"
+  },
+  {
+    "id": 94,
+    "name": "adidas Argentina 2026 Authentic Home Shirt",
+    "brand": "adidas",
+    "price": 4160000,
+    "oldPrice": 4160000,
+    "images": [
+      "assets/images/ao-300.jpg",
+      "assets/images/ao-301.jpg",
+      "assets/images/ao-302.jpg"
+    ],
+    "sourceUrl": "https://www.prodirectsport.com/products/adidas-argentina-2026-authentic-home-shirt-white-icey-blue-light-blue-mens-replica-1042909",
+    "category": "international",
+    "team": "Argentina",
+    "league": "international",
+    "kit_type": "home",
+    "season": "2025-2026"
+  },
+  {
+    "id": 95,
+    "name": "adidas Originals Argentina 2026 Womens Away Shirt",
+    "brand": "adidas Originals",
+    "price": 2720000,
+    "oldPrice": 2720000,
+    "images": [
+      "assets/images/ao-303.jpg",
+      "assets/images/ao-304.jpg",
+      "assets/images/ao-305.jpg"
+    ],
+    "sourceUrl": "https://www.prodirectsport.com/products/adidas-originals-argentina-2026-womens-away-shirt-black-lucid-blue-blue-burst-womens-replica-1042940",
+    "category": "international",
+    "team": "Argentina",
+    "league": "international",
+    "kit_type": "away",
+    "season": "2025-2026"
+  },
+  {
+    "id": 96,
+    "name": "Nike Tottenham Hotspur 25/26 Dri-FIT ADV Match Home Shirt",
+    "brand": "Nike",
+    "price": 2800000,
+    "oldPrice": 4000000,
+    "images": [
+      "assets/images/ao-306.jpg",
+      "assets/images/ao-307.jpg",
+      "assets/images/ao-308.jpg"
+    ],
+    "sourceUrl": "https://www.prodirectsport.com/products/nike-tottenham-hotspur-25-26-dri-fit-adv-match-home-shirt-white-lt-iron-ore-binary-blue-mens-replica-1032701",
+    "category": "club",
+    "team": "Tottenham Hotspur",
+    "league": "Premier League",
+    "kit_type": "home",
+    "season": "2025-2026"
+  },
+  {
+    "id": 97,
+    "name": "Nike Tottenham Hotspur 25/26 Dri-FIT Stadium Away Shirt",
+    "brand": "Nike",
+    "price": 2720000,
+    "oldPrice": 2720000,
+    "images": [
+      "assets/images/ao-309.jpg",
+      "assets/images/ao-310.jpg",
+      "assets/images/ao-311.jpg"
+    ],
+    "sourceUrl": "https://www.prodirectsport.com/products/nike-tottenham-hotspur-25-26-dri-fit-stadium-away-shirt-black-lt-iron-ore-mens-replica-1032708",
+    "category": "club",
+    "team": "Tottenham Hotspur",
+    "league": "Premier League",
+    "kit_type": "away",
+    "season": "2025-2026"
+  },
+  {
+    "id": 98,
+    "name": "Nike Tottenham Hotspur 25/26 Dri-FIT ADV Match Third Shirt",
+    "brand": "Nike",
+    "price": 2800000,
+    "oldPrice": 4000000,
+    "images": [
+      "assets/images/ao-312.jpg",
+      "assets/images/ao-313.jpg",
+      "assets/images/ao-314.jpg"
+    ],
+    "sourceUrl": "https://www.prodirectsport.com/products/nike-tottenham-hotspur-25-26-dri-fit-adv-match-third-shirt-dynamic-yellow-blue-void-mens-replica-1034532",
+    "category": "club",
+    "team": "Tottenham Hotspur",
+    "league": "Premier League",
+    "kit_type": "third",
+    "season": "2025-2026"
+  },
+  {
+    "id": 99,
+    "name": "Nike USA 2026 Dri-FIT ADV Match Home Shirt",
+    "brand": "Nike",
+    "price": 3200000,
+    "oldPrice": 4320000,
+    "images": [
+      "assets/images/ao-315.jpg",
+      "assets/images/ao-316.jpg",
+      "assets/images/ao-317.jpg"
+    ],
+    "sourceUrl": "https://www.prodirectsport.com/products/nike-usa-2026-dri-fit-adv-match-home-shirt-sail-midnight-navy-midnight-navy-mens-replica-1045907",
+    "category": "international",
+    "team": "USA",
+    "league": "international",
+    "kit_type": "home",
+    "season": "2025-2026"
+  },
+  {
+    "id": 100,
+    "name": "adidas Real Madrid 25/26 Authentic Home Shirt",
+    "brand": "adidas",
+    "price": 3840000,
+    "oldPrice": 3840000,
+    "images": [
+      "assets/images/ao-318.jpg",
+      "assets/images/ao-319.jpg",
+      "assets/images/ao-320.jpg"
+    ],
+    "sourceUrl": "https://www.prodirectsport.com/products/adidas-real-madrid-25-26-authentic-home-shirt-white-mens-replica-1036221",
+    "category": "club",
+    "team": "Real Madrid",
+    "league": "La Liga",
+    "kit_type": "home",
+    "season": "2025-2026"
+  },
+  {
+    "id": 101,
+    "name": "adidas Originals Real Madrid 26/27 Authentic Away Shirt",
+    "brand": "adidas Originals",
+    "price": 3200000,
+    "oldPrice": 3840000,
+    "images": [
+      "assets/images/ao-321.jpg",
+      "assets/images/ao-322.jpg",
+      "assets/images/ao-323.jpg"
+    ],
+    "sourceUrl": "https://www.prodirectsport.com/products/adidas-originals-real-madrid-26-27-authentic-away-shirt-aurora-ivy-mens-replica-4004955",
+    "category": "club",
+    "team": "Real Madrid",
+    "league": "La Liga",
+    "kit_type": "away",
+    "season": "2026-2027"
+  },
+  {
+    "id": 102,
+    "name": "adidas Originals Real Madrid 25/26 Authentic Third Shirt",
+    "brand": "adidas Originals",
+    "price": 4160000,
+    "oldPrice": 4160000,
+    "images": [
+      "assets/images/ao-324.jpg",
+      "assets/images/ao-325.jpg",
+      "assets/images/ao-326.jpg"
+    ],
+    "sourceUrl": "https://www.prodirectsport.com/products/adidas-originals-real-madrid-25-26-authentic-third-shirt-bluebird-mens-replica-1036244",
+    "category": "club",
+    "team": "Real Madrid",
+    "league": "La Liga",
+    "kit_type": "third",
+    "season": "2025-2026"
+  },
+  {
+    "id": 103,
+    "name": "Nike Chelsea 25/26 Match Home Shirt with Palmer 10",
+    "brand": "Nike",
+    "price": 1792000,
+    "oldPrice": 4480000,
+    "images": [
+      "assets/images/ao-327.jpg",
+      "assets/images/ao-328.jpg",
+      "assets/images/ao-329.jpg"
+    ],
+    "sourceUrl": "https://www.prodirectsport.com/products/nike-chelsea-25-26-match-home-shirt-with-palmer-10-rush-blue-white-speed-red-white-mens-replica-1040834",
+    "category": "club",
+    "team": "Chelsea",
+    "league": "Premier League",
+    "kit_type": "home",
+    "season": "2025-2026"
+  },
+  {
+    "id": 104,
+    "name": "Nike Chelsea 25/26 Match Away Shirt with Palmer 10",
+    "brand": "Nike",
+    "price": 3136000,
+    "oldPrice": 4480000,
+    "images": [
+      "assets/images/ao-330.jpg",
+      "assets/images/ao-331.jpg",
+      "assets/images/ao-332.jpg"
+    ],
+    "sourceUrl": "https://www.prodirectsport.com/products/nike-chelsea-25-26-match-away-shirt-with-palmer-10-phantom-speed-red-galactic-jade-galactic-jade-mens-replica-1040837",
+    "category": "club",
+    "team": "Chelsea",
+    "league": "Premier League",
+    "kit_type": "away",
+    "season": "2025-2026"
+  },
+  {
+    "id": 105,
+    "name": "Nike Chelsea 25/26 Womens Dri-FIT Stadium Third Shirt",
+    "brand": "Nike",
+    "price": 1088000,
+    "oldPrice": 2720000,
+    "images": [
+      "assets/images/ao-333.jpg",
+      "assets/images/ao-334.jpg",
+      "assets/images/ao-335.jpg"
+    ],
+    "sourceUrl": "https://www.prodirectsport.com/products/nike-chelsea-25-26-womens-dri-fit-stadium-third-shirt-black-field-silver-womens-replica-1034420",
+    "category": "club",
+    "team": "Chelsea",
+    "league": "Premier League",
+    "kit_type": "third",
+    "season": "2025-2026"
+  },
+  {
+    "id": 106,
+    "name": "Nike France 2026 Dri-FIT ADV Match Home Shirt",
+    "brand": "Nike",
+    "price": 3520000,
+    "oldPrice": 4320000,
+    "images": [
+      "assets/images/ao-336.jpg",
+      "assets/images/ao-337.jpg",
+      "assets/images/ao-338.jpg"
+    ],
+    "sourceUrl": "https://www.prodirectsport.com/products/nike-france-2026-dri-fit-adv-match-home-shirt-game-royal-blackened-blue-white-metallic-copper-mens-replica-1053538",
+    "category": "international",
+    "team": "France",
+    "league": "international",
+    "kit_type": "home",
+    "season": "2025-2026"
+  },
+  {
+    "id": 107,
+    "name": "Nike France 2025 Dri-FIT Stadium Away Shirt",
+    "brand": "Nike",
+    "price": 2080000,
+    "oldPrice": 2720000,
+    "images": [
+      "assets/images/ao-339.jpg",
+      "assets/images/ao-340.jpg",
+      "assets/images/ao-341.jpg"
+    ],
+    "sourceUrl": "https://www.prodirectsport.com/products/nike-france-2025-dri-fit-stadium-away-shirt-pale-ivory-bright-blue-lt-madder-root-mens-replica-1032779",
+    "category": "international",
+    "team": "France",
+    "league": "international",
+    "kit_type": "away",
+    "season": "2024-2025"
+  },
+  {
+    "id": 108,
+    "name": "Nike South Korea 2026 Dri-FIT Stadium Home Shirt",
+    "brand": "Nike",
+    "price": 2080000,
+    "oldPrice": 2880000,
+    "images": [
+      "assets/images/ao-342.jpg",
+      "assets/images/ao-343.jpg",
+      "assets/images/ao-344.jpg"
+    ],
+    "sourceUrl": "https://www.prodirectsport.com/products/nike-south-korea-2026-dri-fit-stadium-home-shirt-global-red-black-white-club-gold-mens-replica-1053681",
+    "category": "international",
+    "team": "South Korea",
+    "league": "international",
+    "kit_type": "home",
+    "season": "2025-2026"
+  },
+  {
+    "id": 109,
+    "name": "Puma Manchester City 25/26 Authentic Home Shirt with Haaland 9",
+    "brand": "Puma",
+    "price": 3680000,
+    "oldPrice": 4320000,
+    "images": [
+      "assets/images/ao-345.jpg",
+      "assets/images/ao-346.jpg",
+      "assets/images/ao-347.jpg"
+    ],
+    "sourceUrl": "https://www.prodirectsport.com/products/puma-manchester-city-25-26-authentic-home-shirt-with-haaland-9-team-light-blue-puma-white-mens-replica-1040840",
+    "category": "club",
+    "team": "Manchester City",
+    "league": "Premier League",
+    "kit_type": "home",
+    "season": "2025-2026"
+  },
+  {
+    "id": 110,
+    "name": "Puma Manchester City 25/26 Away Shirt with Haaland 9",
+    "brand": "Puma",
+    "price": 2240000,
+    "oldPrice": 3200000,
+    "images": [
+      "assets/images/ao-348.jpg",
+      "assets/images/ao-349.jpg",
+      "assets/images/ao-350.jpg"
+    ],
+    "sourceUrl": "https://www.prodirectsport.com/products/puma-manchester-city-25-26-away-shirt-with-haaland-9-puma-black-mens-replica-1041300",
+    "category": "club",
+    "team": "Manchester City",
+    "league": "Premier League",
+    "kit_type": "away",
+    "season": "2025-2026"
+  },
+  {
+    "id": 111,
+    "name": "Puma Manchester City 25/26 Authentic Third Shirt",
+    "brand": "Puma",
+    "price": 2688000,
+    "oldPrice": 3840000,
+    "images": [
+      "assets/images/ao-351.jpg",
+      "assets/images/ao-352.jpg",
+      "assets/images/ao-353.jpg"
+    ],
+    "sourceUrl": "https://www.prodirectsport.com/products/puma-manchester-city-25-26-authentic-third-shirt-cool-weather-pro-green-mens-replica-1034136",
+    "category": "club",
+    "team": "Manchester City",
+    "league": "Premier League",
+    "kit_type": "third",
+    "season": "2025-2026"
+  },
+  {
+    "id": 112,
+    "name": "Nike Netherlands 2026 Dri-FIT ADV Match Home Shirt",
+    "brand": "Nike",
+    "price": 3456000,
+    "oldPrice": 4320000,
+    "images": [
+      "assets/images/ao-354.jpg",
+      "assets/images/ao-355.jpg",
+      "assets/images/ao-356.jpg"
+    ],
+    "sourceUrl": "https://www.prodirectsport.com/products/nike-netherlands-2026-dri-fit-adv-match-home-shirt-hyper-crimson-black-mens-replica-1053643",
+    "category": "international",
+    "team": "Netherlands",
+    "league": "international",
+    "kit_type": "home",
+    "season": "2025-2026"
+  },
+  {
+    "id": 113,
+    "name": "Nike Netherlands 2026 Dri-FIT ADV Match Away Shirt",
+    "brand": "Nike",
+    "price": 3456000,
+    "oldPrice": 4320000,
+    "images": [
+      "assets/images/ao-357.jpg",
+      "assets/images/ao-358.jpg",
+      "assets/images/ao-359.jpg"
+    ],
+    "sourceUrl": "https://www.prodirectsport.com/products/nike-netherlands-2026-dri-fit-adv-match-away-shirt-white-hyper-crimson-black-mens-replica-1053647",
+    "category": "international",
+    "team": "Netherlands",
+    "league": "international",
+    "kit_type": "away",
+    "season": "2025-2026"
+  },
+  {
+    "id": 114,
+    "name": "Nike Paris Saint-Germain 26/27 Dri-FIT ADV Match Home Shirt",
+    "brand": "Nike",
+    "price": 3680000,
+    "oldPrice": 4320000,
+    "images": [
+      "assets/images/ao-360.jpg",
+      "assets/images/ao-361.jpg",
+      "assets/images/ao-362.jpg"
+    ],
+    "sourceUrl": "https://www.prodirectsport.com/products/nike-paris-saint-germain-26-27-dri-fit-adv-match-home-shirt-old-royal-white-university-red-white-mens-replica-1053687",
+    "category": "club",
+    "team": "Paris Saint-Germain",
+    "league": "Ligue 1",
+    "kit_type": "home",
+    "season": "2026-2027"
+  },
+  {
+    "id": 115,
+    "name": "Nike Paris Saint-Germain 26/27 Dri-FIT ADV Match Away Shirt",
+    "brand": "Nike",
+    "price": 3680000,
+    "oldPrice": 4320000,
+    "images": [
+      "assets/images/ao-363.jpg",
+      "assets/images/ao-364.jpg",
+      "assets/images/ao-365.jpg"
+    ],
+    "sourceUrl": "https://www.prodirectsport.com/products/nike-paris-saint-germain-26-27-dri-fit-adv-match-away-shirt-white-college-navy-global-red-college-navy-mens-replica-4002777",
+    "category": "club",
+    "team": "Paris Saint-Germain",
+    "league": "Ligue 1",
+    "kit_type": "away",
+    "season": "2026-2027"
+  },
+  {
+    "id": 116,
+    "name": "Nike Paris Saint-Germain 25/26 Dri-FIT ADV Match Third Shirt",
+    "brand": "Nike",
+    "price": 2880000,
+    "oldPrice": 4000000,
+    "images": [
+      "assets/images/ao-366.jpg",
+      "assets/images/ao-367.jpg",
+      "assets/images/ao-368.jpg"
+    ],
+    "sourceUrl": "https://www.prodirectsport.com/products/nike-paris-saint-germain-25-26-dri-fit-adv-match-third-shirt-global-red-hyper-royal-mens-replica-1034495",
+    "category": "club",
+    "team": "Paris Saint-Germain",
+    "league": "Ligue 1",
+    "kit_type": "third",
+    "season": "2025-2026"
+  },
+  {
+    "id": 117,
+    "name": "adidas Inter Miami 2026 Authentic Away Shirt",
+    "brand": "adidas",
+    "price": 3840000,
+    "oldPrice": 3840000,
+    "images": [
+      "assets/images/ao-369.jpg",
+      "assets/images/ao-370.jpg",
+      "assets/images/ao-371.jpg"
+    ],
+    "sourceUrl": "https://www.prodirectsport.com/products/adidas-inter-miami-2026-authentic-away-shirt-black-bliss-pink-mens-replica-1043246",
+    "category": "club",
+    "team": "Inter Miami",
+    "league": "MLS",
+    "kit_type": "away",
+    "season": "2025-2026"
+  },
+  {
+    "id": 118,
+    "name": "adidas Inter Miami 2026 Third Shirt with Messi 10",
+    "brand": "adidas",
+    "price": 3040000,
+    "oldPrice": 3040000,
+    "images": [
+      "assets/images/ao-372.jpg",
+      "assets/images/ao-373.jpg",
+      "assets/images/ao-374.jpg"
+    ],
+    "sourceUrl": "https://www.prodirectsport.com/products/adidas-inter-miami-2026-third-shirt-with-messi-10-white-mens-replica-4005158",
+    "category": "club",
+    "team": "Inter Miami",
+    "league": "MLS",
+    "kit_type": "third",
+    "season": "2025-2026"
+  },
+  {
+    "id": 119,
+    "name": "adidas Inter Miami 2024 Home Shirt",
+    "brand": "adidas",
+    "price": 960000,
+    "oldPrice": 2560000,
+    "images": [
+      "assets/images/ao-375.jpg",
+      "assets/images/ao-376.jpg",
+      "assets/images/ao-377.jpg"
+    ],
+    "sourceUrl": "https://www.prodirectsport.com/products/adidas-inter-miami-cf-2024-home-jersey-easy-pink-mens-replica-1004304",
+    "category": "club",
+    "team": "Inter Miami",
+    "league": "MLS",
+    "kit_type": "home",
+    "season": "2023-2024"
+  },
+  {
+    "id": 120,
+    "name": "Nike Uruguay 2026 Dri-FIT Stadium Home Shirt",
+    "brand": "Nike",
+    "price": 1920000,
+    "oldPrice": 2880000,
+    "images": [
+      "assets/images/ao-378.jpg",
+      "assets/images/ao-379.jpg",
+      "assets/images/ao-380.jpg"
+    ],
+    "sourceUrl": "https://www.prodirectsport.com/products/nike-uruguay-2026-dri-fit-stadium-home-shirt-royal-tint-mens-replica-1053677",
+    "category": "international",
+    "team": "Uruguay",
+    "league": "international",
+    "kit_type": "home",
+    "season": "2025-2026"
+  },
+  {
+    "id": 121,
+    "name": "Nike Uruguay 2026 Dri-FIT Stadium Away Shirt",
+    "brand": "Nike",
+    "price": 2240000,
+    "oldPrice": 2880000,
+    "images": [
+      "assets/images/ao-381.jpg",
+      "assets/images/ao-382.jpg",
+      "assets/images/ao-383.jpg"
+    ],
+    "sourceUrl": "https://www.prodirectsport.com/products/nike-uruguay-2026-dri-fit-stadium-away-shirt-obsidian-hyper-royal-mens-replica-1053678",
+    "category": "international",
+    "team": "Uruguay",
+    "league": "international",
+    "kit_type": "away",
+    "season": "2025-2026"
+  },
+  {
+    "id": 122,
+    "name": "Score Draw Aston Villa 1988 Home Shirt",
+    "brand": "Score Draw",
+    "price": 1280000,
+    "oldPrice": 1280000,
+    "images": [
+      "assets/images/ao-384.jpg",
+      "assets/images/ao-385.jpg",
+      "assets/images/ao-386.jpg"
+    ],
+    "sourceUrl": "https://www.prodirectsport.com/products/aston-villa-1988-home-shirt-claret-sky-blue-mens-replica-262429",
+    "category": "club",
+    "team": "Aston Villa",
+    "league": "Premier League",
+    "kit_type": "home",
+    "season": "1987-1988"
+  },
+  {
+    "id": 123,
+    "name": "Score Draw Aston Villa 1988 Away Shirt",
+    "brand": "Score Draw",
+    "price": 1280000,
+    "oldPrice": 1280000,
+    "images": [
+      "assets/images/ao-387.jpg",
+      "assets/images/ao-388.jpg",
+      "assets/images/ao-389.jpg"
+    ],
+    "sourceUrl": "https://www.prodirectsport.com/products/aston-villa-1988-away-shirt-white-light-blue-mens-replica-shirts-213490",
+    "category": "club",
+    "team": "Aston Villa",
+    "league": "Premier League",
+    "kit_type": "away",
+    "season": "1987-1988"
+  },
+  {
+    "id": 124,
+    "name": "Score Draw Aston Villa 1990 Third Shirt",
+    "brand": "Score Draw",
+    "price": 1280000,
+    "oldPrice": 1280000,
+    "images": [
+      "assets/images/ao-390.jpg",
+      "assets/images/ao-391.jpg",
+      "assets/images/ao-392.jpg"
+    ],
+    "sourceUrl": "https://www.prodirectsport.com/products/score-draw-aston-villa-1990-third-shirt-yellow-mens-replica-247910",
+    "category": "club",
+    "team": "Aston Villa",
+    "league": "Premier League",
+    "kit_type": "third",
+    "season": "1989-1990"
+  },
+  {
+    "id": 125,
+    "name": "adidas Arsenal 25/26 Authentic Away Shirt",
+    "brand": "adidas",
+    "price": 3840000,
+    "oldPrice": 3840000,
+    "images": [
+      "assets/images/ao-393.jpg",
+      "assets/images/ao-394.jpg",
+      "assets/images/ao-395.jpg"
+    ],
+    "sourceUrl": "https://www.prodirectsport.com/products/adidas-arsenal-25-26-authentic-away-shirt-night-indigo-matte-silver-mens-replica-1036169",
+    "category": "club",
+    "team": "Arsenal",
+    "league": "Premier League",
+    "kit_type": "away",
+    "season": "2025-2026"
+  },
+  {
+    "id": 126,
+    "name": "adidas Arsenal 26/27 Authentic Third Shirt",
+    "brand": "adidas",
+    "price": 3840000,
+    "oldPrice": 3840000,
+    "images": [
+      "assets/images/ao-396.jpg",
+      "assets/images/ao-397.jpg",
+      "assets/images/ao-398.jpg"
+    ],
+    "sourceUrl": "https://www.prodirectsport.com/products/adidas-arsenal-26-27-authentic-third-shirt-almost-yellow-mens-replica-4004919",
+    "category": "club",
+    "team": "Arsenal",
+    "league": "Premier League",
+    "kit_type": "third",
+    "season": "2026-2027"
+  },
+  {
+    "id": 127,
+    "name": "Puma Ivory Coast 2026 Home Shirt",
+    "brand": "Puma",
+    "price": 2080000,
+    "oldPrice": 2720000,
+    "images": [
+      "assets/images/ao-399.jpg",
+      "assets/images/ao-400.jpg",
+      "assets/images/ao-401.jpg"
+    ],
+    "sourceUrl": "https://www.prodirectsport.com/products/puma-ivory-coast-2026-home-shirt-rickie-orange-sport-green-mens-replica-1048268",
+    "category": "international",
+    "team": "Ivory Coast",
+    "league": "international",
+    "kit_type": "home",
+    "season": "2025-2026"
+  },
+  {
+    "id": 128,
+    "name": "Puma Ivory Coast 2026 Away Shirt",
+    "brand": "Puma",
+    "price": 2080000,
+    "oldPrice": 2720000,
+    "images": [
+      "assets/images/ao-402.jpg",
+      "assets/images/ao-403.jpg",
+      "assets/images/ao-404.jpg"
+    ],
+    "sourceUrl": "https://www.prodirectsport.com/products/puma-ivory-coast-2026-away-shirt-puma-white-warm-chestnut-mens-replica-1048269",
+    "category": "international",
+    "team": "Ivory Coast",
+    "league": "international",
+    "kit_type": "away",
+    "season": "2025-2026"
+  },
+  {
+    "id": 129,
+    "name": "Nike Nigeria 2026 Dri-FIT Stadium Home Shirt",
+    "brand": "Nike",
+    "price": 2880000,
+    "oldPrice": 2880000,
+    "images": [
+      "assets/images/ao-405.jpg",
+      "assets/images/ao-406.jpg",
+      "assets/images/ao-407.jpg"
+    ],
+    "sourceUrl": "https://www.prodirectsport.com/products/nike-nigeria-2026-dri-fit-stadium-home-shirt-pine-green-electric-green-white-mens-replica-1053586",
+    "category": "international",
+    "team": "Nigeria",
+    "league": "international",
+    "kit_type": "home",
+    "season": "2025-2026"
+  },
+  {
+    "id": 130,
+    "name": "Nike Nigeria 2026 Dri-FIT ADV Match Away Shirt",
+    "brand": "Nike",
+    "price": 2720000,
+    "oldPrice": 4320000,
+    "images": [
+      "assets/images/ao-408.jpg",
+      "assets/images/ao-409.jpg",
+      "assets/images/ao-410.jpg"
+    ],
+    "sourceUrl": "https://www.prodirectsport.com/products/nike-nigeria-2026-dri-fit-adv-match-away-shirt-white-green-glow-black-mens-replica-1053591",
+    "category": "international",
+    "team": "Nigeria",
+    "league": "international",
+    "kit_type": "away",
+    "season": "2025-2026"
+  },
+  {
+    "id": 131,
+    "name": "adidas Italy 2026 Authentic Home Shirt",
+    "brand": "adidas",
+    "price": 3840000,
+    "oldPrice": 3840000,
+    "images": [
+      "assets/images/ao-411.jpg",
+      "assets/images/ao-412.jpg",
+      "assets/images/ao-413.jpg"
+    ],
+    "sourceUrl": "https://www.prodirectsport.com/products/adidas-italy-2026-authentic-home-shirt-bold-blue-mens-replica-1043000",
+    "category": "international",
+    "team": "Italy",
+    "league": "international",
+    "kit_type": "home",
+    "season": "2025-2026"
   }
 ];
