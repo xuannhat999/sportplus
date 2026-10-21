@@ -11,27 +11,34 @@
 <body data-root="./" data-page="home">
   <div id="header-container"></div>
   <main>
-    <div id="products-list"></div>
+    <div id="products" class="all-products"></div>
+    <template id="products-tpl">
+      <article class="product__article">
+        <a class="product">
+          <img class="product__image" loading="lazy">
+          <div class="product__info">
+            <h3 class="product__name"></h3>
+            <div class="product__prices">
+              <span class="product__price-old" hidden></span>
+              <span class="product__price"></span>
+            </div>
+          </div>
+        </a>
+      </article>
+
+    </template>
+
+
   </main>
   <div id="footer-container"></div>
 
-  <template id="product-tpl">
-    <article class="product__article">
-      <a class="product">
-        <img class="product__image" loading="lazy">
-        <div class="product__info">
-          <h3 class="product__name"></h3>
-          <div class="product__prices">
-            <span class="product__price-old" hidden></span>
-            <span class="product__price"></span>
-          </div>
-        </div>
-      </a>
-    </article>
-
-  </template>
-
   <script src="js/data/products.js"></script>
+  <script src="js/data/brands.js"></script>
+  <script src="js/data/categories.js"></script>
+  <script src="js/data/teams.js"></script>
+  <script src="js/data/leagues.js"></script>
+  <script src="js/data/kit_types.js"></script>
+  <script src="js/data/seasons.js"></script>
   <script src="js/utils/format.js"></script>
   <script src="js/utils/path.js"></script>
   <script src="js/utils/product.js"></script>
@@ -42,7 +49,7 @@
   <script src="js/components/footer.js"></script>
   <script src="js/components/btnCart.js" defer></script>
   <script src="js/components/btnAccount.js" defer></script>
-  <script src="js/components/gridProducts.js"></script>
+  <script src="js/components/products.js"></script>
 
   <script src="js/init.js"></script>
   <script src="js/main.js" defer></script>

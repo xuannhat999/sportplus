@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tìm kiếm sản phẩm - SportPlus</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link href="../css/main.css" rel="stylesheet">
+</head>
+
+<body data-root="../" data-page="products_search">
+  <div id="header-container"></div>
+  <main class="search-page">
+    <aside class="filter-panel" id="filter-panel" aria-label="Bộ lọc sản phẩm">
+      <div class="filter-panel__search">
+        <label class="search-bar" for="filter-search">
+          <i class="fa-solid fa-magnifying-glass search-bar__icon"></i>
+          <input class="search-bar__input" id="filter-search" type="search" placeholder="Tìm sản phẩm"
+            aria-label="Tìm kiếm sản phẩm">
+        </label>
+      </div>
+
+      <div class="filter-panel__group">
+        <label class="filter-panel__label" for="filter-sort">Sắp xếp</label>
+        <select class="filter-panel__select" id="filter-sort">
+          <option value="az">A - Z</option>
+          <option value="za">Z - A</option>
+          <option value="price-asc">Giá: thấp đến cao</option>
+          <option value="price-desc">Giá: cao đến thấp</option>
+        </select>
+      </div>
+
+      <div class="filter-panel__group">
+        <button class="filter-panel__toggle" type="button" aria-expanded="false" aria-controls="filter-brand">
+          <span class="filter-panel__toggle__text">
+            <span class="filter-panel__label">Brand</span>
+            <span class="filter-panel__label-count" hidden>0</span>
+          </span>
+          <i class="fa-solid fa-chevron-down filter-panel__toggle-icon"></i>
+        </button>
+        <div class="filter-panel__options" id="filter-brand" data-field="brand" hidden></div>
+      </div>
+
+      <div class="filter-panel__group">
+        <button class="filter-panel__toggle" type="button" aria-expanded="false" aria-controls="filter-category">
+          <span class="filter-panel__toggle__text">
+            <span class="filter-panel__label">Category</span>
+            <span class="filter-panel__label-count" hidden>0</span>
+          </span>
+          <i class="fa-solid fa-chevron-down filter-panel__toggle-icon"></i>
+        </button>
+        <div class="filter-panel__options" id="filter-category" data-field="category" hidden></div>
+      </div>
+
+      <div class="filter-panel__group">
+        <button class="filter-panel__toggle" type="button" aria-expanded="false" aria-controls="filter-kit-type">
+          <span class="filter-panel__toggle__text">
+            <span class="filter-panel__label">Kit type</span>
+            <span class="filter-panel__label-count" hidden>0</span>
+          </span>
+          <i class="fa-solid fa-chevron-down filter-panel__toggle-icon"></i>
+        </button>
+        <div class="filter-panel__options" id="filter-kit-type" data-field="kit_type" hidden></div>
+      </div>
+
+      <div class="filter-panel__group">
+        <button class="filter-panel__toggle" type="button" aria-expanded="false" aria-controls="filter-league">
+          <span class="filter-panel__toggle__text">
+            <span class="filter-panel__label">League</span>
+            <span class="filter-panel__label-count" hidden>0</span>
+          </span>
+          <i class="fa-solid fa-chevron-down filter-panel__toggle-icon"></i>
+        </button>
+        <div class="filter-panel__options" id="filter-league" data-field="league" hidden></div>
+      </div>
+
+      <div class="filter-panel__group">
+        <button class="filter-panel__toggle" type="button" aria-expanded="false" aria-controls="filter-team">
+          <span class="filter-panel__toggle__text">
+            <span class="filter-panel__label">Team</span>
+            <span class="filter-panel__label-count" hidden>0</span>
+          </span>
+          <i class="fa-solid fa-chevron-down filter-panel__toggle-icon"></i>
+        </button>
+        <div class="filter-panel__options" id="filter-team" data-field="team" hidden></div>
+      </div>
+
+      <div class="filter-panel__group">
+        <button class="filter-panel__toggle" type="button" aria-expanded="false" aria-controls="filter-season">
+          <span class="filter-panel__toggle__text">
+            <span class="filter-panel__label">Season</span>
+            <span class="filter-panel__label-count" hidden>0</span>
+          </span>
+          <i class="fa-solid fa-chevron-down filter-panel__toggle-icon"></i>
+        </button>
+        <div class="filter-panel__options" id="filter-season" data-field="season" hidden></div>
+      </div>
+    </aside>
+
+    <section class="search-page__results">
+      <div id="products" class="all-products"></div>
+    </section>
+
+    <template id="products-tpl">
+      <article class="product__article">
+        <a class="product">
+          <img class="product__image" loading="lazy">
+          <div class="product__info">
+            <h3 class="product__name"></h3>
+            <div class="product__prices">
+              <span class="product__price-old" hidden></span>
+              <span class="product__price"></span>
+            </div>
+          </div>
+        </a>
+      </article>
+
+    </template>
+
+
+  </main>
+  <div id="footer-container"></div>
+
+  <script src="../js/data/products.js"></script>
+  <script src="../js/data/brands.js"></script>
+  <script src="../js/data/categories.js"></script>
+  <script src="../js/data/teams.js"></script>
+  <script src="../js/data/leagues.js"></script>
+  <script src="../js/data/kit_types.js"></script>
+  <script src="../js/data/seasons.js"></script>
+  <script src="../js/utils/format.js"></script>
+  <script src="../js/utils/path.js"></script>
+  <script src="../js/utils/product.js"></script>
+  <script src="../js/services/storage_service.js"></script>
+  <script src="../js/services/products_service.js"></script>
+
+  <script src="../js/components/header.js"></script>
+  <script src="../js/components/footer.js"></script>
+  <script src="../js/components/btnCart.js" defer></script>
+  <script src="../js/components/btnAccount.js" defer></script>
+  <script src="../js/components/products.js"></script>
+  <script src="../js/components/productFilters.js"></script>
+
+  <script src="../js/init.js"></script>
+  <script src="../js/main.js" defer></script>
+</body>
+
+
+</html>

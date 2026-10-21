@@ -9,9 +9,9 @@ const MIN_QUANTITY = 1;
 const MAX_QUANTITY = 99;
 
 function setupQuantity(root) {
-  const input = root.querySelector(".product-detail__qty-input");
-  const minus = root.querySelector(".product-detail__qty-minus");
-  const plus = root.querySelector(".product-detail__qty-plus");
+  const input = root.querySelector(".p-detail__summary__purchase__quantity__input");
+  const minus = root.querySelector(".p-detail__summary__purchase__quantity__btn-minus");
+  const plus = root.querySelector(".p-detail__summary__purchase__quantity__btn-plus");
   if (!input || !minus || !plus) return;
 
   const clamp = value => Math.min(MAX_QUANTITY, Math.max(MIN_QUANTITY, value));
@@ -61,7 +61,7 @@ function setupQuantity(root) {
 }
 
 function renderProductSizes(product, root) {
-  const list = root.querySelector(".product-detail__size-list");
+  const list = root.querySelector(".p-detail__summary__purchase__size-list");
   if (!list) return;
 
   const sizes = Array.isArray(product.sizes) && product.sizes.length > 0
@@ -70,7 +70,7 @@ function renderProductSizes(product, root) {
 
   list.replaceChildren(...sizes.map(size => {
     const label = document.createElement("label");
-    label.className = "product-detail__size";
+    label.className = "p-detail__summary__purchase__size";
 
     const input = document.createElement("input");
     input.type = "radio";
@@ -97,40 +97,42 @@ function renderProductDetail(product) {
 
   const node = tpl.content.cloneNode(true);
 
-  const root = node.querySelector(".product-detail");
+  const root = node.querySelector(".p-detail");
   root.dataset.id = product.id;
 
-  const image = node.querySelector(".product-detail__image__main");
+  const image = node.querySelector(".p-detail__media__main");
   const images = productImages(product);
   image.src = getAssetPath(images[0]);
   image.alt = product.name;
 
-  const image_other_1 = node.querySelector(".product-detail__image__other-1");
+  const image_other_1 = node.querySelector(".p-detail__media__thumb__1");
   if (images[1]) {
     image_other_1.src = getAssetPath(images[1]);
   } else {
     image_other_1.hidden = true;
   }
 
-  const image_other_2 = node.querySelector(".product-detail__image__other-2");
+  const image_other_2 = node.querySelector(".p-detail__media__thumb__2");
   if (images[2]) {
     image_other_2.src = getAssetPath(images[2]);
   } else {
     image_other_2.hidden = true;
   }
 
-  const brand = node.querySelector(".product-detail__brand");
+  const brand = node.querySelector(".p-detail__summary__info__brand");
   if (product.brand) {
     brand.textContent = product.brand;
   } else {
     brand.hidden = true;
   }
 
-  node.querySelector(".product-detail__name").textContent = product.name;
-  node.querySelector(".product-detail__price").textContent = formatPrice(product.price);
+  node.querySelector(".p-detail__summary__info__name").textContent = product.name;
+  node.querySelector(".p-detail__summary__info__price").textContent = formatPrice(product.price);
+  node.querySelector(".p-detail__summary__info__season").textContent = product.season;
+  node.querySelector(".p-detail__summary__info__kit-type").textContent = product.kit_type;
 
-  const oldPrice = node.querySelector(".product-detail__price-old");
-  const discount = node.querySelector(".product-detail__discount");
+  const oldPrice = node.querySelector(".p-detail__summary__info__price-old");
+  const discount = node.querySelector(".p-detail__summary__info__discount");
   if (product.oldPrice > product.price) {
     oldPrice.textContent = formatPrice(product.oldPrice);
     oldPrice.hidden = false;
@@ -142,7 +144,7 @@ function renderProductDetail(product) {
     }
   }
 
-  const meta = node.querySelector(".product-detail__meta");
+  const meta = node.querySelector(".p-detail__summary__info__meta");
   const metaParts = [CATEGORY_LABELS[product.category], product.team].filter(Boolean);
   if (metaParts.length) {
     meta.textContent = metaParts.join(" - ");
@@ -153,18 +155,21 @@ function renderProductDetail(product) {
   renderProductSizes(product, node);
   setupQuantity(node);
 
-  node.querySelector(".product-detail__add-to-cart").dataset.id = product.id;
+  node.querySelector(".p-detail__summary__purchase__btn-add-to-cart").dataset.id = product.id;
 
   document.title = `${product.name} - SportPlus`;
   container.replaceChildren(node);
 }
 
+
 function renderProductNotFound(container) {
   container.innerHTML = `
-    <div class="product-detail__empty">
+    <div class="p-detail__empty">
       <p>Không tìm thấy sản phẩm.</p>
-      <a class="product-detail__back" href="${getAssetPath("index.html")}">← Về trang chủ</a>
+      <a class="p-detail__back" href="${getAssetPath("index.html")}">← Về trang chủ</a>
     </div>
   `;
   document.title = "Không tìm thấy sản phẩm - SportPlus";
 }
+
+

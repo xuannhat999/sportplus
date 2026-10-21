@@ -2,18 +2,28 @@ App.initBtnCart();
 App.initBtnAccount();
 
 function initHomePage() {
-  renderProductList(ProductService.getAll());
+  renderProducts(ProductService.getAll());
 }
 
 function initProductDetailPage() {
   const id = new URLSearchParams(location.search).get("id");
-  renderProductDetail(ProductService.getById(id));
+  const product = ProductService.getById(id);
+  renderProductDetail(product);
+
+  const related_products = ProductService.getRelatedProducts(product);
+  renderProducts(related_products);
+
+}
+
+function initProductsSearchPage() {
+  initProductFilters(ProductService.getAll());
 }
 
 // TODO: bổ sung initCartPage khi trang giỏ hàng đã có markup
 const PAGES = {
   home: initHomePage,
-  product_detail: initProductDetailPage
+  product_detail: initProductDetailPage,
+  products_search: initProductsSearchPage,
 };
 
 document.addEventListener("DOMContentLoaded", () => {

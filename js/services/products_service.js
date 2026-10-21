@@ -1,11 +1,43 @@
 const PRODUCT_KEY = "products";
 
+const RELATED_PRODUCTS_LIMIT = 10;
+
 const ProductService = {
   getAll() {
     return Storage.get(PRODUCT_KEY, []);
   },
   getById(id) {
     return this.getAll().find(p => p.id === Number(id));
+  },
+  getRelatedProducts(product, limit = RELATED_PRODUCTS_LIMIT) {
+    if (!product) return [];
+
+    const list = this.getAll();
+    const currentId = Number(product.id);
+    const related = [];
+    const usedIds = new Set();
+
+    const criteria = [
+      p => p.team === product.team,
+      p => p.league === product.league,
+      p => p.season === product.season
+    ];
+
+    for (const isMatch of criteria) {
+      if (related.length >= limit) break;
+
+      for (const item of list) {
+        if (related.length >= limit) break;
+        if (Number(item.id) === currentId) continue;
+        if (usedIds.has(item.id)) continue;
+        if (!isMatch(item)) continue;
+
+        usedIds.add(item.id);
+        related.push(item);
+      }
+    }
+
+    return related;
   },
   add(product) {
     const list = this.getAll();

@@ -11,12 +11,12 @@
   <nav class="left">
     <a href="${root}index.html" class="header__name">SportPlus</a>
   </nav>
-  <label class="search-bar">
-    <i class="fa-solid fa-magnifying-glass icon-search"></i>
-    <form>
-      <input class="search-bar__input" type="search" placeholder="Tìm sản phẩm" aria-label="Tìm kiếm sản phẩm">
+  <div class="search-bar">
+    <i class="fa-solid fa-magnifying-glass search-bar__icon"></i>
+    <form class="search-bar__form" action="${root}pages/products_search.html" method="get">
+      <input class="search-bar__input" name="q" type="search" placeholder="Tìm sản phẩm" aria-label="Tìm kiếm sản phẩm">
     </form>
-  </label>
+  </div>
   <button class="btn-cart">
     <i class="fa-solid fa-cart-shopping btn-cart__icon"></i>
   </button>

@@ -1,0 +1,4 @@
+const CATEGORIES = [
+  "club",
+  "international"
+];

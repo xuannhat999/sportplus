@@ -12,44 +12,73 @@
 <body data-root="../" data-page="product_detail">
   <div id="header-container"></div>
   <main>
-    <div id="product-detail"></div>
-    <template id="product-detail-tpl">
-      <article class="product-detail">
-        <div class="product-detail__images">
-          <img class="product-detail__image__main" alt="">
-          <div class="product-detail__images__other">
-            <img class="product-detail__image__other-1" alt="">
-            <img class="product-detail__image__other-2" alt="">
-          </div>
-        </div>
-        <div class="product-detail__info">
-          <p class="product-detail__brand"></p>
-          <h1 class="product-detail__name"></h1>
-          <div class="product-detail__prices">
-            <span class="product-detail__price-old" hidden></span>
-            <span class="product-detail__price"></span>
-            <span class="product-detail__discount" hidden></span>
-          </div>
-          <p class="product-detail__meta"></p>
-          <div class="product-detail__sizes" role="group" aria-label="Chọn size">
-            <p class="product-detail__sizes-label">Size</p>
-            <div class="product-detail__size-list"></div>
-          </div>
-          <div class="product-detail__quantity">
-            <p class="product-detail__quantity-label">Số lượng</p>
-            <div class="product-detail__qty">
-              <button class="product-detail__qty-btn product-detail__qty-minus" type="button" aria-label="Giảm số lượng">−</button>
-              <input class="product-detail__qty-input" type="number" value="1" min="1" max="99" step="1" inputmode="numeric" aria-label="Số lượng">
-              <button class="product-detail__qty-btn product-detail__qty-plus" type="button" aria-label="Tăng số lượng">+</button>
+    <section class="product-detail" id="product-detail">
+      <template id="product-detail-tpl">
+        <article class="p-detail">
+          <div class="p-detail__media">
+            <img class="p-detail__media__main" alt="">
+            <div class="p-detail__media__thumbs">
+              <img class="p-detail__media__thumb__1" alt="">
+              <img class="p-detail__media__thumb__2" alt="">
             </div>
           </div>
-          <button class="product-detail__add-to-cart" type="button">Thêm vào giỏ</button>
-        </div>
-      </article>
-    </template>
+          <div class="p-detail__summary">
+            <div class="p-detail__summary__info">
+              <h1 class="p-detail__summary__info__name">
+              </h1>
+              <p class="p-detail__summary__info__brand"></p>
+              <p class="p-detail__summary__info__meta"></p>
+              <p class="p-detail__summary__info__season"></p>
+              <p class="p-detail__summary__info__kit-type"></p>
+              <div class="p-detail__summary__info__prices">
+                <span class="p-detail__summary__info__price-old" hidden></span>
+                <span class="p-detail__summary__info__price"></span>
+                <span class="p-detail__summary__info__discount" hidden></span>
+              </div>
+            </div>
+            <div class="p-detail__summary__purchase">
+              <div class="p-detail__summary__purchase__sizes" role="group" aria-label="Chọn size">
+                <p class="p-detail__summary__purchase__sizes-label">Size</p>
+                <div class="p-detail__summary__purchase__size-list"></div>
+              </div>
+              <div class="p-detail__summary__purchase__quantity">
+                <p class="p-detail__summary__purchase__quantity-label">Số lượng</p>
+                <div class="p-detail__summary__purchase__quantity__control">
+                  <button class="p-detail__summary__purchase__quantity__btn-minus" type="button"
+                    aria-label="Giảm số lượng">−</button>
+                  <input class="p-detail__summary__purchase__quantity__input" type="number" value="1" min="1" max="99"
+                    step="1" inputmode="numeric" aria-label="Số lượng">
+                  <button class="p-detail__summary__purchase__quantity__btn-plus" type="button"
+                    aria-label="Tăng số lượng">+</button>
+                </div>
+              </div>
+              <button class="p-detail__summary__purchase__btn-add-to-cart" type="button">Thêm vào giỏ</button>
+            </div>
+          </div>
+        </article>
+      </template>
+    </section>
+    <section class="r-products">
+      <p class="r-products__title">Sản phẩm liên quan</p>
+      <div id="products" class="r-products__products">
+        <template id="products-tpl">
+          <article class="products-article">
+            <a class="product">
+              <img class="product__image" loading="lazy">
+              <div class="product__info">
+                <h3 class="product__name"></h3>
+                <div class="product__prices">
+                  <span class="product__price-old" hidden></span>
+                  <span class="product__price"></span>
+                </div>
+              </div>
+            </a>
+          </article>
+        </template>
+      </div>
+    </section>
   </main>
   <div id="footer-container"></div>
-
   <script src="../js/data/products.js"></script>
   <script src="../js/utils/format.js"></script>
   <script src="../js/utils/path.js"></script>
@@ -62,6 +91,7 @@
   <script src="../js/components/footer.js"></script>
   <script src="../js/components/btnCart.js" defer></script>
   <script src="../js/components/btnAccount.js" defer></script>
+  <script src="../js/components/products.js"></script>
   <script src="../js/components/productDetail.js"></script>
   <script src="../js/init.js"></script>
   <script src="../js/main.js" defer></script>

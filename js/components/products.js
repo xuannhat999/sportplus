@@ -1,6 +1,6 @@
-function renderProductList(products) {
-  const container = document.getElementById("products-list");
-  const tpl = document.getElementById("product-tpl");
+function renderProducts(products) {
+  const container = document.getElementById("products");
+  const tpl = document.getElementById("products-tpl");
   if (!container || !tpl) return;
 
   container.innerHTML = "";

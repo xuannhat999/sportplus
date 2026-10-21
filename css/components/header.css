@@ -42,6 +42,11 @@
   gap: var(--space-sm);
 }
 
+.search-bar__form {
+  display: flex;
+  flex: 1;
+}
+
 .search-bar__icon {
   color: var(--color-on-surface);
 }
