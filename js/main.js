@@ -31,6 +31,14 @@ function initAuthPage() {
   App.initAuth();
 }
 
+function initOrdersPage() {
+  App.initOrders();
+}
+
+function initOrderCompletePage() {
+  App.initOrderComplete();
+}
+
 const PAGES = {
   home: initHomePage,
   product_detail: initProductDetailPage,
@@ -38,6 +46,8 @@ const PAGES = {
   account: initAccountPage,
   cart: initCartPage,
   auth: initAuthPage,
+  orders: initOrdersPage,
+  order_complete: initOrderCompletePage,
 };
 
 document.addEventListener("DOMContentLoaded", () => {

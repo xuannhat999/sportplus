@@ -109,3 +109,73 @@
 .btn-cart__count[hidden] {
   display: none;
 }
+
+/* MENU TÀI KHOẢN */
+.account-menu {
+  position: relative;
+}
+
+.account-menu__dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  z-index: 100;
+  min-width: 240px;
+  padding: var(--space-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+
+  background-color: var(--color-surface);
+  color: var(--color-on-surface);
+  border: 1px solid color-mix(in srgb, var(--color-on-surface) 20%, transparent);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-md);
+}
+
+.account-menu__dropdown[hidden] {
+  display: none;
+}
+
+.account-menu__head {
+  padding: var(--space-sm) var(--space-md) var(--space-md);
+  margin-bottom: var(--space-sm);
+  border-bottom: 1px solid color-mix(in srgb, var(--color-on-surface) 15%, transparent);
+}
+
+.account-menu__name {
+  margin: 0;
+  font-weight: var(--font-weight-bold);
+}
+
+.account-menu__email {
+  margin: var(--space-sm) 0 0;
+  font-size: var(--font-size-sm);
+  opacity: .7;
+  word-break: break-all;
+}
+
+.account-menu__item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  width: 100%;
+  padding: var(--space-sm) var(--space-md);
+  font-size: var(--font-size-md);
+  font-family: inherit;
+  color: inherit;
+  background-color: transparent;
+  border: none;
+  border-radius: var(--radius);
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.account-menu__item:hover {
+  background-color: color-mix(in srgb, var(--color-on-surface) 10%, transparent);
+}
+
+.account-menu__item--logout {
+  color: var(--color-error);
+}

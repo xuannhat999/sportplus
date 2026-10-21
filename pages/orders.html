@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="light">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lịch sử mua hàng - SportPlus</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link href="../css/main.css" rel="stylesheet">
+</head>
+
+<body data-root="../" data-page="orders">
+  <div id="header-container"></div>
+  <main>
+    <section class="orders-page" id="orders-page">
+      <div class="orders-page__head">
+        <h1 class="orders-page__title">Lịch sử mua hàng</h1>
+        <p class="orders-page__count" data-orders-count></p>
+      </div>
+
+      <div id="orders-list" class="orders-list"></div>
+
+      <!-- 1 ĐƠN HÀNG -->
+      <template id="order-tpl">
+        <article class="order">
+          <header class="order__head">
+            <h2 class="order__title">Đơn hàng</h2>
+            <span class="order__status" data-field="status"></span>
+          </header>
+
+          <dl class="order__info">
+            <div class="order__row">
+              <dt class="order__label">Ngày đặt</dt>
+              <dd class="order__value" data-field="createdAt"></dd>
+            </div>
+            <div class="order__row">
+              <dt class="order__label">Tổng tiền</dt>
+              <dd class="order__value order__value--total" data-field="total"></dd>
+            </div>
+            <div class="order__row">
+              <dt class="order__label">Địa chỉ</dt>
+              <dd class="order__value" data-field="address"></dd>
+            </div>
+            <div class="order__row">
+              <dt class="order__label">Phương thức thanh toán</dt>
+              <dd class="order__value" data-field="payMethod"></dd>
+            </div>
+          </dl>
+
+          <div class="order__items">
+            <ul class="order__items-list" data-order-items></ul>
+          </div>
+        </article>
+      </template>
+
+      <!-- 1 SẢN PHẨM TRONG ĐƠN -->
+      <template id="order-item-tpl">
+        <li class="order-item">
+          <img class="order-item__image" data-field="image" loading="lazy" alt="">
+          <div class="order-item__info">
+            <p class="order-item__name" data-field="name"></p>
+            <p class="order-item__meta" data-field="meta"></p>
+          </div>
+          <span class="order-item__total" data-field="lineTotal"></span>
+        </li>
+      </template>
+
+      <!-- CHƯA CÓ ĐƠN HÀNG -->
+      <template id="orders-empty-tpl">
+        <div class="orders__empty">
+          <i class="fa-solid fa-receipt orders__empty-icon"></i>
+          <p class="orders__empty-text" data-empty-text></p>
+          <button class="cart__btn cart__btn--primary" type="button" data-empty-login>Đăng nhập</button>
+          <a class="cart__btn cart__btn--primary" data-empty-link href="#">Tiếp tục mua sắm</a>
+        </div>
+      </template>
+    </section>
+  </main>
+  <div id="footer-container"></div>
+
+  <script src="../js/data/products.js"></script>
+  <script src="../js/data/users.js"></script>
+  <script src="../js/utils/format.js"></script>
+  <script src="../js/utils/path.js"></script>
+
+  <script src="../js/services/storage_service.js"></script>
+  <script src="../js/services/products_service.js"></script>
+  <script src="../js/services/user_service.js"></script>
+  <script src="../js/services/cart_service.js"></script>
+
+  <script src="../js/data/models/cart_item_model.js"></script>
+  <script src="../js/data/models/order_detail_model.js"></script>
+  <script src="../js/data/models/order_model.js"></script>
+  <script src="../js/services/order_service.js"></script>
+
+  <script src="../js/components/header.js"></script>
+  <script src="../js/components/footer.js"></script>
+  <script src="../js/components/btnCart.js" defer></script>
+  <script src="../js/components/btnAccount.js" defer></script>
+  <script src="../js/components/orderCard.js"></script>
+  <script src="../js/components/orders.js"></script>
+
+  <script src="../js/init.js"></script>
+  <script src="../js/main.js" defer></script>
+</body>
+
+</html>

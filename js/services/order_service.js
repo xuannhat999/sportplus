@@ -1,5 +1,10 @@
 const ORDER_KEY = "order";
 
+const ORDER_PAY_METHOD_LABELS = {
+  online: "Thanh toán trực tuyến",
+  cash: "Thanh toán khi nhận hàng"
+};
+
 function notifyOrderChange() {
   document.dispatchEvent(new CustomEvent("order:change"));
 }
@@ -14,41 +19,59 @@ function orderToJSON(order) {
     createdAt: order.createdAt,
     history: order.history,
     address: order.address,
-    payMethod: order.payMethod
+    payMethod: order.payMethod,
+    userId: order.userId
   };
 }
 
 const OrderService = {
-  getAll() {
+  // Các bản ghi đơn hàng đã lưu
+  getRecords() {
     const list = Storage.get(ORDER_KEY, []);
-    if (!Array.isArray(list)) return [];
-
-    return list.map(order => OrderModel.fromJSON(order)).filter(Boolean);
+    return Array.isArray(list) ? list : [];
   },
 
-  save(list) {
-    Storage.set(ORDER_KEY, list.map(orderToJSON));
+  // userId = undefined -> lấy tất cả, có userId -> chỉ lấy đơn của user đó
+  getAll(userId) {
+    return this.getRecords()
+      .map(record => OrderModel.fromJSON(record))
+      .filter(Boolean)
+      .filter(order => userId === undefined || Number(order.userId) === Number(userId));
+  },
+
+  save(records) {
+    Storage.set(ORDER_KEY, records);
     notifyOrderChange();
 
-    return list;
+    return records;
   },
 
-  getById(id) {
-    return this.getAll().find(order => Number(order.id) === Number(id)) || null;
+  getById(id, userId) {
+    return this.getAll(userId).find(order => Number(order.id) === Number(id)) || null;
   },
 
   // Tạo đơn hàng từ các dòng giỏ hàng đã chọn
-  create({ items, address, payMethod }) {
-    const list = this.getAll();
-    const id = list.length ? Math.max(...list.map(order => Number(order.id) || 0)) + 1 : 1;
+  create({ userId, items, address, payMethod }) {
+    const records = this.getRecords();
+    const id = records.length ? Math.max(...records.map(record => Number(record.id) || 0)) + 1 : 1;
 
     const orderItems = (items || []).map(item => new OrderDetail({ ...item, orderId: id }));
     const total = orderItems.reduce((sum, item) => sum + item.getLineTotal(), 0);
 
-    const order = new OrderModel(id, orderItems, total, undefined, undefined, undefined, address, payMethod);
+    const order = new OrderModel(
+      id,
+      orderItems,
+      total,
+      undefined,
+      undefined,
+      undefined,
+      address,
+      payMethod,
+      userId
+    );
 
-    list.push(order);
-    this.save(list);
+    records.push(orderToJSON(order));
+    this.save(records);
 
     return order;
   },

@@ -12,6 +12,8 @@
 @import url("pages/auth.css");
 @import url("pages/account.css");
 @import url("pages/cart.css");
+@import url("pages/orders.css");
+@import url("pages/order-complete.css");
 @import url("pages/product-detail.css");
 @import url("pages/products-search.css");
 

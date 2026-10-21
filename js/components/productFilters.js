@@ -16,6 +16,11 @@ const FILTER_SORTERS = {
 
 const FILTER_DEFAULT_SORT = "az";
 
+// Lưới kết quả luôn 5 cột, mỗi trang tối đa 6 dòng
+const FILTER_PAGE_COLUMNS = 5;
+const FILTER_PAGE_ROWS = 6;
+const FILTER_PAGE_SIZE = FILTER_PAGE_COLUMNS * FILTER_PAGE_ROWS;
+
 function initProductFilters(products) {
   const panel = document.getElementById("filter-panel");
   if (!panel) return;
@@ -26,9 +31,13 @@ function initProductFilters(products) {
   const sortParam = params.get("sort");
   const validSort = sortParam && Object.prototype.hasOwnProperty.call(FILTER_SORTERS, sortParam);
 
+  const pageParam = Number.parseInt(params.get("page"), 10);
+  const validPage = !Number.isNaN(pageParam) && pageParam > 0 ? pageParam : 1;
+
   const state = {
     keyword: (params.get("q") || "").trim(),
     sort: validSort ? sortParam : FILTER_DEFAULT_SORT,
+    page: validPage,
     selected: {}
   };
 
@@ -46,6 +55,10 @@ function initProductFilters(products) {
     }
 
     next.set("sort", state.sort);
+
+    if (state.page > 1) {
+      next.set("page", state.page);
+    }
 
     FILTER_FIELDS.forEach(item => {
       state.selected[item.field].forEach(value => next.append(item.field, value));
@@ -121,6 +134,7 @@ function initProductFilters(products) {
           state.selected[item.field].delete(value);
         }
         updateFieldBadge(item);
+        state.page = 1;
         applyFilters();
       });
 
@@ -132,6 +146,28 @@ function initProductFilters(products) {
     }));
 
     updateFieldBadge(item);
+  }
+
+  function renderPagination(total) {
+    const el = document.getElementById("pagination");
+
+    App.renderPagination(el, {
+      total,
+      page: state.page,
+      pageSize: FILTER_PAGE_SIZE,
+      onChange: page => {
+        state.page = page;
+        applyFilters();
+        scrollToResults();
+      }
+    });
+  }
+
+  function scrollToResults() {
+    const results = document.querySelector(".search-page__results");
+    if (!results || typeof results.scrollIntoView !== "function") return;
+
+    results.scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
   function applyFilters() {
@@ -150,7 +186,15 @@ function initProductFilters(products) {
     const sorter = FILTER_SORTERS[state.sort] || FILTER_SORTERS.az;
     result = [...result].sort(sorter);
 
-    renderProducts(result);
+    // giới hạn trang hợp lệ
+    const totalPages = Math.max(1, Math.ceil(result.length / FILTER_PAGE_SIZE));
+    if (state.page > totalPages) state.page = totalPages;
+    if (state.page < 1) state.page = 1;
+
+    const start = (state.page - 1) * FILTER_PAGE_SIZE;
+    renderProducts(result.slice(start, start + FILTER_PAGE_SIZE));
+
+    renderPagination(result.length);
     syncUrl();
   }
 
@@ -183,6 +227,7 @@ function initProductFilters(products) {
     searchInput.value = state.keyword;
     searchInput.addEventListener("input", () => {
       state.keyword = searchInput.value.trim();
+      state.page = 1;
       applyFilters();
     });
   }
@@ -192,6 +237,7 @@ function initProductFilters(products) {
     sortSelect.value = state.sort;
     sortSelect.addEventListener("change", () => {
       state.sort = sortSelect.value;
+      state.page = 1;
       applyFilters();
     });
   }

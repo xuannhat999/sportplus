@@ -1,0 +1,200 @@
+/* TRANG LỊCH SỬ MUA HÀNG */
+.orders-page {
+  width: 100%;
+  max-width: 880px;
+  margin: 0 auto;
+  padding: var(--space-lg) var(--space-md);
+  box-sizing: border-box;
+  color: var(--color-text);
+}
+
+.orders-page__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-md);
+  flex-wrap: wrap;
+  margin-bottom: var(--space-md);
+}
+
+.orders-page__title {
+  margin: 0;
+  font-size: var(--font-size-xl);
+}
+
+.orders-page__count {
+  margin: 0;
+  font-size: var(--font-size-sm);
+  opacity: .7;
+}
+
+.orders-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+/* ĐƠN HÀNG */
+.order {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  padding: var(--space-md);
+  border: 1px solid color-mix(in srgb, var(--color-text) 20%, transparent);
+  border-radius: var(--radius);
+}
+
+.order__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+}
+
+.order__title {
+  margin: 0;
+  font-size: var(--font-size-lg);
+}
+
+.order__status {
+  padding: var(--space-sm) var(--space-md);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  border-radius: 999px;
+  border: 1px solid currentColor;
+  white-space: nowrap;
+}
+
+.order__status--pending {
+  color: var(--color-accent);
+}
+
+.order__status--confirmed {
+  color: var(--color-text);
+}
+
+.order__status--delivered {
+  color: var(--color-success);
+}
+
+.order__status--cancelled {
+  color: var(--color-error);
+}
+
+/* THÔNG TIN ĐƠN */
+.order__info {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.order__row {
+  display: grid;
+  grid-template-columns: 200px minmax(0, 1fr);
+  gap: var(--space-md);
+  align-items: baseline;
+  padding: var(--space-sm) 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--color-text) 10%, transparent);
+}
+
+.order__row:last-child {
+  border-bottom: none;
+}
+
+.order__label {
+  font-size: var(--font-size-sm);
+  opacity: .7;
+}
+
+.order__value {
+  margin: 0;
+  word-break: break-word;
+}
+
+.order__value--total {
+  font-weight: var(--font-weight-bold);
+}
+
+/* DANH SÁCH SẢN PHẨM TRONG ĐƠN (cuộn bên trong) */
+.order__items {
+  max-height: 260px;
+  overflow-y: auto;
+  border-top: 1px solid color-mix(in srgb, var(--color-text) 10%, transparent);
+  padding-top: var(--space-sm);
+}
+
+.order__items-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.order-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-sm) 0;
+}
+
+.order-item__image {
+  width: 56px;
+  height: 56px;
+  flex: 0 0 auto;
+  object-fit: cover;
+  border-radius: var(--radius);
+  background-color: color-mix(in srgb, var(--color-text) 6%, transparent);
+}
+
+.order-item__info {
+  min-width: 0;
+  flex: 1;
+}
+
+.order-item__name {
+  margin: 0;
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-bold);
+  line-height: 1.35;
+}
+
+.order-item__meta {
+  margin: var(--space-sm) 0 0;
+  font-size: var(--font-size-sm);
+  opacity: .7;
+}
+
+.order-item__total {
+  font-weight: var(--font-weight-bold);
+  white-space: nowrap;
+}
+
+/* CHƯA CÓ ĐƠN */
+.orders__empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-lg) var(--space-md);
+  text-align: center;
+  color: var(--color-text);
+}
+
+.orders__empty-icon {
+  font-size: 48px;
+  opacity: .35;
+}
+
+.orders__empty-text {
+  margin: 0;
+  font-size: var(--font-size-md);
+}
+
+@media (max-width: 560px) {
+  .order__row {
+    grid-template-columns: 1fr;
+    gap: var(--space-sm);
+  }
+}

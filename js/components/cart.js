@@ -260,15 +260,14 @@ window.App = window.App || {};
       const order = createOrder(chosen, {
         address: addressInput ? addressInput.value.trim() : user.address,
         payMethod: payMethodSelect ? payMethodSelect.value : user.pay_method
-      });
+      }, user);
 
       // bỏ các sản phẩm đã đặt khỏi giỏ
       CartService.removeMany(chosen.map(item => item.id));
       chosen.forEach(item => selectedIds.delete(item.id));
 
-      showCartMessage(
-        `Đã đặt ${OrderService.getTotalQuantity(order)} sản phẩm, tổng ${formatPrice(order.total)}.`
-      );
+      // sang trang hoàn tất đơn hàng
+      location.href = getAssetPath(`pages/order_complete.html?id=${order.id}`);
     });
 
     container.replaceChildren(node);
@@ -277,7 +276,7 @@ window.App = window.App || {};
   }
 
   // Tạo đơn hàng từ các dòng giỏ hàng đã chọn
-  function createOrder(items, info) {
+  function createOrder(items, info, user) {
     const details = items.map(item => {
       const product = ProductService.getById(item.productId);
       if (!product) return null;
@@ -293,6 +292,7 @@ window.App = window.App || {};
     }).filter(Boolean);
 
     return OrderService.create({
+      userId: user.id,
       items: details,
       address: info.address,
       payMethod: info.payMethod

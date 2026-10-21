@@ -10,7 +10,6 @@ class OrderDetail {
     this.price = Number(price) || 0;
   }
 
-  // Dựng lại chi tiết đơn hàng từ dữ liệu đã lưu trong localStorage
   static fromJSON(data) {
     if (!data) return null;
     return new OrderDetail(data);

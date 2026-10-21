@@ -20,9 +20,34 @@
   <button class="btn-cart">
     <i class="fa-solid fa-cart-shopping btn-cart__icon"></i>
   </button>
-  <button class="btn-account">
-    <i class="fa-solid fa-user btn-account__icon"></i>
-  </button>
+
+  <div class="account-menu">
+    <button class="btn-account" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="account-menu">
+      <i class="fa-solid fa-user btn-account__icon"></i>
+    </button>
+
+    <div class="account-menu__dropdown" id="account-menu" hidden>
+      <div class="account-menu__head">
+        <p class="account-menu__name" data-account-name></p>
+        <p class="account-menu__email" data-account-email></p>
+      </div>
+
+      <a class="account-menu__item" href="${root}pages/account.html">
+        <i class="fa-solid fa-user"></i>
+        <span>Thông tin tài khoản</span>
+      </a>
+
+      <a class="account-menu__item" href="${root}pages/orders.html">
+        <i class="fa-solid fa-receipt"></i>
+        <span>Lịch sử mua hàng</span>
+      </a>
+
+      <button class="account-menu__item account-menu__item--logout" type="button" data-account-logout>
+        <i class="fa-solid fa-arrow-right-from-bracket"></i>
+        <span>Đăng xuất</span>
+      </button>
+    </div>
+  </div>
   </header>
 `;
   headerContainer.innerHTML = headerHTML;

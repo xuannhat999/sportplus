@@ -11,8 +11,6 @@ window.App = window.App || {};
     el.classList.toggle(FIELD_ERROR_CLASS, isError);
   }
 
-  // Ô địa chỉ: nhập/sửa địa chỉ của user, lưu lại khi thay đổi.
-  // Dùng chung cho trang tài khoản và trang giỏ hàng.
   App.setupAddressField = function (root, user) {
     const input = root.querySelector('[data-field="address"]');
     const hintEl = root.querySelector('[data-hint="address"]');

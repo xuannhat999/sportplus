@@ -1,0 +1,67 @@
+/* TRANG ĐẶT HÀNG THÀNH CÔNG */
+.order-complete {
+  width: 100%;
+  max-width: 880px;
+  margin: 0 auto;
+  padding: var(--space-lg) var(--space-md);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  color: var(--color-text);
+}
+
+.order-complete__head {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm);
+  text-align: center;
+}
+
+.order-complete__icon {
+  font-size: 52px;
+  color: var(--color-success);
+}
+
+.order-complete__title {
+  margin: 0;
+  font-size: var(--font-size-xl);
+}
+
+.order-complete__subtitle {
+  margin: 0;
+  font-size: var(--font-size-sm);
+  opacity: .7;
+}
+
+.order-complete__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.order-complete__actions {
+  display: flex;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+}
+
+.order-complete__actions .cart__btn {
+  flex: 1;
+  min-width: 200px;
+}
+
+.order-complete__empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-lg) var(--space-md);
+  text-align: center;
+}
+
+.order-complete__empty-text {
+  margin: 0;
+  font-size: var(--font-size-md);
+}

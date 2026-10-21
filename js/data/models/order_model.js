@@ -20,7 +20,7 @@ const NEXT_STATUS = {
 };
 
 class OrderModel {
-  constructor(id, items, total, status = ORDER_STATUS.PENDING, createdAt = Date.now(), history = [], address, payMethod) {
+  constructor(id, items, total, status = ORDER_STATUS.PENDING, createdAt = Date.now(), history = [], address, payMethod, userId) {
     this.id = id;
     this.items = items;
     this.total = total;
@@ -29,6 +29,7 @@ class OrderModel {
     this.history = history;
     this.address = address;
     this.payMethod = payMethod;
+    this.userId = userId;
 
   }
 
@@ -53,7 +54,8 @@ class OrderModel {
       json.createdAt,
       json.history,
       json.address,
-      json.payMethod
+      json.payMethod,
+      json.userId
     );
   }
 }

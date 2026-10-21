@@ -100,7 +100,13 @@
 
     <section class="search-page__results">
       <p class="products-empty" data-products-empty hidden>Chưa có sản phẩm nào.</p>
-    <div id="products" class="all-products"></div>
+      <div id="products" class="all-products"></div>
+
+      <nav class="pagination" id="pagination" aria-label="Phân trang kết quả" hidden>
+        <button class="pagination__btn" type="button" data-page-prev aria-label="Trang trước">‹</button>
+        <ul class="pagination__list" data-page-list></ul>
+        <button class="pagination__btn" type="button" data-page-next aria-label="Trang sau">›</button>
+      </nav>
     </section>
 
     <template id="products-tpl">
@@ -145,6 +151,7 @@
   <script src="../js/components/btnCart.js" defer></script>
   <script src="../js/components/btnAccount.js" defer></script>
   <script src="../js/components/products.js"></script>
+  <script src="../js/components/pagination.js"></script>
   <script src="../js/components/productFilters.js"></script>
 
   <script src="../js/init.js"></script>
