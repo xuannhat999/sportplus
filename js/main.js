@@ -2,7 +2,15 @@ App.initBtnCart();
 App.initBtnAccount();
 
 function initHomePage() {
-  renderProducts(ProductService.getAll());
+  const all = ProductService.getAll();
+
+  document.querySelectorAll("[data-rail]").forEach(section => {
+    const track = section.querySelector(".all-products--rail");
+    if (!track) return;
+
+    const category = section.dataset.rail;
+    renderProducts(all.filter(p => p.category === category), { container: track });
+  });
 }
 
 function initProductDetailPage() {

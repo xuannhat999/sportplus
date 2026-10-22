@@ -22,9 +22,8 @@
     <div class="footer__col">
       <h4 class="footer__title">Tài khoản</h4>
       <ul class="footer__list">
-        <li><a class="footer__link" href="${root}pages/auth.html">Đăng nhập</a></li>
+        <li><a class="footer__link" href="${root}pages/account.html">Thông tin</a></li>
         <li><a class="footer__link" href="${root}pages/orders.html">Lịch sử mua hàng</a></li>
-        <li><a class="footer__link" href="${root}pages/account.html">Tài khoản</a></li>
       </ul>
     </div>
     <div class="footer__col">

@@ -11,8 +11,26 @@
 <body data-root="./" data-page="home">
   <div id="header-container"></div>
   <main>
-    <p class="products-empty" data-products-empty hidden>Chưa có sản phẩm nào.</p>
-    <div id="products" class="all-products"></div>
+    <img src="assets/banners/banner.webp">
+
+    <section class="product-rail" data-rail="international">
+      <div class="product-rail__head">
+        <h2 class="product-rail__title">Đội tuyển quốc gia</h2>
+        <a class="product-rail__more" href="pages/products_search.html?category=international">Xem tất cả</a>
+      </div>
+      <p class="products-empty" data-products-empty hidden>Chưa có sản phẩm nào.</p>
+      <div class="all-products--rail"></div>
+    </section>
+
+    <section class="product-rail" data-rail="club">
+      <div class="product-rail__head">
+        <h2 class="product-rail__title">Câu lạc bộ</h2>
+        <a class="product-rail__more" href="pages/products_search.html?category=club">Xem tất cả</a>
+      </div>
+      <p class="products-empty" data-products-empty hidden>Chưa có sản phẩm nào.</p>
+      <div class="all-products--rail"></div>
+    </section>
+
     <template id="products-tpl">
       <article class="product__article">
         <a class="product">
