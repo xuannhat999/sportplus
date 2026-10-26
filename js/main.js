@@ -16,10 +16,12 @@ function initHomePage() {
 function initProductDetailPage() {
   const id = new URLSearchParams(location.search).get("id");
   const product = ProductService.getById(id);
+  if (product && product.is_hidden && !isAdmin()) product = undefined;
   renderProductDetail(product);
 
   const related_products = ProductService.getRelatedProducts(product);
   renderProducts(related_products);
+  
 
 }
 

@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="light">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Quản trị</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link href="../css/main.css" rel="stylesheet">
+</head>
+
+<body data-root="../" data-page="admin">
+  <div id="header-container"></div>
+
+  <main class="admin">
+    <div class="admin__tabs">
+      <button type="button" class="admin__tab is-active" data-tab="products">Quản lý sản phẩm</button>
+      <button type="button" class="admin__tab" data-tab="users">Quản lý người dùng</button>
+      <button type="button" class="admin__tab" data-tab="orders">Quản lý đơn hàng</button>
+      <button type="button" class="admin__tab" data-tab="stats">Thống kê</button>
+    </div>
+
+    <section class="admin__panel" data-panel="products">
+      <div class="admin__head">
+        <h1>Quản lý sản phẩm</h1>
+        <button type="button" id="addProductBtn" class="admin__add">+ Thêm sản phẩm</button>
+      </div>
+      <p class="products-empty" id="adminEmpty" hidden>Chưa có sản phẩm nào.</p>
+      <div class="admin__table-wrap">
+        <table class="admin__table">
+          <thead>
+            <tr>
+              <th>ID</th><th>Ảnh</th><th>Tên sản phẩm</th><th>Giá</th>
+              <th>Giá cũ</th><th>Đội</th><th>Giải</th><th>Mùa</th><th>Thao tác</th>
+            </tr>
+          </thead>
+          <tbody id="adminProducts"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="admin__panel" data-panel="users" hidden>
+      <div class="admin__head"><h1>Quản lý người dùng</h1></div>
+      <p class="products-empty" id="adminUsersEmpty" hidden>Chưa có người dùng nào.</p>
+      <div class="admin__table-wrap">
+        <table class="admin__table">
+          <thead>
+            <tr>
+              <th>ID</th><th>Tên</th><th>Email</th><th>Địa chỉ</th>
+              <th>Vai trò</th><th>Trạng thái</th><th>Thao tác</th>
+            </tr>
+          </thead>
+          <tbody id="adminUsers"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="admin__panel" data-panel="orders" hidden>
+  <div class="admin__head"><h1>Quản lý đơn hàng</h1></div>
+  <div class="admin__filters">
+  <label class="admin__filter">
+    <span>Trạng thái</span>
+    <select id="ofStatus" class="admin__input"></select>
+  </label>
+  <label class="admin__filter">
+    <span>Từ ngày</span>
+    <input type="date" id="ofFrom" class="admin__input">
+  </label>
+  <label class="admin__filter">
+    <span>Đến ngày</span>
+    <input type="date" id="ofTo" class="admin__input">
+  </label>
+  <label class="admin__filter">
+    <span>Thành phố</span>
+    <select id="ofCity" class="admin__input"></select>
+  </label>
+  <label class="admin__filter">
+    <span>Quận / Huyện</span>
+    <select id="ofDistrict" class="admin__input"></select>
+  </label>
+  <button type="button" id="ofReset" class="admin__cancel">Xoá lọc</button>
+  <span id="ofCount" class="admin__count"></span>
+</div>
+  <p class="products-empty" id="adminOrdersEmpty" hidden>Chưa có đơn hàng nào.</p>
+  <div class="admin__table-wrap">
+    <table class="admin__table">
+      <thead>
+        <tr>
+          <th>Mã đơn</th><th>Ngày đặt</th><th>Khách hàng</th><th>Sản phẩm</th>
+          <th>Tổng tiền</th><th>Thanh toán</th><th>Địa chỉ</th><th>Trạng thái</th>
+        </tr>
+      </thead>
+      <tbody id="adminOrders"></tbody>
+    </table>
+  </div>
+</section>
+
+<section class="admin__panel" data-panel="stats" hidden>
+  <div class="admin__head"><h1>Thống kê khách hàng mua nhiều nhất</h1></div>
+
+  <div class="admin__filters">
+    <label class="admin__filter">
+      <span>Từ ngày</span>
+      <input type="date" id="stFrom" class="admin__input">
+    </label>
+    <label class="admin__filter">
+      <span>Đến ngày</span>
+      <input type="date" id="stTo" class="admin__input">
+    </label>
+    <button type="button" id="stRun" class="admin__add">Thống kê</button>
+  </div>
+
+  <p class="products-empty" id="stNote" hidden></p>
+  <div id="stResult"></div>
+</section>
+<dialog id="productDialog" class="admin__dialog">
+  <form id="productForm" novalidate>
+    <h2>Thêm sản phẩm</h2>
+
+    <label class="admin__field">
+      <span>Tên sản phẩm</span>
+      <input type="text" id="pfName" class="admin__input" placeholder="Tự đặt tên" required>
+    </label>
+
+    <div id="pfSelects"></div>
+
+    <label class="admin__field">
+      <span>Giá</span>
+      <input type="number" id="pfPrice" class="admin__input" min="0" required>
+    </label>
+
+    <label class="admin__field">
+      <span>Giá cũ (không bắt buộc)</span>
+      <input type="number" id="pfOldPrice" class="admin__input" min="0">
+    </label>
+
+    <label class="admin__field">
+      <span>Hình ảnh</span>
+      <input type="file" id="pfImage" accept="image/*">
+    </label>
+    <img id="pfPreview" class="admin__preview" alt="" hidden>
+
+    <p id="pfError" class="admin__error" hidden></p>
+
+    <div class="admin__dialog-actions">
+      <button type="submit" class="admin__save">Thêm</button>
+      <button type="button" id="pfCancel" class="admin__cancel">Hủy</button>
+    </div>
+  </form>
+</dialog>
+<dialog id="orderDialog" class="admin__dialog admin__dialog--wide">
+  <div id="orderDetail"></div>
+  <div class="admin__dialog-actions">
+    <button type="button" id="odClose" class="admin__cancel">Đóng</button>
+  </div>
+</dialog>
+  </main>
+
+  <div id="footer-container"></div>
+
+  <script src="../js/data/products.js"></script>
+  <script src="../js/data/users.js"></script>
+  <script src="../js/utils/format.js"></script>
+  <script src="../js/utils/path.js"></script>
+  <script src="../js/utils/product.js"></script>
+  <script src="../js/services/storage_service.js"></script>
+  <script src="../js/services/products_service.js"></script>
+  <script src="../js/services/user_service.js"></script>
+  <script src="../js/data/models/cart_item_model.js"></script>
+  <script src="../js/data/models/order_detail_model.js"></script>
+  <script src="../js/data/models/order_model.js"></script>
+  <script src="../js/services/order_service.js"></script>
+
+  <script src="../js/components/header.js"></script>
+  <script src="../js/components/footer.js"></script>
+  <script src="../js/data/brands.js"></script>
+  <script src="../js/data/categories.js"></script>
+  <script src="../js/data/kit_types.js"></script>
+  <script src="../js/data/leagues.js"></script>
+  <script src="../js/data/seasons.js"></script>
+  <script src="../js/data/teams.js"></script>
+
+  <script src="../js/init.js"></script>
+  <script src="../js/components/admin.js"></script>
+</body>
+
+</html>

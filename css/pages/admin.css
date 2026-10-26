@@ -1,0 +1,95 @@
+.admin { max-width: 1200px; margin: 24px auto; padding: 0 16px; }
+
+.admin__tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #e5e5e5;
+}
+.admin__tab {
+  padding: 10px 18px;
+  border: 0;
+  background: none;
+  font-size: 15px;
+  color: #555;
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  margin-bottom: -2px;
+}
+.admin__tab.is-active {
+  color: #111;
+  font-weight: 600;
+  border-bottom-color: #1f2937;
+}
+.admin__panel[hidden] { display: none; }
+
+.admin__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+.admin__table-wrap { overflow-x: auto; }
+.admin__table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.admin__table th,
+.admin__table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid #e5e5e5;
+  text-align: left;
+  vertical-align: middle;
+}
+.admin__table th { background: #f5f5f5; white-space: nowrap; }
+.admin__table tbody tr:hover { background: #fafafa; }
+.admin__thumb { width: 56px; height: 56px; object-fit: cover; border-radius: 6px; }
+.admin__actions { white-space: nowrap; }
+
+.admin__add,
+.admin__edit,
+.admin__delete {
+  padding: 6px 12px;
+  border: 0;
+  border-radius: 6px;
+  color: #fff;
+  cursor: pointer;
+}
+.admin__add, .admin__edit { background: #1f2937; }
+.admin__delete { background: #c81e1e; margin-left: 6px; }
+.admin__dialog {
+  width: min(480px, 92vw);
+  padding: 20px;
+  border: 0;
+  border-radius: 10px;
+}
+.admin__dialog::backdrop { background: rgba(0, 0, 0, 0.5); }
+.admin__field { display: block; margin-bottom: 12px; }
+.admin__field > span { display: block; margin-bottom: 4px; font-size: 14px; }
+.admin__preview { max-width: 140px; max-height: 140px; border-radius: 6px; margin-bottom: 8px; }
+.admin__error { color: #c81e1e; font-size: 14px; }
+.admin__dialog-actions { display: flex; gap: 8px; margin-top: 12px; }
+.admin__table tr.is-hidden-product { opacity: 0.55; }
+.admin__filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.admin__filter { display: flex; flex-direction: column; gap: 4px; font-size: 13px; }
+.admin__filter .admin__input { min-width: 150px; }
+.admin__count { font-size: 13px; color: #555; align-self: center; }
+.admin__dialog--wide { width: min(820px, 94vw); }
+.admin__order-info p { margin: 4px 0; }
+.admin__order-total { margin-top: 12px; text-align: right; font-weight: 600; }
+
+.admin__stat { margin-bottom: 28px; }
+.admin__stat-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.admin__stat-head h2 { font-size: 18px; margin: 0; }
+.admin__stat-sum { font-weight: 600; color: #15803d; margin: 0; }
+.admin__link { color: #1d4ed8; text-decoration: underline; }

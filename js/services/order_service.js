@@ -78,5 +78,29 @@ const OrderService = {
 
   getTotalQuantity(order) {
     return order.items.reduce((sum, item) => sum + item.quantity, 0);
-  }
+  },
+
+    // Admin đổi trạng thái đơn, theo đúng NEXT_STATUS và ghi history
+  updateStatus(orderId, newStatus) {
+    if (!isAdmin()) return { ok: false, message: "Bạn không có quyền." };
+
+    const records = this.getRecords();
+    const index = records.findIndex(r => Number(r.id) === Number(orderId));
+    if (index === -1) return { ok: false, message: "Không tìm thấy đơn hàng." };
+
+    const order = OrderModel.fromJSON(records[index]);
+
+    if (!order.canChangeTo(newStatus)) {
+      return {
+        ok: false,
+        message: `Không thể chuyển từ "${STATUS_LABEL[order.status]}" sang "${STATUS_LABEL[newStatus]}".`
+      };
+    }
+
+    order.changeStatus(newStatus);
+    records[index] = orderToJSON(order);
+    this.save(records);
+
+    return { ok: true, order };
+  },
 };

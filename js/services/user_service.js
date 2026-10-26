@@ -179,3 +179,10 @@ function logout() {
   const home = typeof getAssetPath === "function" ? getAssetPath("index.html") : "index.html";
   location.replace(home);
 }
+
+const USER_ROLE_ADMIN = "admin";
+
+function isAdmin() {
+  const user = getCurrentUser();
+  return !!user && user.role === USER_ROLE_ADMIN;
+}

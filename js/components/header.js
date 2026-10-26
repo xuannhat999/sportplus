@@ -42,6 +42,11 @@
         <span>Lịch sử mua hàng</span>
       </a>
 
+      <a class="account-menu__item" href="${root}pages/admin.html"data-admin-only>
+        <i class="fa-solid fa-pen"></i>
+        <span>Quản lý</span>
+      </a>
+
       <button class="account-menu__item account-menu__item--logout" type="button" data-account-logout>
         <i class="fa-solid fa-arrow-right-from-bracket"></i>
         <span>Đăng xuất</span>
@@ -51,4 +56,8 @@
   </header>
 `;
   headerContainer.innerHTML = headerHTML;
+  var adminOnly = typeof isAdmin === "function" && isAdmin();
+  headerContainer.querySelectorAll("[data-admin-only]").forEach(function (el) {
+    if (!adminOnly) el.remove();
+  });
 })();
