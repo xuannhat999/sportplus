@@ -1,4 +1,12 @@
 (function () {
+  if (!isAdmin()) {
+    if (isLoggedIn()) {
+      location.replace(getAssetPath("index.html"));  // đã đăng nhập nhưng không phải admin
+    } else {
+      goToAuth("pages/admin.html");                  // chưa đăng nhập: sang trang login
+    }
+    return;
+  }
    
 
   const productsBody = document.getElementById("adminProducts");
