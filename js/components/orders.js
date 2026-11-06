@@ -56,7 +56,7 @@ window.App = window.App || {};
       return;
     }
 
-    if (!tpls.order || !tpls.item) return;
+    if (!tpls.order) return;
 
     const cards = orders.map(order => App.createOrderCard(order, tpls));
     container.replaceChildren(...cards);

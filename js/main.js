@@ -45,6 +45,10 @@ function initOrdersPage() {
   App.initOrders();
 }
 
+function initOrderDetailPage() {
+  App.initOrderDetail();
+}
+
 function initOrderCompletePage() {
   App.initOrderComplete();
 }
@@ -57,6 +61,7 @@ const PAGES = {
   cart: initCartPage,
   auth: initAuthPage,
   orders: initOrdersPage,
+  order_detail: initOrderDetailPage,
   order_complete: initOrderCompletePage,
 };
 

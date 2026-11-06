@@ -35,7 +35,7 @@ window.App = window.App || {};
 
     item.querySelector('[data-field="name"]').textContent = detail.name;
     item.querySelector('[data-field="meta"]').textContent =
-      `Size ${detail.size} · Số lượng: ${detail.quantity}`;
+      `Size ${detail.size} · Số lượng: ${detail.quantity} · Đơn giá: ${formatPrice(detail.price)}`;
     item.querySelector('[data-field="lineTotal"]').textContent = formatPrice(detail.getLineTotal());
 
     return item;
@@ -46,6 +46,12 @@ window.App = window.App || {};
     const node = tpls.order.content.cloneNode(true);
     const card = node.querySelector(".order");
 
+    const title = card.querySelector(".order__title");
+    if (title) title.textContent = `Đơn hàng #${order.id}`;
+
+    const orderId = card.querySelector('[data-field="orderId"]');
+    if (orderId) orderId.textContent = `#${order.id}`;
+
     card.querySelector('[data-field="createdAt"]').textContent = formatOrderDate(order.createdAt);
     card.querySelector('[data-field="total"]').textContent = formatPrice(order.total);
     card.querySelector('[data-field="address"]').textContent = order.address || "Chưa cập nhật";
@@ -55,9 +61,17 @@ window.App = window.App || {};
     status.textContent = getOrderStatusLabel(order.status);
     status.classList.add(`order__status--${order.status}`);
 
-    // danh sách sản phẩm trong đơn (cuộn bên trong)
-    const items = order.items.map(detail => createOrderItem(detail, tpls.item));
-    card.querySelector("[data-order-items]").replaceChildren(...items);
+    const detailLink = card.querySelector('[data-field="detailLink"]');
+    if (detailLink) {
+      detailLink.href = getAssetPath(`pages/order_detail.html?id=${encodeURIComponent(order.id)}`);
+    }
+
+    // danh sách sản phẩm trong đơn (trang chi tiết / hoàn tất đơn mới có)
+    const itemsList = card.querySelector("[data-order-items]");
+    if (itemsList && tpls.item) {
+      const items = order.items.map(detail => createOrderItem(detail, tpls.item));
+      itemsList.replaceChildren(...items);
+    }
 
     return card;
   }

@@ -47,22 +47,11 @@
             </div>
           </dl>
 
-          <div class="order__items">
-            <ul class="order__items-list" data-order-items></ul>
-          </div>
+          <a class="order__detail-link" data-field="detailLink" href="#">
+            <span>Xem chi tiết đơn hàng</span>
+            <i class="fa-solid fa-chevron-right"></i>
+          </a>
         </article>
-      </template>
-
-      <!-- 1 SẢN PHẨM TRONG ĐƠN -->
-      <template id="order-item-tpl">
-        <li class="order-item">
-          <img class="order-item__image" data-field="image" loading="lazy" alt="">
-          <div class="order-item__info">
-            <p class="order-item__name" data-field="name"></p>
-            <p class="order-item__meta" data-field="meta"></p>
-          </div>
-          <span class="order-item__total" data-field="lineTotal"></span>
-        </li>
       </template>
 
       <!-- CHƯA CÓ ĐƠN HÀNG -->

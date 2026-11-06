@@ -5,9 +5,6 @@
   var root = document.body.dataset.root || '';
   var headerHTML = `
 <header class="header" id="header">
-  <button class="btn-menu">
-    <i class="fa-solid fa-bars btn-menu__icon"></i>
-  </button>
   <nav class="left">
     <a href="${root}index.html" class="header__name">SportPlus</a>
   </nav>

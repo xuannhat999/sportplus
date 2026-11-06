@@ -171,6 +171,51 @@
   white-space: nowrap;
 }
 
+/* LIÊN KẾT SANG TRANG CHI TIẾT */
+.order__detail-link {
+  align-self: flex-end;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-link);
+  text-decoration: none;
+}
+
+.order__detail-link:hover,
+.order__detail-link:focus-visible {
+  text-decoration: underline;
+}
+
+/* TRANG CHI TIẾT ĐƠN HÀNG */
+.order-detail__back {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-sm);
+  font-size: var(--font-size-sm);
+  color: var(--color-link);
+  text-decoration: none;
+}
+
+.order-detail__back:hover,
+.order-detail__back:focus-visible {
+  text-decoration: underline;
+}
+
+.order-detail__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+/* Trang chi tiết hiển thị đầy đủ danh sách, không cuộn trong khung */
+.order-detail__body .order__items {
+  max-height: none;
+  overflow: visible;
+}
+
 /* CHƯA CÓ ĐƠN */
 .orders__empty {
   display: flex;
