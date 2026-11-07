@@ -4,7 +4,7 @@ window.App = window.App || {};
   const AUTH_MODE_LOGIN = "login";
   const AUTH_MODE_REGISTER = "register";
 
-  const AUTH_MIN_PASSWORD_LENGTH = 6;
+  const AUTH_MIN_PASSWORD_LENGTH = 1;
   const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   let mode = AUTH_MODE_LOGIN;
