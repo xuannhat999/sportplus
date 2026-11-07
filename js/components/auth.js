@@ -114,7 +114,6 @@ window.App = window.App || {};
     const form = document.querySelector(".auth__form");
     if (!form) return;
 
-    // đã đăng nhập rồi -> vào thẳng trang được yêu cầu
     if (getCurrentUser()) {
       location.replace(getAssetPath(getSafeRedirect()));
       return;
