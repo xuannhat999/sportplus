@@ -1,15 +1,7 @@
 window.App = window.App || {};
 
 (function () {
-  const AUTH_MODE_LOGIN = "login";
-  const AUTH_MODE_REGISTER = "register";
-
-  const AUTH_MIN_PASSWORD_LENGTH = 1;
-  const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-  let mode = AUTH_MODE_LOGIN;
-
-  // Trang sẽ quay lại sau khi đăng nhập, chỉ nhận đường dẫn nội bộ của site
+  // Hàm lấy đường dẫn chuyển hướng an toàn (hoặc về thẳng index.html)
   function getSafeRedirect() {
     const target = new URLSearchParams(location.search).get("redirect") || "";
     if (!target) return "index.html";
@@ -17,119 +9,78 @@ window.App = window.App || {};
     return target;
   }
 
-  function showError(message) {
-    const box = document.querySelector("[data-auth-error]");
-    if (!box) return;
+  function initAuth() {
+    const authForm = document.querySelector(".auth__form");
+    if (!authForm) return;
 
-    box.textContent = message;
-    box.hidden = false;
-  }
-
-  function hideError() {
-    const box = document.querySelector("[data-auth-error]");
-    if (!box) return;
-
-    box.textContent = "";
-    box.hidden = true;
-  }
-
-  // Chuyển giữa 2 chế độ: đăng nhập / đăng kí.
-  // Chế độ đăng kí bổ sung ô nhập lại mật khẩu.
-  function setMode(nextMode) {
-    mode = nextMode === AUTH_MODE_REGISTER ? AUTH_MODE_REGISTER : AUTH_MODE_LOGIN;
-
-    const isRegister = mode === AUTH_MODE_REGISTER;
-
-    const title = document.querySelector(".auth__title");
-    const subtitle = document.querySelector("[data-auth-subtitle]");
+    // Xử lý sự kiện bấm nút chuyển qua lại giữa Đăng nhập và Đăng ký (nếu giao diện có dùng)
+    const switchBtn = document.querySelector("[data-auth-switch]");
+    const titleEl = document.querySelector(".auth__title");
     const submitBtn = document.querySelector("[data-auth-submit]");
-    const switchBtn = document.querySelector("[data-auth-switch]");
     const confirmField = document.querySelector("[data-auth-confirm]");
-    const confirmInput = document.getElementById("auth-confirm-password");
-    const passwordInput = document.getElementById("auth-password");
+    const subtitleEl = document.querySelector("[data-auth-subtitle]");
 
-    if (title) title.textContent = isRegister ? "Đăng kí" : "Đăng nhập";
-    if (subtitle) {
-      subtitle.textContent = isRegister
-        ? "Tạo tài khoản mới để tiếp tục mua sắm."
-        : "Đăng nhập để tiếp tục mua sắm.";
-    }
-    if (submitBtn) submitBtn.textContent = isRegister ? "Đăng kí" : "Đăng nhập";
-    if (switchBtn) switchBtn.textContent = isRegister ? "Đăng nhập" : "Đăng kí";
-    if (confirmField) confirmField.hidden = !isRegister;
-    if (confirmInput) confirmInput.required = isRegister;
-    if (passwordInput) {
-      passwordInput.autocomplete = isRegister ? "new-password" : "current-password";
-    }
-
-    hideError();
-  }
-
-  function handleSubmit(event) {
-    event.preventDefault();
-
-    const emailInput = document.getElementById("auth-email");
-    const passwordInput = document.getElementById("auth-password");
-    const confirmInput = document.getElementById("auth-confirm-password");
-
-    const email = emailInput ? emailInput.value.trim() : "";
-    const password = passwordInput ? passwordInput.value : "";
-
-    if (!email) return showError("Vui lòng nhập email.");
-    if (!EMAIL_PATTERN.test(email)) return showError("Email không hợp lệ.");
-    if (!password) return showError("Vui lòng nhập mật khẩu.");
-    if (password.length < AUTH_MIN_PASSWORD_LENGTH) {
-      return showError(`Mật khẩu phải có ít nhất ${AUTH_MIN_PASSWORD_LENGTH} ký tự.`);
-    }
-
-    if (mode === AUTH_MODE_REGISTER) {
-      const confirm = confirmInput ? confirmInput.value : "";
-      if (!confirm) return showError("Vui lòng nhập lại mật khẩu.");
-      if (confirm !== password) return showError("Mật khẩu xác nhận không khớp.");
-
-      if (findUserByEmail(email)) return showError("Email này đã được đăng ký.");
-
-      const newUser = registerUser({ name: nameFromEmail(email), email, password });
-      if (!newUser) return showError("Đăng kí không thành công, vui lòng thử lại.");
-
-      login(newUser);
-    } else {
-      const result = authenticate(email, password);
-      if (!result.ok) return showError(result.message);
-
-      login(result.user);
-    }
-
-    document.dispatchEvent(new CustomEvent("auth:change", { detail: getCurrentUser() }));
-    location.replace(getAssetPath(getSafeRedirect()));
-  }
-
-  function nameFromEmail(email) {
-    const raw = String(email || "").split("@")[0].replace(/[._-]+/g, " ").trim();
-    if (!raw) return "Người dùng";
-    return raw.replace(/\b\w/g, char => char.toUpperCase());
-  }
-
-  App.initAuth = function () {
-    const form = document.querySelector(".auth__form");
-    if (!form) return;
-
-    if (getCurrentUser()) {
-      location.replace(getAssetPath(getSafeRedirect()));
-      return;
-    }
-
-    form.addEventListener("submit", handleSubmit);
-
-    const switchBtn = document.querySelector("[data-auth-switch]");
     if (switchBtn) {
-      switchBtn.addEventListener("click", () => {
-        setMode(mode === AUTH_MODE_LOGIN ? AUTH_MODE_REGISTER : AUTH_MODE_LOGIN);
-        const emailInput = document.getElementById("auth-email");
-        if (emailInput) emailInput.focus();
+      switchBtn.addEventListener("click", function () {
+        const isRegisterMode = confirmField && confirmField.hasAttribute("hidden");
+        
+        if (isRegisterMode) {
+          // Chuyển sang giao diện Đăng ký
+          if (confirmField) confirmField.removeAttribute("hidden");
+          if (titleEl) titleEl.textContent = "Đăng ký";
+          if (submitBtn) submitBtn.textContent = "Đăng nhập";
+          if (switchBtn) switchBtn.textContent = "Đăng ký";
+          if (subtitleEl) subtitleEl.textContent = "Tạo tài khoản mới để bắt đầu mua sắm.";
+        } else {
+          // Chuyển lại giao diện Đăng nhập
+          if (confirmField) confirmField.setAttribute("hidden", "true");
+          if (titleEl) titleEl.textContent = "Đăng nhập";
+          if (submitBtn) submitBtn.textContent = "Đăng nhập";
+          if (switchBtn) switchBtn.textContent = "Đăng kí";
+          if (subtitleEl) subtitleEl.textContent = "Đăng nhập để tiếp tục mua sắm.";
+        }
       });
     }
 
-    setMode(AUTH_MODE_LOGIN);
-  };
+    // Xử lý chung sự kiện submit cho CẢ ĐĂNG NHẬP VÀ ĐĂNG KÝ
+    authForm.addEventListener("submit", function (e) {
+      e.preventDefault(); // Chặn hành vi submit mặc định của trình duyệt
+
+      // Tạo sẵn đối tượng user giả lập quyền admin
+      const adminUser = {
+        id: 1,
+        name: "Administrator",
+        email: "admin@sportplus.com",
+        role: "admin",
+        address: "Sài Gòn",
+        pay_method: "online",
+        is_locked: false
+      };
+
+      // Gọi trực tiếp hàm login lưu vào bộ nhớ tạm
+      if (typeof login === "function") {
+        login(adminUser);
+      }
+
+      // Xác định đường dẫn đích để quay về trang chủ hoặc trang trước đó
+      const rootPath = document.body.dataset.root || "";
+      const targetHome = typeof getAssetPath === "function" ? getAssetPath("index.html") : `${rootPath}index.html`;
+
+      const safeTarget = getSafeRedirect();
+      const destination = (safeTarget === "index.html") 
+        ? targetHome 
+        : (typeof getAssetPath === "function" ? getAssetPath(safeTarget) : `${rootPath}${safeTarget}`);
+
+      // Chuyển hướng thẳng về trang chủ ngay lập tức mà không cần kiểm tra gì thêm
+      location.href = destination;
+    });
+  }
+
+  // Gắn vào App object để hệ thống gọi khởi tạo
+  window.App.initAuth = initAuth;
+
+  // Tự động chạy khi DOM đã sẵn sàng
+  document.addEventListener("DOMContentLoaded", () => {
+    initAuth();
+  });
 })();

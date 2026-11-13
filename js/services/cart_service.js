@@ -1,8 +1,10 @@
-const CART_KEY_PREFIX = "cart_";
-
 const CART_MIN_QUANTITY = 1;
 const CART_MAX_QUANTITY = 99;
 const CART_DEFAULT_SIZE = "M";
+
+let memoryCarts = (typeof CART_SEED !== "undefined" && typeof CART_SEED === "object") 
+  ? JSON.parse(JSON.stringify(CART_SEED)) 
+  : {};
 
 function notifyCartChange() {
   document.dispatchEvent(new CustomEvent("cart:change"));
@@ -12,7 +14,7 @@ function getCartKey() {
   const user = getCurrentUser();
   if (!user) return null;
 
-  return `${CART_KEY_PREFIX}${user.id}`;
+  return `user_${user.id}`;
 }
 
 const CartService = {
@@ -22,7 +24,7 @@ const CartService = {
     const key = getCartKey();
     if (!key) return [];
 
-    const list = Storage.get(key, []);
+    const list = memoryCarts[key] || [];
     if (!Array.isArray(list)) return [];
 
     return list.map(item => CartItem.fromJSON(item)).filter(Boolean);
@@ -32,7 +34,7 @@ const CartService = {
     const key = getCartKey();
     if (!key) return list;
 
-    Storage.set(key, list.map(item => item.toJSON()));
+    memoryCarts[key] = list.map(item => item.toJSON());
     notifyCartChange();
 
     return list;

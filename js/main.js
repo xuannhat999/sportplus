@@ -15,7 +15,7 @@ function initHomePage() {
 
 function initProductDetailPage() {
   const id = new URLSearchParams(location.search).get("id");
-  const product = ProductService.getById(id);
+  let product = ProductService.getById(id);
   if (product && product.is_hidden && !isAdmin()) product = undefined;
   renderProductDetail(product);
 
@@ -59,14 +59,12 @@ const PAGES = {
   products_search: initProductsSearchPage,
   account: initAccountPage,
   cart: initCartPage,
-  auth: initAuthPage,
   orders: initOrdersPage,
   order_detail: initOrderDetailPage,
   order_complete: initOrderCompletePage,
 };
 
 document.addEventListener("DOMContentLoaded", () => {
-  initData();
 
   const page = document.body.dataset.page;
   if (PAGES[page]) PAGES[page]();

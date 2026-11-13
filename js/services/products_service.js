@@ -1,13 +1,17 @@
-const PRODUCT_KEY = "products";
-
 const RELATED_PRODUCTS_LIMIT = 10;
+
+const rawProductSeed = typeof PRODUCTS_SEED !== "undefined" 
+  ? PRODUCTS_SEED 
+  : (typeof PRODUCTS !== "undefined" ? PRODUCTS : []);
+
+let inMemoryProducts = Array.isArray(rawProductSeed) ? [...rawProductSeed] : [];
 
 const ProductService = {
   getAllRaw() {
-    return Storage.get(PRODUCT_KEY, []);
+    return inMemoryProducts;
   },
   getAll() {
-    return Storage.get(PRODUCT_KEY, []);
+    return inMemoryProducts;
   },
   getById(id) {
     return this.getAll().find(p => p.id === Number(id));
@@ -46,26 +50,25 @@ const ProductService = {
     const list = this.getAllRaw();
     product.id = list.length ? Math.max(...list.map(p => p.id)) + 1 : 1;
     list.push(product);
-    Storage.set(PRODUCT_KEY, list);
     return product;
   },
   update(id, changes) {
-    const list = this.getAllRaw().map(p =>
+    inMemoryProducts = this.getAllRaw().map(p =>
       p.id === Number(id) ? { ...p, ...changes } : p
     );
-    Storage.set(PRODUCT_KEY, list);
   },
   remove(id) {
-    Storage.set(PRODUCT_KEY, this.getAllRaw().filter(p => p.id !== Number(id)));
+    inMemoryProducts = this.getAllRaw().filter(p => p.id !== Number(id));
   },
 
   isSold(id) {
     const pid = Number(id);
-    const orders = Storage.get("order", []);
+    const orders = inMemoryOrders;
 
     return orders.some(order =>
       (order.items || []).some(line => Number(line.productId) === pid)
-    );},
+    );
+  },
 
   hide(id) {
     this.update(id, { is_hidden: true });

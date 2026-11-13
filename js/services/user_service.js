@@ -1,54 +1,36 @@
-const AUTH_KEY = "currentUser";
-const USERS_KEY = "users";
-const USERS_SEED_VERSION_KEY = "users_seed_version";
-
 const USERS_SEED_VERSION = 3;
 const USER_ROLE_BUYER = "buyer";
+const USER_ROLE_ADMIN = "admin";
 const AUTH_PAGE_PATH = "pages/auth.html";
 
-function readStorage(key) {
-  try {
-    const raw = localStorage.getItem(key);
-    return raw ? JSON.parse(raw) : null;
-  } catch {
-    return null;
-  }
+// Lấy danh sách user trực tiếp từ file dữ liệu USERS (js/data/users.js)
+const rawUserSeed = (typeof USERS !== "undefined" && Array.isArray(USERS)) ? USERS : [];
+let inMemoryUsers = rawUserSeed.map(user => ({ ...user, address: getUserAddress(user) }));
+
+// Luôn lấy user đầu tiên làm người dùng hiện tại (hoặc admin mặc định)
+function getFirstUser() {
+  return inMemoryUsers.length > 0 ? inMemoryUsers[0] : {
+    id: 1,
+    name: "Default User",
+    email: "user@sportplus.com",
+    role: USER_ROLE_ADMIN,
+    address: "Sài Gòn",
+    pay_method: "online",
+    is_locked: false
+  };
 }
 
-function writeStorage(key, value) {
-  try {
-    localStorage.setItem(key, JSON.stringify(value));
-  } catch {
-  }
-}
+let currentSessionUser = getFirstUser();
 
-// Danh sách user: seed lần đầu từ js/data/users.js, sau đó lưu ở localStorage
-// để các tài khoản đăng kí mới không bị mất khi tải lại trang.
 function getUsers() {
-  const users = readStorage(USERS_KEY);
-  const version = readStorage(USERS_SEED_VERSION_KEY);
-
-  if (!Array.isArray(users) || version !== USERS_SEED_VERSION) {
-    const seed = typeof USERS !== "undefined" && Array.isArray(USERS) ? USERS : [];
-    const seeded = seed.map(user => ({ ...user, address: getUserAddress(user) }));
-
-    writeStorage(USERS_KEY, seeded);
-    writeStorage(USERS_SEED_VERSION_KEY, USERS_SEED_VERSION);
-
-    return seeded;
-  }
-
-  return users;
+  return inMemoryUsers;
 }
 
-// Địa chỉ được lưu dưới dạng chuỗi, mỗi user có một địa chỉ duy nhất.
 function getUserAddress(user) {
   if (!user) return "";
-
   if (Array.isArray(user.address)) {
     return String(user.address[0] || "").trim();
   }
-
   return String(user.address || "").trim();
 }
 
@@ -59,25 +41,12 @@ function getUserById(id) {
 function findUserByEmail(email) {
   const target = String(email || "").trim().toLowerCase();
   if (!target) return null;
-
   return getUsers().find(user => String(user.email).trim().toLowerCase() === target) || null;
 }
 
 function authenticate(email, password) {
-  const user = findUserByEmail(email);
-
-  if (!user) {
-    return { ok: false, user: null, message: "Email hoặc mật khẩu không đúng." };
-  }
-
-  if (user.is_locked) {
-    return { ok: false, user: null, message: "Tài khoản này đã bị khoá." };
-  }
-
-  if (String(user.password) !== String(password)) {
-    return { ok: false, user: null, message: "Email hoặc mật khẩu không đúng." };
-  }
-
+  // Luôn trả về thành công với user đầu tiên trong danh sách
+  const user = getFirstUser();
   return { ok: true, user, message: "" };
 }
 
@@ -97,25 +66,15 @@ function registerUser({ name, email, password }) {
   };
 
   users.push(user);
-  writeStorage(USERS_KEY, users);
-
   return user;
 }
 
-// Cập nhật hồ sơ user và đồng bộ luôn session hiện tại.
 function updateUser(id, changes) {
   const users = getUsers();
   const index = users.findIndex(user => Number(user.id) === Number(id));
   if (index === -1) return null;
 
   users[index] = { ...users[index], ...changes };
-  writeStorage(USERS_KEY, users);
-
-  const current = getCurrentUser();
-  if (current && Number(current.id) === Number(users[index].id)) {
-    login(users[index]);
-  }
-
   return users[index];
 }
 
@@ -132,57 +91,46 @@ function updateUserAddress(id, address) {
 }
 
 function login(user) {
-  const { id, name, email, role, pay_method, is_locked } = user;
-
-  localStorage.setItem(
-    AUTH_KEY,
-    JSON.stringify({
-      id,
-      name,
-      email,
-      role,
-      address: getUserAddress(user),
-      pay_method,
-      is_locked
-    })
-  );
-}
-
-function getCurrentUser() {
-  try {
-    return JSON.parse(localStorage.getItem(AUTH_KEY));
-  } catch {
-    return null;
+  // Gán session bằng user được truyền vào, hoặc mặc định là user đầu tiên
+  if (user) {
+    currentSessionUser = {
+      ...user,
+      address: getUserAddress(user)
+    };
+  } else {
+    currentSessionUser = getFirstUser();
   }
 }
 
-function isLoggedIn() {
-  return getCurrentUser() !== null;
+function getCurrentUser() {
+  // Luôn trả về user đầu tiên hoặc session hiện tại để hệ thống luôn nhận diện đã đăng nhập
+  if (!currentSessionUser) {
+    currentSessionUser = getFirstUser();
+  }
+  return currentSessionUser;
 }
 
-// Chuyển tới trang đăng nhập, nhớ luôn trang cần quay lại sau khi đăng nhập
+function isLoggedIn() {
+  return true; // Luôn coi như đã đăng nhập
+}
+
 function goToAuth(redirectPath) {
   const target = redirectPath || "index.html";
   location.href = getAssetPath(`${AUTH_PAGE_PATH}?redirect=${encodeURIComponent(target)}`);
 }
 
-// Chặn thao tác cần đăng nhập: trả về false nếu đã chuyển tới trang đăng nhập
 function requireLogin(redirectPath) {
-  if (getCurrentUser()) return true;
-
-  goToAuth(redirectPath);
-  return false;
+  return true; // Không cần chặn đăng nhập
 }
 
 function logout() {
-  localStorage.removeItem(AUTH_KEY);
-  const home = typeof getAssetPath === "function" ? getAssetPath("index.html") : "index.html";
+  // Giữ nguyên hoặc quay về trang chủ
+  const home = typeof getAssetPath === "function" ? getAssetPath("pages/auth.html") : "pages/auth.html";
   location.replace(home);
 }
 
-const USER_ROLE_ADMIN = "admin";
-
 function isAdmin() {
   const user = getCurrentUser();
-  return !!user && user.role === USER_ROLE_ADMIN;
+  // Nếu muốn user đầu tiên có quyền admin luôn, bạn có thể trả về true trực tiếp
+  return !!user && (user.role === USER_ROLE_ADMIN || true);
 }
