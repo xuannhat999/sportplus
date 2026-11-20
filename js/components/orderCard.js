@@ -25,7 +25,6 @@ window.App = window.App || {};
   }
 
   // 1 dòng sản phẩm trong đơn hàng
-  // 1 dòng sản phẩm trong đơn hàng
   function createOrderItem(detail, tpl) {
     const node = tpl.content.cloneNode(true);
     const item = node.querySelector(".order-item");
@@ -46,12 +45,9 @@ window.App = window.App || {};
 
     const lineTotalEl = item.querySelector('[data-field="lineTotal"]');
     if (lineTotalEl) {
-      // Hỗ trợ cả phương thức getLineTotal() lẫn phép tính trực tiếp quantity * price
-      const lineTotal = typeof detail.getLineTotal === "function" 
-        ? detail.getLineTotal() 
-        : (Number(detail.quantity || 1) * Number(detail.price || 0));
-      
-      lineTotalEl.textContent = formatPrice(lineTotal);
+      lineTotalEl.textContent = formatPrice(
+        Number(detail.quantity || 1) * Number(detail.price || 0)
+      );
     }
 
     return item;
@@ -79,13 +75,13 @@ window.App = window.App || {};
 
     const detailLink = card.querySelector('[data-field="detailLink"]');
     if (detailLink) {
-      detailLink.href = getAssetPath(`pages/order_detail.html?id=${encodeURIComponent(order.id)}`);
+      detailLink.href = getAssetPath("pages/order_detail.html");
     }
 
     // danh sách sản phẩm trong đơn (trang chi tiết / hoàn tất đơn mới có)
     const itemsList = card.querySelector("[data-order-items]");
     if (itemsList && tpls.item) {
-      const items = order.items.map(detail => createOrderItem(detail, tpls.item));
+      const items = (order.items || []).map(detail => createOrderItem(detail, tpls.item));
       itemsList.replaceChildren(...items);
     }
 

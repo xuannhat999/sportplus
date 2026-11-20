@@ -10,7 +10,30 @@
 </head>
 
 <body data-root="../" data-page="order_complete">
-  <div id="header-container"></div>
+  <header class="header" id="header">
+    <nav class="left">
+      <a href="../index.html" class="header__name">SportPlus</a>
+    </nav>
+    <div class="search-bar">
+      <i class="fa-solid fa-magnifying-glass search-bar__icon"></i>
+      <form class="search-bar__form" action="../pages/products_search.html" method="get">
+        <input class="search-bar__input" type="search" placeholder="Tìm sản phẩm" aria-label="Tìm kiếm sản phẩm">
+      </form>
+    </div>
+
+    <button class="btn-cart" type="button" aria-label="Giỏ hàng">
+      <i class="fa-solid fa-cart-shopping btn-cart__icon"></i>
+    </button>
+
+    <a href="orders.html" class="btn-cart__icon">
+      <i class="fa-solid fa-list"></i>
+    </a>
+
+    <button class="btn-account" type="button" aria-label="Tài khoản">
+      <i class="fa-solid fa-user btn-account__icon"></i>
+    </button>
+
+  </header>
   <main>
     <section class="order-complete" id="order-complete-page">
       <header class="order-complete__head">
@@ -70,7 +93,36 @@
       </template>
     </section>
   </main>
-  <div id="footer-container"></div>
+  <footer class="footer" id="footer">
+    <div class="footer__grid">
+      <div class="footer__brand">
+        <a href="../index.html" class="footer__name">SportPlus</a>
+        <p class="footer__desc">Cửa hàng áo bóng đá: áo đội tuyển quốc gia và áo câu lạc bộ.</p>
+      </div>
+      <div class="footer__col">
+        <h4 class="footer__title">Mua sắm</h4>
+        <ul class="footer__list">
+          <li><a class="footer__link" href="../index.html">Trang chủ</a></li>
+          <li><a class="footer__link" href="../index.html">Áo đội tuyển</a></li>
+          <li><a class="footer__link" href="../index.html">Áo câu lạc bộ</a></li>
+          <li><a class="footer__link" href="../pages/cart.html">Giỏ hàng</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h4 class="footer__title">Tài khoản</h4>
+        <ul class="footer__list">
+          <li><a class="footer__link" href="../pages/account.html">Thông tin</a></li>
+          <li><a class="footer__link" href="../pages/orders.html">Lịch sử mua hàng</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h4 class="footer__title">Liên hệ</h4>
+        <p class="footer__text">Email: support@sportplus.vn</p>
+        <p class="footer__text">Hotline: 1900 0000</p>
+      </div>
+    </div>
+    <div class="footer__bottom">© 2026 SportPlus.</div>
+  </footer>
 
   <script src="../js/data/products.js"></script>
   <script src="../js/data/users.js"></script>
@@ -81,20 +133,12 @@
   <script src="../js/services/products_service.js"></script>
   <script src="../js/services/user_service.js"></script>
   <script src="../js/services/cart_service.js"></script>
-
-  <script src="../js/data/models/cart_item_model.js"></script>
-  <script src="../js/data/models/order_detail_model.js"></script>
   <script src="../js/data/models/order_model.js"></script>
   <script src="../js/services/order_service.js"></script>
-
-  <script src="../js/components/header.js"></script>
-  <script src="../js/components/footer.js"></script>
   <script src="../js/components/btnCart.js" defer></script>
   <script src="../js/components/btnAccount.js" defer></script>
   <script src="../js/components/orderCard.js"></script>
   <script src="../js/components/orderComplete.js"></script>
-
-  <script src="../js/init.js"></script>
   <script src="../js/main.js" defer></script>
 </body>
 

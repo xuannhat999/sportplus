@@ -2,8 +2,7 @@ function createProductCard(product, template) {
   const node = template.content.cloneNode(true);
 
   const link = node.querySelector(".product");
-  link.dataset.id = product.id;
-  link.href = `${getAssetPath("pages/product_detail.html")}?id=${product.id}`;
+  link.href = getAssetPath("pages/product_detail.html");
 
   const image = node.querySelector(".product__image");
   const images = productImages(product);

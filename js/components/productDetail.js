@@ -42,20 +42,6 @@ function renderProductSizes(product, root) {
   }));
 }
 
-// Thông báo ngắn sau khi thêm vào giỏ hàng
-function showPurchaseMessage(root, message) {
-  const box = root.querySelector(".p-detail__summary__purchase__message");
-  if (!box) return;
-
-  box.textContent = message;
-  box.hidden = false;
-
-  clearTimeout(box._timer);
-  box._timer = setTimeout(() => {
-    box.hidden = true;
-  }, 2500);
-}
-
 function renderProductDetail(product) {
   const container = document.getElementById("product-detail");
   const tpl = document.getElementById("product-detail-tpl");
@@ -67,27 +53,25 @@ function renderProductDetail(product) {
   }
 
   const node = tpl.content.cloneNode(true);
-
   const root = node.querySelector(".p-detail");
-  root.dataset.id = product.id;
 
   const image = node.querySelector(".p-detail__media__main");
   const images = productImages(product);
   image.src = getAssetPath(images[0]);
   image.alt = product.name;
 
-  const image_other_1 = node.querySelector(".p-detail__media__thumb__1");
+  const imageOther1 = node.querySelector(".p-detail__media__thumb__1");
   if (images[1]) {
-    image_other_1.src = getAssetPath(images[1]);
+    imageOther1.src = getAssetPath(images[1]);
   } else {
-    image_other_1.hidden = true;
+    imageOther1.hidden = true;
   }
 
-  const image_other_2 = node.querySelector(".p-detail__media__thumb__2");
+  const imageOther2 = node.querySelector(".p-detail__media__thumb__2");
   if (images[2]) {
-    image_other_2.src = getAssetPath(images[2]);
+    imageOther2.src = getAssetPath(images[2]);
   } else {
-    image_other_2.hidden = true;
+    imageOther2.hidden = true;
   }
 
   const brand = node.querySelector(".p-detail__summary__info__brand");
@@ -124,25 +108,11 @@ function renderProductDetail(product) {
   }
 
   renderProductSizes(product, node);
-  const quantityControl = setupQuantity(node);
-
-  const addToCartBtn = node.querySelector(".p-detail__summary__purchase__btn-add-to-cart");
-  addToCartBtn.dataset.id = product.id;
-  addToCartBtn.addEventListener("click", () => {
-    if (!requireLogin(`pages/product_detail.html?id=${product.id}`)) return;
-
-    const sizeInput = root.querySelector('input[name="product-size"]:checked');
-    const size = sizeInput ? sizeInput.value : DEFAULT_SIZES[0];
-    const quantity = quantityControl ? quantityControl.getValue() : MIN_QUANTITY;
-
-    CartService.add(product, size, quantity);
-    showPurchaseMessage(root, `Đã thêm ${product.name} vào giỏ hàng.`);
-  });
+  setupQuantity(node);
 
   document.title = `${product.name} - SportPlus`;
   container.replaceChildren(node);
 }
-
 
 function renderProductNotFound(container) {
   const tpl = document.getElementById("product-not-found-tpl");
@@ -155,5 +125,3 @@ function renderProductNotFound(container) {
   container.replaceChildren(node);
   document.title = "Không tìm thấy sản phẩm - SportPlus";
 }
-
-

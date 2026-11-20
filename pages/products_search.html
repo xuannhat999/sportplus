@@ -10,7 +10,31 @@
 </head>
 
 <body data-root="../" data-page="products_search">
-  <div id="header-container"></div>
+  <header class="header" id="header">
+    <nav class="left">
+      <a href="../index.html" class="header__name">SportPlus</a>
+    </nav>
+    <div class="search-bar">
+      <i class="fa-solid fa-magnifying-glass search-bar__icon"></i>
+      <form class="search-bar__form" action="../pages/products_search.html" method="get">
+        <input class="search-bar__input" type="search" placeholder="Tìm sản phẩm" aria-label="Tìm kiếm sản phẩm">
+      </form>
+    </div>
+
+    <button class="btn-cart" type="button" aria-label="Giỏ hàng">
+      <i class="fa-solid fa-cart-shopping btn-cart__icon"></i>
+    </button>
+
+    <a href="orders.html" class="btn-cart__icon">
+      <i class="fa-solid fa-list"></i>
+    </a>
+
+
+    <button class="btn-account" type="button" aria-label="Tài khoản">
+      <i class="fa-solid fa-user btn-account__icon"></i>
+    </button>
+
+  </header>
   <main class="search-page">
     <aside class="filter-panel" id="filter-panel" aria-label="Bộ lọc sản phẩm">
       <div class="filter-panel__search">
@@ -32,69 +56,69 @@
       </div>
 
       <div class="filter-panel__group">
-        <button class="filter-panel__toggle" type="button" aria-expanded="false" aria-controls="filter-brand">
+        <button class="filter-panel__toggle" type="button" aria-expanded="true" aria-controls="filter-brand">
           <span class="filter-panel__toggle__text">
             <span class="filter-panel__label">Hãng</span>
             <span class="filter-panel__label-count" hidden>0</span>
           </span>
           <i class="fa-solid fa-chevron-down filter-panel__toggle-icon"></i>
         </button>
-        <div class="filter-panel__options" id="filter-brand" data-field="brand" hidden></div>
+        <div class="filter-panel__options" id="filter-brand" data-field="brand"></div>
       </div>
 
       <div class="filter-panel__group">
-        <button class="filter-panel__toggle" type="button" aria-expanded="false" aria-controls="filter-category">
+        <button class="filter-panel__toggle" type="button" aria-expanded="true" aria-controls="filter-category">
           <span class="filter-panel__toggle__text">
             <span class="filter-panel__label">Thể loại</span>
             <span class="filter-panel__label-count" hidden>0</span>
           </span>
           <i class="fa-solid fa-chevron-down filter-panel__toggle-icon"></i>
         </button>
-        <div class="filter-panel__options" id="filter-category" data-field="category" hidden></div>
+        <div class="filter-panel__options" id="filter-category" data-field="category"></div>
       </div>
 
       <div class="filter-panel__group">
-        <button class="filter-panel__toggle" type="button" aria-expanded="false" aria-controls="filter-kit-type">
+        <button class="filter-panel__toggle" type="button" aria-expanded="true" aria-controls="filter-kit-type">
           <span class="filter-panel__toggle__text">
             <span class="filter-panel__label">Loại áo đấu</span>
             <span class="filter-panel__label-count" hidden>0</span>
           </span>
           <i class="fa-solid fa-chevron-down filter-panel__toggle-icon"></i>
         </button>
-        <div class="filter-panel__options" id="filter-kit-type" data-field="kit_type" hidden></div>
+        <div class="filter-panel__options" id="filter-kit-type" data-field="kit_type"></div>
       </div>
 
       <div class="filter-panel__group">
-        <button class="filter-panel__toggle" type="button" aria-expanded="false" aria-controls="filter-league">
+        <button class="filter-panel__toggle" type="button" aria-expanded="true" aria-controls="filter-league">
           <span class="filter-panel__toggle__text">
             <span class="filter-panel__label">Giải đấu</span>
             <span class="filter-panel__label-count" hidden>0</span>
           </span>
           <i class="fa-solid fa-chevron-down filter-panel__toggle-icon"></i>
         </button>
-        <div class="filter-panel__options" id="filter-league" data-field="league" hidden></div>
+        <div class="filter-panel__options" id="filter-league" data-field="league"></div>
       </div>
 
       <div class="filter-panel__group">
-        <button class="filter-panel__toggle" type="button" aria-expanded="false" aria-controls="filter-team">
+        <button class="filter-panel__toggle" type="button" aria-expanded="true" aria-controls="filter-team">
           <span class="filter-panel__toggle__text">
             <span class="filter-panel__label">Đội</span>
             <span class="filter-panel__label-count" hidden>0</span>
           </span>
           <i class="fa-solid fa-chevron-down filter-panel__toggle-icon"></i>
         </button>
-        <div class="filter-panel__options" id="filter-team" data-field="team" hidden></div>
+        <div class="filter-panel__options" id="filter-team" data-field="team"></div>
       </div>
 
       <div class="filter-panel__group">
-        <button class="filter-panel__toggle" type="button" aria-expanded="false" aria-controls="filter-season">
+        <button class="filter-panel__toggle" type="button" aria-expanded="true" aria-controls="filter-season">
           <span class="filter-panel__toggle__text">
             <span class="filter-panel__label">Mùa giải</span>
             <span class="filter-panel__label-count" hidden>0</span>
           </span>
           <i class="fa-solid fa-chevron-down filter-panel__toggle-icon"></i>
         </button>
-        <div class="filter-panel__options" id="filter-season" data-field="season" hidden></div>
+        <div class="filter-panel__options" id="filter-season" data-field="season"></div>
       </div>
     </aside>
 
@@ -102,10 +126,23 @@
       <p class="products-empty" data-products-empty hidden>Chưa có sản phẩm nào.</p>
       <div id="products" class="all-products"></div>
 
-      <nav class="pagination" id="pagination" aria-label="Phân trang kết quả" hidden>
-        <button class="pagination__btn" type="button" data-page-prev aria-label="Trang trước">‹</button>
-        <ul class="pagination__list" data-page-list></ul>
-        <button class="pagination__btn" type="button" data-page-next aria-label="Trang sau">›</button>
+      <nav class="pagination" id="pagination" aria-label="Phân trang kết quả">
+        <button class="pagination__btn" type="button" aria-label="Trang trước" disabled>‹</button>
+        <ul class="pagination__list">
+          <li class="pagination__item"><button class="pagination__btn is-active" type="button" aria-label="Trang 1"
+              aria-current="page">1</button></li>
+          <li class="pagination__item"><button class="pagination__btn" type="button" aria-label="Trang 2">2</button>
+          </li>
+          <li class="pagination__item"><button class="pagination__btn" type="button" aria-label="Trang 3">3</button>
+          </li>
+          <li class="pagination__item"><button class="pagination__btn" type="button" aria-label="Trang 4">4</button>
+          </li>
+          <li class="pagination__item"><button class="pagination__btn" type="button" aria-label="Trang 5">5</button>
+          </li>
+          <li class="pagination__item"><button class="pagination__btn" type="button" aria-label="Trang 6">6</button>
+          </li>
+        </ul>
+        <button class="pagination__btn" type="button" aria-label="Trang sau">›</button>
       </nav>
     </section>
 
@@ -127,7 +164,36 @@
 
 
   </main>
-  <div id="footer-container"></div>
+  <footer class="footer" id="footer">
+    <div class="footer__grid">
+      <div class="footer__brand">
+        <a href="../index.html" class="footer__name">SportPlus</a>
+        <p class="footer__desc">Cửa hàng áo bóng đá: áo đội tuyển quốc gia và áo câu lạc bộ.</p>
+      </div>
+      <div class="footer__col">
+        <h4 class="footer__title">Mua sắm</h4>
+        <ul class="footer__list">
+          <li><a class="footer__link" href="../index.html">Trang chủ</a></li>
+          <li><a class="footer__link" href="../index.html">Áo đội tuyển</a></li>
+          <li><a class="footer__link" href="../index.html">Áo câu lạc bộ</a></li>
+          <li><a class="footer__link" href="../pages/cart.html">Giỏ hàng</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h4 class="footer__title">Tài khoản</h4>
+        <ul class="footer__list">
+          <li><a class="footer__link" href="../pages/account.html">Thông tin</a></li>
+          <li><a class="footer__link" href="../pages/orders.html">Lịch sử mua hàng</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h4 class="footer__title">Liên hệ</h4>
+        <p class="footer__text">Email: support@sportplus.vn</p>
+        <p class="footer__text">Hotline: 1900 0000</p>
+      </div>
+    </div>
+    <div class="footer__bottom">© 2026 SportPlus.</div>
+  </footer>
 
   <script src="../js/data/products.js"></script>
   <script src="../js/data/users.js"></script>
@@ -141,19 +207,12 @@
   <script src="../js/utils/path.js"></script>
   <script src="../js/utils/product.js"></script>
   <script src="../js/services/products_service.js"></script>
-  <script src="../js/data/models/cart_item_model.js"></script>
   <script src="../js/services/cart_service.js"></script>
   <script src="../js/services/user_service.js"></script>
-
-  <script src="../js/components/header.js"></script>
-  <script src="../js/components/footer.js"></script>
   <script src="../js/components/btnCart.js" defer></script>
   <script src="../js/components/btnAccount.js" defer></script>
   <script src="../js/components/products.js"></script>
-  <script src="../js/components/pagination.js"></script>
   <script src="../js/components/productFilters.js"></script>
-
-  <script src="../js/init.js"></script>
   <script src="../js/main.js" defer></script>
 </body>
 

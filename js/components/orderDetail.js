@@ -1,7 +1,7 @@
 window.App = window.App || {};
 
 (function () {
-  function renderMessage(container, text, actionText, actionHref) {
+  function renderMessage(container, text) {
     const box = document.createElement("div");
     box.className = "orders__empty";
 
@@ -14,8 +14,8 @@ window.App = window.App || {};
 
     const action = document.createElement("a");
     action.className = "cart__btn cart__btn--primary";
-    action.href = actionHref;
-    action.textContent = actionText;
+    action.href = getAssetPath("pages/orders.html");
+    action.textContent = "Xem lịch sử mua hàng";
 
     box.append(icon, message, action);
     container.replaceChildren(box);
@@ -25,28 +25,10 @@ window.App = window.App || {};
     const container = document.getElementById("order-detail");
     if (!container) return;
 
-    const user = getCurrentUser();
-
-    if (!user) {
-      renderMessage(
-        container,
-        "Bạn cần đăng nhập để xem chi tiết đơn hàng.",
-        "Đăng nhập",
-        getAssetPath("pages/auth.html")
-      );
-      return;
-    }
-
-    const id = new URLSearchParams(location.search).get("id");
-    const order = id ? OrderService.getById(id, user.id) : null;
+    const order = OrderService.getFixed();
 
     if (!order) {
-      renderMessage(
-        container,
-        "Không tìm thấy đơn hàng.",
-        "Xem lịch sử mua hàng",
-        getAssetPath("pages/orders.html")
-      );
+      renderMessage(container, "Không tìm thấy đơn hàng.");
       return;
     }
 
@@ -58,8 +40,5 @@ window.App = window.App || {};
 
   App.initOrderDetail = function () {
     renderOrderDetail();
-
-    document.addEventListener("order:change", renderOrderDetail);
-    document.addEventListener("auth:change", renderOrderDetail);
   };
 })();

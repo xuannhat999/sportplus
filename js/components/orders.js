@@ -1,7 +1,7 @@
 window.App = window.App || {};
 
 (function () {
-  function renderEmpty(container, tpls, text, needLogin) {
+  function renderEmpty(container, tpls, text) {
     if (!tpls.empty) return;
 
     const node = tpls.empty.content.cloneNode(true);
@@ -12,14 +12,9 @@ window.App = window.App || {};
     const loginBtn = empty.querySelector("[data-empty-login]");
     const link = empty.querySelector("[data-empty-link]");
 
-    loginBtn.hidden = !needLogin;
-    link.hidden = needLogin;
-
-    if (needLogin) {
-      loginBtn.addEventListener("click", () => goToAuth("pages/orders.html"));
-    } else {
-      link.href = getAssetPath("index.html");
-    }
+    loginBtn.hidden = true;
+    link.hidden = false;
+    link.href = getAssetPath("index.html");
 
     container.replaceChildren(empty);
   }
@@ -41,17 +36,12 @@ window.App = window.App || {};
     };
     const user = getCurrentUser();
 
-    if (!user) {
-      renderEmpty(container, tpls, "Bạn cần đăng nhập để xem lịch sử mua hàng.", true);
-      setOrdersCount(0);
-      return;
-    }
-
-    const orders = OrderService.getAll(user.id)
-      .sort((a, b) => Number(b.createdAt) - Number(a.createdAt));
+    const orders = OrderService.getAll()
+      .filter(order => !user || Number(order.userId) === Number(user.id))
+      .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
 
     if (!orders.length) {
-      renderEmpty(container, tpls, "Bạn chưa có đơn hàng nào.", false);
+      renderEmpty(container, tpls, "Bạn chưa có đơn hàng nào.");
       setOrdersCount(0);
       return;
     }
@@ -65,8 +55,5 @@ window.App = window.App || {};
 
   App.initOrders = function () {
     renderOrders();
-
-    document.addEventListener("order:change", renderOrders);
-    document.addEventListener("auth:change", renderOrders);
   };
 })();

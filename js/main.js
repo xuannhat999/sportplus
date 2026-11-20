@@ -9,24 +9,19 @@ function initHomePage() {
     if (!track) return;
 
     const category = section.dataset.rail;
-    renderProducts(all.filter(p => p.category === category), { container: track });
+    renderProducts(all.filter(product => product.category === category), { container: track });
   });
 }
 
 function initProductDetailPage() {
-  const id = new URLSearchParams(location.search).get("id");
-  let product = ProductService.getById(id);
-  if (product && product.is_hidden && !isAdmin()) product = undefined;
+  const product = ProductService.getAll()[0];
   renderProductDetail(product);
-
-  const related_products = ProductService.getRelatedProducts(product);
-  renderProducts(related_products);
-  
-
+  renderProducts(ProductService.getRelatedProducts());
 }
 
 function initProductsSearchPage() {
   initProductFilters(ProductService.getAll());
+  renderProducts(ProductService.getRelatedProducts(25));
 }
 
 function initAccountPage() {
@@ -59,13 +54,13 @@ const PAGES = {
   products_search: initProductsSearchPage,
   account: initAccountPage,
   cart: initCartPage,
+  auth: initAuthPage,
   orders: initOrdersPage,
   order_detail: initOrderDetailPage,
-  order_complete: initOrderCompletePage,
+  order_complete: initOrderCompletePage
 };
 
 document.addEventListener("DOMContentLoaded", () => {
-
   const page = document.body.dataset.page;
   if (PAGES[page]) PAGES[page]();
 });

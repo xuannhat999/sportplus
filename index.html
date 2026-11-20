@@ -9,7 +9,28 @@
 </head>
 
 <body data-root="./" data-page="home">
-  <div id="header-container"></div>
+  <header class="header" id="header">
+    <nav class="left">
+      <a href="index.html" class="header__name">SportPlus</a>
+    </nav>
+    <div class="search-bar">
+      <i class="fa-solid fa-magnifying-glass search-bar__icon"></i>
+      <form class="search-bar__form" action="pages/products_search.html" method="get">
+        <input class="search-bar__input" type="search" placeholder="Tìm sản phẩm" aria-label="Tìm kiếm sản phẩm">
+      </form>
+    </div>
+    <button class="btn-cart" type="button" aria-label="Giỏ hàng">
+      <i class="fa-solid fa-cart-shopping btn-cart__icon"></i>
+    </button>
+
+    <a href="pages/orders.html" class="btn-cart__icon">
+      <i class="fa-solid fa-list"></i>
+    </a>
+
+    <button class="btn-account" type="button" aria-label="Tài khoản">
+      <i class="fa-solid fa-user btn-account__icon"></i>
+    </button>
+  </header>
   <main>
     <img src="assets/banners/banner.webp">
 
@@ -17,7 +38,7 @@
       <div class="product-rail__head">
         <h2 class="product-rail__title">Đội tuyển quốc gia</h2>
 
-        <a class="product-rail__more" href="pages/products_search.html?category=international">Xem tất cả</a>
+        <a class="product-rail__more" href="pages/products_search.html">Xem tất cả</a>
       </div>
       <p class="products-empty" data-products-empty hidden>Chưa có sản phẩm nào.</p>
       <div class="all-products--rail"></div>
@@ -26,7 +47,7 @@
     <section class="product-rail" data-rail="club">
       <div class="product-rail__head">
         <h2 class="product-rail__title">Câu lạc bộ</h2>
-        <a class="product-rail__more" href="pages/products_search.html?category=club">Xem tất cả</a>
+        <a class="product-rail__more" href="pages/products_search.html">Xem tất cả</a>
       </div>
       <p class="products-empty" data-products-empty hidden>Chưa có sản phẩm nào.</p>
       <div class="all-products--rail"></div>
@@ -49,7 +70,36 @@
 
 
   </main>
-  <div id="footer-container"></div>
+  <footer class="footer" id="footer">
+    <div class="footer__grid">
+      <div class="footer__brand">
+        <a href="index.html" class="footer__name">SportPlus</a>
+        <p class="footer__desc">Cửa hàng áo bóng đá: áo đội tuyển quốc gia và áo câu lạc bộ.</p>
+      </div>
+      <div class="footer__col">
+        <h4 class="footer__title">Mua sắm</h4>
+        <ul class="footer__list">
+          <li><a class="footer__link" href="index.html">Trang chủ</a></li>
+          <li><a class="footer__link" href="index.html">Áo đội tuyển</a></li>
+          <li><a class="footer__link" href="index.html">Áo câu lạc bộ</a></li>
+          <li><a class="footer__link" href="pages/cart.html">Giỏ hàng</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h4 class="footer__title">Tài khoản</h4>
+        <ul class="footer__list">
+          <li><a class="footer__link" href="pages/account.html">Thông tin</a></li>
+          <li><a class="footer__link" href="pages/orders.html">Lịch sử mua hàng</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h4 class="footer__title">Liên hệ</h4>
+        <p class="footer__text">Email: support@sportplus.vn</p>
+        <p class="footer__text">Hotline: 1900 0000</p>
+      </div>
+    </div>
+    <div class="footer__bottom">© 2026 SportPlus.</div>
+  </footer>
 
   <script src="js/data/products.js"></script>
   <script src="js/data/users.js"></script>
@@ -64,17 +114,11 @@
   <script src="js/utils/path.js"></script>
   <script src="js/utils/product.js"></script>
   <script src="js/services/products_service.js"></script>
-  <script src="js/data/models/cart_item_model.js"></script>
   <script src="js/services/cart_service.js"></script>
   <script src="js/services/user_service.js"></script>
-
-  <script src="js/components/header.js"></script>
-  <script src="js/components/footer.js"></script>
   <script src="js/components/btnCart.js" defer></script>
   <script src="js/components/btnAccount.js" defer></script>
   <script src="js/components/products.js"></script>
-
-  <script src="js/init.js"></script>
   <script src="js/main.js" defer></script>
 </body>
 

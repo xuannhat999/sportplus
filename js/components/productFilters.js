@@ -25,7 +25,6 @@ function initProductFilters(products) {
   const panel = document.getElementById("filter-panel");
   if (!panel) return;
 
-  const list = Array.isArray(products) ? products : [];
   const params = new URLSearchParams(location.search);
 
   const sortParam = params.get("sort");
@@ -46,36 +45,6 @@ function initProductFilters(products) {
     const picked = params.getAll(item.field).filter(value => valid.includes(value));
     state.selected[item.field] = new Set(picked);
   });
-
-  function syncUrl() {
-    const next = new URLSearchParams();
-
-    if (state.keyword) {
-      next.set("q", state.keyword);
-    }
-
-    next.set("sort", state.sort);
-
-    if (state.page > 1) {
-      next.set("page", state.page);
-    }
-
-    FILTER_FIELDS.forEach(item => {
-      state.selected[item.field].forEach(value => next.append(item.field, value));
-    });
-
-    const query = next.toString();
-    const url = location.pathname + (query ? `?${query}` : "");
-
-    try {
-      history.replaceState(null, "", url);
-    } catch (e) {
-    }
-  }
-
-  function countByField(field, value) {
-    return list.filter(p => p[field] === value).length;
-  }
 
   function fieldBoxId(field) {
     return `filter-${field.replace(/_/g, "-")}`;
@@ -135,7 +104,6 @@ function initProductFilters(products) {
         }
         updateFieldBadge(item);
         state.page = 1;
-        applyFilters();
       });
 
       const text = document.createElement("span");
@@ -148,55 +116,6 @@ function initProductFilters(products) {
     updateFieldBadge(item);
   }
 
-  function renderPagination(total) {
-    const el = document.getElementById("pagination");
-
-    App.renderPagination(el, {
-      total,
-      page: state.page,
-      pageSize: FILTER_PAGE_SIZE,
-      onChange: page => {
-        state.page = page;
-        applyFilters();
-        scrollToResults();
-      }
-    });
-  }
-
-  function scrollToResults() {
-    const results = document.querySelector(".search-page__results");
-    if (!results || typeof results.scrollIntoView !== "function") return;
-
-    results.scrollIntoView({ behavior: "smooth", block: "start" });
-  }
-
-  function applyFilters() {
-    const keyword = state.keyword.toLowerCase();
-
-    let result = list.filter(product => {
-      if (keyword && !product.name.toLowerCase().includes(keyword)) return false;
-
-      return FILTER_FIELDS.every(item => {
-        const selected = state.selected[item.field];
-        if (selected.size === 0) return true;
-        return selected.has(product[item.field]);
-      });
-    });
-
-    const sorter = FILTER_SORTERS[state.sort] || FILTER_SORTERS.az;
-    result = [...result].sort(sorter);
-
-    // giới hạn trang hợp lệ
-    const totalPages = Math.max(1, Math.ceil(result.length / FILTER_PAGE_SIZE));
-    if (state.page > totalPages) state.page = totalPages;
-    if (state.page < 1) state.page = 1;
-
-    const start = (state.page - 1) * FILTER_PAGE_SIZE;
-    renderProducts(result.slice(start, start + FILTER_PAGE_SIZE));
-
-    renderPagination(result.length);
-    syncUrl();
-  }
 
   function initToggles() {
     const toggles = panel.querySelectorAll(".filter-panel__toggle");
@@ -222,25 +141,4 @@ function initProductFilters(products) {
     }
   });
 
-  const searchInput = document.getElementById("filter-search");
-  if (searchInput) {
-    searchInput.value = state.keyword;
-    searchInput.addEventListener("input", () => {
-      state.keyword = searchInput.value.trim();
-      state.page = 1;
-      applyFilters();
-    });
-  }
-
-  const sortSelect = document.getElementById("filter-sort");
-  if (sortSelect) {
-    sortSelect.value = state.sort;
-    sortSelect.addEventListener("change", () => {
-      state.sort = sortSelect.value;
-      state.page = 1;
-      applyFilters();
-    });
-  }
-
-  applyFilters();
 }

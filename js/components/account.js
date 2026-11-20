@@ -12,7 +12,6 @@ window.App = window.App || {};
   };
 
   const ACCOUNT_EMPTY_TEXT = "Chưa cập nhật";
-  const ACCOUNT_EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   function formatAccountValue(value, fallback = ACCOUNT_EMPTY_TEXT) {
     const text = value === null || value === undefined ? "" : String(value).trim();
@@ -28,49 +27,11 @@ window.App = window.App || {};
     };
   }
 
-  function showHint(el, message, isError = false) {
-    if (!el) return;
-
-    el.textContent = message;
-    el.hidden = !message;
-    el.classList.toggle("account__hint--error", isError);
-  }
-
   function setupEmailField(root, user) {
     const input = root.querySelector('[data-field="email"]');
-    const errorEl = root.querySelector('[data-error="email"]');
     if (!input) return;
 
     input.value = user.email || "";
-
-    input.addEventListener("change", () => {
-      const value = input.value.trim();
-
-      if (!value) {
-        showHint(errorEl, "Vui lòng nhập email.", true);
-        return;
-      }
-
-      if (!ACCOUNT_EMAIL_PATTERN.test(value)) {
-        showHint(errorEl, "Email không hợp lệ.", true);
-        return;
-      }
-
-      const owner = findUserByEmail(value);
-      if (owner && Number(owner.id) !== Number(user.id)) {
-        showHint(errorEl, "Email này đã được sử dụng.", true);
-        return;
-      }
-
-      const updated = updateUserEmail(user.id, value);
-      if (!updated) {
-        showHint(errorEl, "Không cập nhật được email.", true);
-        return;
-      }
-
-      user.email = updated.email;
-      showHint(errorEl, "");
-    });
   }
 
   function renderAccountEmpty(container, text) {
@@ -84,7 +45,9 @@ window.App = window.App || {};
 
     const btn = empty.querySelector(".account__btn-login");
     if (btn) {
-      btn.addEventListener("click", () => goToAuth("pages/account.html"));
+      btn.addEventListener("click", () => {
+        location.href = getAssetPath("index.html");
+      });
     }
 
     container.replaceChildren(empty);
@@ -116,19 +79,15 @@ window.App = window.App || {};
 
     const logoutBtn = node.querySelector(".account__btn-logout");
     if (logoutBtn) {
-      logoutBtn.addEventListener("click", () => logout());
+      logoutBtn.addEventListener("click", () => {
+        location.href = getAssetPath("pages/auth.html");
+      });
     }
 
     container.replaceChildren(node);
   }
 
   App.initAccount = function () {
-    const user = getCurrentUser();
-
-    renderAccountInfo(user);
-
-    document.addEventListener("auth:change", () => {
-      renderAccountInfo(getCurrentUser());
-    });
+    renderAccountInfo(getCurrentUser());
   };
 })();
