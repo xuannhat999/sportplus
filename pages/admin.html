@@ -36,9 +36,9 @@
   <main class="admin">
     <div class="admin__tabs">
       <button type="button" class="admin__tab is-active" data-tab="products">Quản lý sản phẩm</button>
-      <button type="button" class="admin__tab is-active" data-tab="users">Quản lý người dùng</button>
-      <button type="button" class="admin__tab is-active" data-tab="orders">Quản lý đơn hàng</button>
-      <button type="button" class="admin__tab is-active" data-tab="stats">Thống kê</button>
+      <button type="button" class="admin__tab" data-tab="users">Quản lý người dùng</button>
+      <button type="button" class="admin__tab" data-tab="orders">Quản lý đơn hàng</button>
+      <button type="button" class="admin__tab" data-tab="stats">Thống kê</button>
     </div>
 
     <section class="admin__panel" data-panel="products">
@@ -82,7 +82,6 @@
               <th>Địa chỉ</th>
               <th>Vai trò</th>
               <th>Trạng thái</th>
-              <th>Thao tác</th>
             </tr>
           </thead>
           <tbody id="adminUsers"></tbody>
@@ -190,6 +189,40 @@
         <div class="admin__dialog-actions">
           <button type="submit" class="admin__save">Thêm</button>
           <button type="button" id="pfCancel" class="admin__cancel">Hủy</button>
+        </div>
+      </form>
+    </dialog>
+
+    <dialog id="editProductDialog" class="admin__dialog">
+      <form id="editProductForm" novalidate>
+        <h2>Sửa sản phẩm</h2>
+
+        <label class="admin__field">
+          <span>Tên sản phẩm</span>
+          <input type="text" id="epfName" class="admin__input" placeholder="Nhập tên sản phẩm">
+        </label>
+
+        <div id="epfSelects"></div>
+
+        <label class="admin__field">
+          <span>Giá</span>
+          <input type="number" id="epfPrice" class="admin__input" min="0">
+        </label>
+
+        <label class="admin__field">
+          <span>Giá cũ (không bắt buộc)</span>
+          <input type="number" id="epfOldPrice" class="admin__input" min="0">
+        </label>
+
+        <label class="admin__field">
+          <span>Hình ảnh</span>
+          <input type="file" id="epfImage" accept="image/*">
+        </label>
+        <img id="epfPreview" class="admin__preview" alt="" hidden>
+
+        <div class="admin__dialog-actions">
+          <button type="button" id="epfSave" class="admin__save">Lưu</button>
+          <button type="button" id="epfCancel" class="admin__cancel">Hủy</button>
         </div>
       </form>
     </dialog>

@@ -59,9 +59,43 @@
     tr.appendChild(cell(product.team));
     tr.appendChild(cell(product.league));
     tr.appendChild(cell(product.season));
-    tr.appendChild(emptyCell());
+    tr.appendChild(createActionCell(product));
 
     return tr;
+  }
+
+
+  const addProductBtn = document.getElementById("addProductBtn");
+  const productDialog = document.getElementById("productDialog");
+  const productForm = document.getElementById("productForm");
+  const pfCancel = document.getElementById("pfCancel");
+
+  if (addProductBtn && productDialog) {
+    addProductBtn.addEventListener("click", () => {
+      if (productForm) productForm.reset();
+      if (typeof productDialog.showModal === "function") {
+        productDialog.showModal();
+      } else {
+        productDialog.setAttribute("open", "");
+      }
+    });
+  }
+
+  if (pfCancel && productDialog) {
+    pfCancel.addEventListener("click", () => {
+      if (typeof productDialog.close === "function") {
+        productDialog.close();
+      } else {
+        productDialog.removeAttribute("open");
+      }
+    });
+  }
+
+  if (productForm) {
+    productForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      // Chỉ hiển thị form, bấm nút không làm gì
+    });
   }
 
   function renderProductTable() {
@@ -82,7 +116,18 @@
     tr.appendChild(cell(user.email));
     tr.appendChild(cell(getUserAddress(user)));
     tr.appendChild(cell(user.role));
-    tr.appendChild(cell(user.is_locked ? "Đã khoá" : "Hoạt động"));
+    const statusTd = document.createElement("td");
+    const statusText = document.createElement("span");
+    statusText.textContent = user.is_locked ? "Đã khoá" : "Hoạt động";
+
+    const lockBtn = document.createElement("button");
+    lockBtn.type = "button";
+    lockBtn.className = "admin__lock-btn";
+    lockBtn.textContent = user.is_locked ? "Mở khoá" : "Khoá";
+
+    statusTd.append(statusText, lockBtn);
+    tr.appendChild(statusTd);
+
     tr.appendChild(emptyCell());
 
     return tr;
@@ -297,4 +342,91 @@
     `Admin: ${counts.products} sản phẩm, ${counts.users} người dùng, ` +
     `${counts.orders} đơn hàng, ${counts.stats} khách hàng thống kê.`
   );
-})();
+
+
+
+  const editDialog = document.getElementById("editProductDialog");
+  const editForm = document.getElementById("editProductForm");
+  const epfName = document.getElementById("epfName");
+  const epfPrice = document.getElementById("epfPrice");
+  const epfOldPrice = document.getElementById("epfOldPrice");
+  const epfSave = document.getElementById("epfSave");
+  const epfCancel = document.getElementById("epfCancel");
+
+  function createActionCell(product) {
+    const td = document.createElement("td");
+    td.className = "admin__actions";
+
+    const editBtn = document.createElement("button");
+    editBtn.type = "button";
+    editBtn.className = "admin__edit-btn";
+    editBtn.textContent = "Sửa";
+    editBtn.addEventListener("click", () => {
+      if (!editDialog) return;
+      if (epfName) epfName.value = product.name ?? "";
+      if (epfPrice) epfPrice.value = product.price ?? "";
+      if (epfOldPrice) epfOldPrice.value = product.oldPrice ?? "";
+      if (typeof editDialog.showModal === "function") {
+        editDialog.showModal();
+      } else {
+        editDialog.setAttribute("open", "");
+      }
+    });
+
+    const deleteBtn = document.createElement("button");
+    deleteBtn.type = "button";
+    deleteBtn.className = "admin__delete-btn";
+    deleteBtn.textContent = "Xoá";
+    deleteBtn.addEventListener("click", () => {
+      // Chỉ hiển thị nút, không xử lý xoá
+    });
+
+    td.append(editBtn, deleteBtn);
+    return td;
+  }
+
+  if (epfSave) {
+    epfSave.addEventListener("click", () => {
+      // Chỉ hiển thị nút, bấm Lưu không làm gì
+    });
+  }
+
+  if (epfCancel) {
+    epfCancel.addEventListener("click", () => {
+      if (!editDialog) return;
+      if (typeof editDialog.close === "function") {
+        editDialog.close();
+      } else {
+        editDialog.removeAttribute("open");
+      }
+    });
+  }
+
+  if (editForm) {
+    editForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+    });
+  }
+}
+
+
+
+)();
+
+
+(function () {
+  const tabs = document.querySelectorAll(".admin__tab");
+  const panels = document.querySelectorAll(".admin__panel");
+
+  function showTab(name) {
+    tabs.forEach(t => t.classList.toggle("is-active", t.dataset.tab === name));
+    panels.forEach(p => { p.hidden = p.dataset.panel !== name; });
+  }
+
+  tabs.forEach(t => t.addEventListener("click", () => showTab(t.dataset.tab)));
+  showTab("products");
+}
+
+
+
+)();
