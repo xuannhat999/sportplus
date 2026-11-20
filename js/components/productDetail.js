@@ -42,6 +42,49 @@ function renderProductSizes(product, root) {
   }));
 }
 
+function getSelectedSize(root) {
+  const checked = root.querySelector('input[name="product-size"]:checked');
+  return checked ? checked.value : null;
+}
+
+function getQuantityValue(quantityControl, root) {
+  if (quantityControl && typeof quantityControl.getValue === "function") {
+    return Number(quantityControl.getValue()) || MIN_QUANTITY;
+  }
+
+  const input = root.querySelector('.p-detail__summary__purchase__quantity__control input[type="number"]');
+  return input ? Math.max(MIN_QUANTITY, Number(input.value) || MIN_QUANTITY) : MIN_QUANTITY;
+}
+
+function setupAddToCart(product, root, quantityControl) {
+  const btnAdd = root.querySelector(".p-detail__summary__purchase__btn-add-to-cart");
+  const messageEl = root.querySelector(".p-detail__summary__purchase__message");
+  if (!btnAdd || !messageEl) return;
+
+  let hideTimer = null;
+
+  function showNotice(text, isError = false) {
+    messageEl.textContent = text;
+    messageEl.hidden = false;
+    messageEl.classList.toggle("is-error", isError);
+
+    clearTimeout(hideTimer);
+    hideTimer = setTimeout(() => {
+      messageEl.hidden = true;
+    }, 3000);
+  }
+
+  btnAdd.addEventListener("click", () => {
+    const size = getSelectedSize(root);
+    const quantity = getQuantityValue(quantityControl, root);
+
+    // Gọi hàm thêm vào giỏ hàng của dự án bạn tại đây (nếu có):
+    // Ví dụ: App.cartService?.addItem?.(product.id, size, quantity)
+
+    showNotice(`Đã thêm "${product.name}" ( SL: ${quantity}) vào giỏ hàng.`);
+  });
+}
+
 function renderProductDetail(product) {
   const container = document.getElementById("product-detail");
   const tpl = document.getElementById("product-detail-tpl");
@@ -53,7 +96,6 @@ function renderProductDetail(product) {
   }
 
   const node = tpl.content.cloneNode(true);
-  const root = node.querySelector(".p-detail");
 
   const image = node.querySelector(".p-detail__media__main");
   const images = productImages(product);
@@ -108,7 +150,8 @@ function renderProductDetail(product) {
   }
 
   renderProductSizes(product, node);
-  setupQuantity(node);
+  const quantityControl = setupQuantity(node);
+  setupAddToCart(product, node, quantityControl);
 
   document.title = `${product.name} - SportPlus`;
   container.replaceChildren(node);
