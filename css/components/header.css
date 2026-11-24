@@ -19,6 +19,132 @@
 .btn-menu__icon {
   font-size: var(--font-size-xl);
 }
+.header {
+  flex-wrap: wrap;
+  overflow: visible;
+}
+
+.header-filters {
+  order: 10;
+  flex: 0 0 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  padding: 4px 0 8px;
+}
+
+.header-filters__group {
+  position: relative;
+}
+
+.header-filters__toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 16px;
+  border: 0;
+  border-radius: 999px;
+  background: none;
+  color: #fff;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background .2s;
+}
+
+.header-filters__toggle i {
+  font-size: 11px;
+  transition: transform .2s;
+}
+
+.header-filters__group:hover > .header-filters__toggle,
+.header-filters__group:focus-within > .header-filters__toggle {
+  background: rgba(255, 255, 255, .15);
+}
+
+.header-filters__group:hover .header-filters__toggle i,
+.header-filters__group:focus-within .header-filters__toggle i {
+  transform: rotate(180deg);
+}
+
+.header-filters__toggle.is-selected {
+  background: #2563eb;
+}
+
+/* Menu thả xuống: ẩn mặc định */
+.header-filters__menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 100;
+  display: grid;
+  grid-template-columns: repeat(var(--cols, 1), minmax(150px, 1fr));
+  gap: 2px;
+  min-width: 200px;
+  max-height: 360px;
+  overflow-y: auto;
+  padding: 8px;
+  border-radius: 12px;
+  background: #fff;
+  color: #111;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, .3);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(8px);
+  transition: opacity .18s, transform .18s, visibility .18s;
+}
+
+.header-filters__group:hover > .header-filters__menu,
+.header-filters__group:focus-within > .header-filters__menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+/* Danh sách dài thì chia cột */
+.header-filters__group[data-field="team"] .header-filters__menu   { --cols: 3; }
+.header-filters__group[data-field="season"] .header-filters__menu { --cols: 2; }
+
+.header-filters__item {
+  padding: 8px 12px;
+  border: 0;
+  border-radius: 8px;
+  background: none;
+  color: inherit;
+  font: inherit;
+  font-size: 14px;
+  text-align: left;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.header-filters__item:hover {
+  background: rgba(37, 99, 235, .12);
+  color: #2563eb;
+}
+
+.header-filters__item.is-active {
+  background: rgba(37, 99, 235, .15);
+  color: #2563eb;
+  font-weight: 600;
+}
+
+.header-filters__clear {
+  padding: 6px 14px;
+  border: 1px solid rgba(128, 128, 128, .4);
+  border-radius: 999px;
+  background: none;
+  color: inherit;
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.header-filters__clear:hover {
+  border-color: #dc2626;
+  color: #dc2626;
+}
 
 /* TITLE */
 .header__name {

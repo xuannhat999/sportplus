@@ -98,47 +98,77 @@
     });
   }
 
-  function renderProductTable() {
-    const list = ProductService.getAll();
-    productsEmpty.hidden = list.length > 0;
-    productsBody.replaceChildren(...list.map(createProductRow));
-    return list.length;
+  const productsView = createListView({
+  getList: () => ProductService.getAll(),
+  pagerEl: document.getElementById("adminProductsPager"),
+  pageSize: 8,
+  renderPage(items, info) {
+    productsEmpty.hidden = info.total > 0;
+    productsEmpty.textContent = info.all ? "Không tìm thấy sản phẩm phù hợp." : "Chưa có sản phẩm nào.";
+    productsBody.replaceChildren(...items.map(createProductRow));
   }
+});
+
+function renderProductTable() {
+  return productsView.render(true);
+}
 
   /* ---------- Người dùng ---------- */
 
   function createUserRow(user) {
-    const tr = document.createElement("tr");
-    tr.dataset.id = user.id;
+  const tr = document.createElement("tr");
+  tr.dataset.id = user.id;
 
-    tr.appendChild(cell(user.id));
-    tr.appendChild(cell(user.name));
-    tr.appendChild(cell(user.email));
-    tr.appendChild(cell(getUserAddress(user)));
-    tr.appendChild(cell(user.role));
-    const statusTd = document.createElement("td");
-    const statusText = document.createElement("span");
-    statusText.textContent = user.is_locked ? "Đã khoá" : "Hoạt động";
+  tr.appendChild(cell(user.id));
+  tr.appendChild(cell(user.name));
+  tr.appendChild(cell(user.email));
+  tr.appendChild(cell(getUserAddress(user)));
+  tr.appendChild(cell(user.role));
 
-    const lockBtn = document.createElement("button");
-    lockBtn.type = "button";
-    lockBtn.className = "admin__lock-btn";
-    lockBtn.textContent = user.is_locked ? "Mở khoá" : "Khoá";
+  const statusTd = document.createElement("td");
+  const toggle = document.createElement("button");
+  toggle.type = "button";
+  toggle.className = "admin__toggle";
+  toggle.setAttribute("role", "switch");
 
-    statusTd.append(statusText, lockBtn);
-    tr.appendChild(statusTd);
-
-    tr.appendChild(emptyCell());
-
-    return tr;
+  function paint() {
+    const active = !user.is_locked;
+    toggle.classList.toggle("is-on", active);
+    toggle.setAttribute("aria-checked", String(active));
+    toggle.innerHTML =
+      '<span class="admin__toggle-track"><span class="admin__toggle-dot"></span></span>' +
+      '<span class="admin__toggle-text">' + (active ? "Hoạt động" : "Đã khoá") + "</span>";
+    toggle.title = active ? "Bấm để khoá tài khoản" : "Bấm để mở khoá";
   }
 
-  function renderUserTable() {
-    const list = getUsers();
-    usersEmpty.hidden = list.length > 0;
-    usersBody.replaceChildren(...list.map(createUserRow));
-    return list.length;
+  toggle.addEventListener("click", () => {
+    user.is_locked = !user.is_locked;
+    paint();
+    // TODO: lưu lại nếu user_service có hàm cập nhật, ví dụ:
+    // UserService.update(user) hoặc ghi lại vào localStorage
+  });
+
+  paint();
+  statusTd.appendChild(toggle);
+  tr.appendChild(statusTd);
+
+  return tr;
+}
+
+  const usersView = createListView({
+  getList: () => getUsers(),
+  pagerEl: document.getElementById("adminUsersPager"),
+  pageSize: 8,
+  renderPage(items, info) {
+    usersEmpty.hidden = info.total > 0;
+    usersEmpty.textContent = info.all ? "Không tìm thấy người dùng phù hợp." : "Chưa có người dùng nào.";
+    usersBody.replaceChildren(...items.map(createUserRow));
   }
+});
+
+function renderUserTable() {
+  return usersView.render(true);
+}
 
   /* ---------- Đơn hàng ---------- */
 
@@ -148,6 +178,47 @@
     return `${name} (${item.size || ""}) x${item.quantity ?? 0}`;
   }
 
+
+  function createStatusSelect(order) {
+  const td = document.createElement("td");
+  const select = document.createElement("select");
+  select.className = "admin__status";
+  select.setAttribute("aria-label", "Trạng thái đơn hàng");
+
+  Object.keys(STATUS_LABEL).forEach(key => {
+    select.append(new Option(STATUS_LABEL[key], key));
+  });
+
+  function paint() {
+    select.value = order.status;
+    select.dataset.status = order.status;
+  }
+
+  select.addEventListener("change", () => {
+    const next = select.value;
+    if (next === order.status) return;
+
+    if (next === ORDER_STATUS.CANCELLED &&
+        !confirm(`Hủy đơn #${order.id}?`)) {
+      paint();
+      return;
+    }
+
+    order.status = next;
+
+    if (typeof OrderService.updateStatus === "function") {
+      OrderService.updateStatus(order.id, next);
+    } else if (typeof OrderService.update === "function") {
+      OrderService.update(order);
+    }
+
+    paint();
+  });
+
+  paint();
+  td.appendChild(select);
+  return td;
+}
   function createOrderRow(order) {
     const tr = document.createElement("tr");
     tr.dataset.id = order.id;
@@ -162,7 +233,7 @@
     tr.appendChild(cell(formatPrice(order.total)));
     tr.appendChild(cell(ORDER_PAY_METHOD_LABELS[order.payMethod] || order.payMethod));
     tr.appendChild(cell(order.address || ""));
-    tr.appendChild(cell(STATUS_LABEL[order.status] || order.status));
+    tr.appendChild(createStatusSelect(order));
 
     return tr;
   }
@@ -179,6 +250,8 @@
       district: parts.length >= 3 ? parts[parts.length - 2] : ""
     };
   }
+
+  
 
   function fillSelect(select, values, placeholder) {
     if (!select) return;
@@ -228,28 +301,58 @@
 
   /* ---------- Thống kê ---------- */
 
-  function computeTopCustomers(limit = 5) {
-    const byUser = new Map();
+  const stFrom = document.getElementById("stFrom");
+const stTo = document.getElementById("stTo");
+const stRun = document.getElementById("stRun");
 
-    OrderService.getAll().forEach(order => {
-      if (order.status === ORDER_STATUS.CANCELLED) return; // bỏ đơn đã hủy
+function computeCustomers() {
+  const from = stFrom && stFrom.value ? new Date(stFrom.value + "T00:00:00") : null;
+  const to = stTo && stTo.value ? new Date(stTo.value + "T23:59:59.999") : null;
+  const byUser = new Map();
 
-      const key = Number(order.userId);
-      if (!byUser.has(key)) byUser.set(key, { userId: key, total: 0, orders: [] });
+  OrderService.getAll().forEach(order => {
+    if (order.status === ORDER_STATUS.CANCELLED) return; // bỏ đơn đã hủy
 
-      const entry = byUser.get(key);
-      entry.total += Number(order.total) || 0;
-      entry.orders.push(order);
-    });
+    const d = new Date(order.createdAt);
+    if (from && d < from) return;
+    if (to && d > to) return;
 
-    return [...byUser.values()]
-      .sort((a, b) => b.total - a.total)
-      .slice(0, limit)
-      .map(entry => ({
-        ...entry,
-        orders: entry.orders.sort((a, b) => Number(b.total) - Number(a.total))
-      }));
+    const key = Number(order.userId);
+    if (!byUser.has(key)) byUser.set(key, { userId: key, total: 0, orders: [] });
+
+    const entry = byUser.get(key);
+    entry.total += Number(order.total) || 0;
+    entry.orders.push(order);
+  });
+
+  return [...byUser.values()]
+    .sort((a, b) => b.total - a.total)
+    .map((entry, i) => ({
+      ...entry,
+      rank: i + 1,
+      orders: entry.orders.sort((a, b) => Number(b.total) - Number(a.total))
+    }));
+}
+
+const statsView = createListView({
+  getList: computeCustomers,
+  pagerEl: document.getElementById("adminStatsPager"),
+  pageSize: 3,
+  renderPage(items, info) {
+    if (stNote) {
+      stNote.hidden = info.total > 0;
+      stNote.textContent = "Chưa có đơn hàng nào.";
+    }
+    stResult.replaceChildren(...items.map(entry => createCustomerBlock(entry, entry.rank)));
   }
+});
+
+function renderStats() {
+  return statsView.render(true);
+}
+
+if (stRun) stRun.addEventListener("click", () => statsView.render(true));
+  
 
   function createCustomerBlock(entry, rank) {
     const owner = getUserById(entry.userId);
@@ -311,24 +414,6 @@
     return block;
   }
 
-  function renderStats() {
-    if (stNote) stNote.hidden = true;
-    stResult.replaceChildren();
-
-    const top = computeTopCustomers(5);
-
-    if (top.length === 0) {
-      if (stNote) {
-        stNote.textContent = "Chưa có đơn hàng nào.";
-        stNote.hidden = false;
-      }
-      return 0;
-    }
-
-    stResult.replaceChildren(...top.map((entry, i) => createCustomerBlock(entry, i + 1)));
-    return top.length;
-  }
-
   /* ---------- Khởi tạo ---------- */
 
   const counts = {
@@ -350,40 +435,53 @@
   const epfName = document.getElementById("epfName");
   const epfPrice = document.getElementById("epfPrice");
   const epfOldPrice = document.getElementById("epfOldPrice");
+  const epfTeam = document.getElementById("epfTeam");
+const epfLeague = document.getElementById("epfLeague");
+const epfSeason = document.getElementById("epfSeason");
   const epfSave = document.getElementById("epfSave");
   const epfCancel = document.getElementById("epfCancel");
 
   function createActionCell(product) {
-    const td = document.createElement("td");
-    td.className = "admin__actions";
+  const td = document.createElement("td");
 
-    const editBtn = document.createElement("button");
-    editBtn.type = "button";
-    editBtn.className = "admin__edit-btn";
-    editBtn.textContent = "Sửa";
-    editBtn.addEventListener("click", () => {
-      if (!editDialog) return;
-      if (epfName) epfName.value = product.name ?? "";
-      if (epfPrice) epfPrice.value = product.price ?? "";
-      if (epfOldPrice) epfOldPrice.value = product.oldPrice ?? "";
-      if (typeof editDialog.showModal === "function") {
-        editDialog.showModal();
-      } else {
-        editDialog.setAttribute("open", "");
-      }
-    });
+  const wrap = document.createElement("div");
+  wrap.className = "admin__actions";
 
-    const deleteBtn = document.createElement("button");
-    deleteBtn.type = "button";
-    deleteBtn.className = "admin__delete-btn";
-    deleteBtn.textContent = "Xoá";
-    deleteBtn.addEventListener("click", () => {
-      // Chỉ hiển thị nút, không xử lý xoá
-    });
+  const editBtn = document.createElement("button");
+  editBtn.type = "button";
+  editBtn.className = "admin__btn admin__btn--edit";
+  editBtn.title = "Sửa sản phẩm";
+  editBtn.setAttribute("aria-label", "Sửa");
+  editBtn.innerHTML = '<i class="fa-solid fa-pen-to-square"></i><span>Sửa</span>';
+  editBtn.addEventListener("click", () => {
+    if (!editDialog) return;
+    if (epfName) epfName.value = product.name ?? "";
+    if (epfPrice) epfPrice.value = product.price ?? "";
+    if (epfOldPrice) epfOldPrice.value = product.oldPrice ?? "";
+    if (epfTeam) epfTeam.value = product.team ?? "";
+    if (epfLeague) epfLeague.value = product.league ?? "";
+    if (epfSeason) epfSeason.value = product.season ?? "";
+    if (typeof editDialog.showModal === "function") {
+      editDialog.showModal();
+    } else {
+      editDialog.setAttribute("open", "");
+    }
+  });
 
-    td.append(editBtn, deleteBtn);
-    return td;
-  }
+  const deleteBtn = document.createElement("button");
+  deleteBtn.type = "button";
+  deleteBtn.className = "admin__btn admin__btn--delete";
+  deleteBtn.title = "Xoá sản phẩm";
+  deleteBtn.setAttribute("aria-label", "Xoá");
+  deleteBtn.innerHTML = '<i class="fa-solid fa-trash-can"></i><span>Xoá</span>';
+  deleteBtn.addEventListener("click", () => {
+    // Chỉ hiển thị nút, không xử lý xoá
+  });
+
+  wrap.append(editBtn, deleteBtn);
+  td.appendChild(wrap);
+  return td;
+}
 
   if (epfSave) {
     epfSave.addEventListener("click", () => {
@@ -407,6 +505,98 @@
       e.preventDefault();
     });
   }
+
+
+  /* ---------- Tìm kiếm + phân trang dùng chung ---------- */
+
+// bỏ dấu + chữ thường để tìm "ao" ra "Áo"
+function normalize(s) {
+  return String(s ?? "")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/đ/g, "d").replace(/Đ/g, "D")
+    .toLowerCase()
+    .trim();
+}
+
+function createListView({ getList, match, renderPage, searchEl, pagerEl, pageSize = 8 }) {
+  let page = 1;
+
+  function render(resetPage) {
+    if (resetPage) page = 1;
+
+    const kw = normalize(searchEl ? searchEl.value : "");
+    const all = getList();
+    const filtered = kw ? all.filter(item => match(item, kw)) : all;
+
+    const pages = Math.max(1, Math.ceil(filtered.length / pageSize));
+    if (page > pages) page = pages;
+
+    const start = (page - 1) * pageSize;
+    renderPage(filtered.slice(start, start + pageSize), {
+      total: filtered.length,
+      all: all.length,
+      keyword: kw
+    });
+    renderPager(pages, filtered.length);
+    return filtered.length;
+  }
+
+  function goTo(p) {
+    page = p;
+    render();
+  }
+
+  function pageButton(label, target, opts = {}) {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = "admin__page-btn" + (opts.active ? " is-active" : "");
+    b.textContent = label;
+    b.disabled = !!opts.disabled;
+    if (opts.aria) b.setAttribute("aria-label", opts.aria);
+    if (opts.active) b.setAttribute("aria-current", "page");
+    b.addEventListener("click", () => goTo(target));
+    return b;
+  }
+
+  function renderPager(pages, total) {
+    if (!pagerEl) return;
+    pagerEl.replaceChildren();
+    pagerEl.hidden = pages <= 1;
+    if (pages <= 1) return;
+
+    const info = document.createElement("span");
+    info.className = "admin__page-info";
+    info.textContent = `Trang ${page}/${pages} · ${total} kết quả`;
+
+    const nav = document.createElement("div");
+    nav.className = "admin__page-list";
+    nav.appendChild(pageButton("‹", page - 1, { disabled: page === 1, aria: "Trang trước" }));
+
+    const nums = [...new Set([1, page - 1, page, page + 1, pages])]
+      .filter(n => n >= 1 && n <= pages)
+      .sort((a, b) => a - b);
+
+    let prev = 0;
+    nums.forEach(n => {
+      if (n - prev > 1) {
+        const dots = document.createElement("span");
+        dots.className = "admin__page-dots";
+        dots.textContent = "…";
+        nav.appendChild(dots);
+      }
+      nav.appendChild(pageButton(String(n), n, { active: n === page }));
+      prev = n;
+    });
+
+    nav.appendChild(pageButton("›", page + 1, { disabled: page === pages, aria: "Trang sau" }));
+    pagerEl.append(info, nav);
+  }
+
+  if (searchEl) searchEl.addEventListener("input", () => render(true));
+
+  return { render, goTo };
+}
 }
 
 
