@@ -555,7 +555,6 @@ function createListView({ getList, match, renderPage, searchEl, pagerEl, pageSiz
     b.disabled = !!opts.disabled;
     if (opts.aria) b.setAttribute("aria-label", opts.aria);
     if (opts.active) b.setAttribute("aria-current", "page");
-    b.addEventListener("click", () => goTo(target));
     return b;
   }
 
@@ -619,4 +618,73 @@ function createListView({ getList, match, renderPage, searchEl, pagerEl, pageSiz
 
 
 
+
+
 )();
+
+(function () {
+  function formatSize(bytes) {
+    if (bytes < 1024) return bytes + " B";
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + " KB";
+    return (bytes / 1024 / 1024).toFixed(1) + " MB";
+  }
+
+  document.querySelectorAll("[data-dropzone]").forEach(zone => {
+    const input = zone.querySelector('input[type="file"]');
+    const emptyView = zone.querySelector(".admin__dropzone-empty");
+    const fileView = zone.querySelector(".admin__dropzone-file");
+    const img = zone.querySelector("img");
+    const nameEl = zone.querySelector(".admin__dropzone-name");
+    const sizeEl = zone.querySelector(".admin__dropzone-size");
+    const removeBtn = zone.querySelector(".admin__dropzone-remove");
+    let url = null;
+
+    function clear() {
+      if (url) URL.revokeObjectURL(url);
+      url = null;
+      input.value = "";
+      img.removeAttribute("src");
+      emptyView.hidden = false;
+      fileView.hidden = true;
+      zone.classList.remove("has-file", "is-dragover");
+    }
+
+    function show(file) {
+      if (!file || !file.type.startsWith("image/")) { clear(); return; }
+      if (url) URL.revokeObjectURL(url);
+      url = URL.createObjectURL(file);
+      img.src = url;
+      nameEl.textContent = file.name;
+      sizeEl.textContent = formatSize(file.size);
+      emptyView.hidden = true;
+      fileView.hidden = false;
+      zone.classList.add("has-file");
+    }
+
+    input.addEventListener("change", () => show(input.files[0]));
+    removeBtn.addEventListener("click", clear);
+
+    // Kéo thả
+    ["dragenter", "dragover"].forEach(ev =>
+      zone.addEventListener(ev, e => {
+        e.preventDefault();
+        zone.classList.add("is-dragover");
+      }));
+    ["dragleave", "drop"].forEach(ev =>
+      zone.addEventListener(ev, e => {
+        e.preventDefault();
+        zone.classList.remove("is-dragover");
+      }));
+    zone.addEventListener("drop", e => {
+      const file = e.dataTransfer.files[0];
+      if (!file) return;
+      const dt = new DataTransfer();
+      dt.items.add(file);
+      input.files = dt.files;
+      show(file);
+    });
+
+    // Form reset (nút Thêm sản phẩm gọi productForm.reset())
+    if (input.form) input.form.addEventListener("reset", () => setTimeout(clear, 0));
+  });
+})();
