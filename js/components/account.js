@@ -74,6 +74,7 @@ window.App = window.App || {};
     });
 
     setupEmailField(node, user);
+    App.setupPhoneField(node, user);
     App.setupPayMethodField(node, user);
     App.setupAddressField(node, user);
 

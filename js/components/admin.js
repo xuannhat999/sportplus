@@ -465,6 +465,10 @@
       if (epfTeam) epfTeam.value = product.team ?? "";
       if (epfLeague) epfLeague.value = product.league ?? "";
       if (epfSeason) epfSeason.value = product.season ?? "";
+
+      // Render product image gallery (main + thumbnails)
+      renderEditDialogGallery(product);
+
       if (typeof editDialog.showModal === "function") {
         editDialog.showModal();
       } else {
@@ -485,6 +489,50 @@
     wrap.append(editBtn, deleteBtn);
     td.appendChild(wrap);
     return td;
+  }
+
+  // Render gallery in edit dialog with main image + thumbnails
+  function renderEditDialogGallery(product) {
+    const mainImg = document.getElementById("epfGalleryMain")?.querySelector(".admin__gallery-image");
+    const thumbsContainer = document.getElementById("epfGalleryThumbs");
+    if (!mainImg || !thumbsContainer) return;
+
+    const images = productImages(product);
+    if (images.length === 0) {
+      mainImg.src = "";
+      mainImg.alt = product.name || "Sản phẩm";
+      thumbsContainer.innerHTML = "";
+      return;
+    }
+
+    // Set main image (first image)
+    mainImg.src = getAssetPath(images[0]);
+    mainImg.alt = product.name || "Sản phẩm";
+
+    // Render thumbnails (up to 3)
+    const thumbs = images.slice(0, 3);
+    thumbsContainer.innerHTML = thumbs.map((src, i) => `
+      <button type="button" class="admin__gallery-thumb${i === 0 ? ' is-active' : ''}" 
+              data-index="${i}" aria-label="Ảnh ${i + 1}" aria-pressed="${i === 0}"
+              role="listitem">
+        <img src="${getAssetPath(src)}" alt="${product.name || 'Sản phẩm'} ${i + 1}">
+      </button>
+    `).join("");
+
+    // Thumbnail click handlers
+    thumbsContainer.querySelectorAll(".admin__gallery-thumb").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const idx = parseInt(btn.dataset.index, 10);
+        const newSrc = getAssetPath(images[idx]);
+        mainImg.src = newSrc;
+        mainImg.alt = `${product.name || 'Sản phẩm'} ${idx + 1}`;
+        // Update active state
+        thumbsContainer.querySelectorAll(".admin__gallery-thumb").forEach(b => {
+          b.classList.toggle("is-active", b === btn);
+          b.setAttribute("aria-pressed", b === btn ? "true" : "false");
+        });
+      });
+    });
   }
 
   function closeEditDialog() {

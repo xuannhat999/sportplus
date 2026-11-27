@@ -1,7 +1,7 @@
 /* TRANG TÀI KHOẢN */
 .account-page {
   width: 100%;
-  max-width: 720px;
+  max-width: 960px;
   margin: 0 auto;
   padding: var(--space-lg) var(--space-md);
   box-sizing: border-box;
@@ -35,7 +35,7 @@
 
 .account__row {
   display: grid;
-  grid-template-columns: 200px minmax(0, 1fr);
+  grid-template-columns: 240px minmax(0, 1fr);
   gap: var(--space-md);
   align-items: baseline;
   padding: var(--space-md) 0;

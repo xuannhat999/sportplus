@@ -68,15 +68,26 @@
               </dd>
             </div>
             <div class="account__row">
-              <dt class="account__label">Địa chỉ</dt>
+              <dt class="account__label">Số điện thoại</dt>
               <dd class="account__value account__value--field">
                 <div class="field">
-                  <input class="field__input" id="account-address" data-field="address" type="text"
-                    autocomplete="street-address" placeholder="Nhập địa chỉ" aria-label="Địa chỉ">
-                  <p class="field__hint" data-hint="address" hidden></p>
+                  <input class="field__input" id="account-phone" data-field="phone" type="tel" autocomplete="tel"
+                    inputmode="tel" maxlength="11" placeholder="Số điện thoại" aria-label="Số điện thoại">
+                  <p class="field__hint field__hint--error" data-error="phone" role="alert" hidden></p>
                 </div>
               </dd>
             </div>
+            <div class="account__row">
+              <dt class="account__label">Địa chỉ</dt>
+              <dd class="account__value account__value--field">
+                <div class="field">
+                  <input class="field__input" id="address" data-field="address" type="text" placeholder="Số điện thoại"
+                    aria-label="Địa chỉ">
+                  <p class="field__hint field__hint--error" data-error="address" role="alert" hidden></p>
+                </div>
+              </dd>
+            </div>
+
             <div class="account__row">
               <dt class="account__label">Phương thức thanh toán</dt>
               <dd class="account__value account__value--field">

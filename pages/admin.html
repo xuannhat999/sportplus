@@ -262,62 +262,89 @@
           <p>Cập nhật thông tin sản phẩm</p>
         </div>
 
-        <div class="admin__form-grid">
-          <label class="admin__field admin__field--full">
-            <span>Tên sản phẩm</span>
-            <input type="text" id="epfName" class="admin__input" placeholder="Nhập tên sản phẩm">
-          </label>
+        <div class="admin__dialog-body">
+          <!-- Image Gallery Section -->
+          <aside class="admin__dialog-gallery" aria-label="Hình ảnh sản phẩm">
+            <div class="admin__gallery-main" id="epfGalleryMain">
+              <img class="admin__gallery-image" alt="">
+              <span class="admin__gallery-badge" aria-hidden="true">Ảnh chính</span>
+            </div>
+            <div class="admin__gallery-thumbs" id="epfGalleryThumbs" role="list" aria-label="Thư viện ảnh">
+              <!-- Thumbnails rendered by JS -->
+            </div>
+          </aside>
 
-          <div id="epfSelects" class="admin__selects"></div>
+          <!-- Form Section -->
+          <div class="admin__dialog-form">
+            <div class="admin__form-section">
+              <h3 class="admin__section-title">Thông tin cơ bản</h3>
+              <div class="admin__form-grid">
+                <label class="admin__field admin__field--full">
+                  <span>Tên sản phẩm <em>*</em></span>
+                  <input type="text" id="epfName" class="admin__input"
+                    placeholder="Ví dụ: Áo Real Madrid sân nhà 2025-2026" required>
+                </label>
 
-          <label class="admin__field">
-            <span>Giá</span>
-            <input type="number" id="epfPrice" class="admin__input" min="0">
-          </label>
+                <div id="epfSelects" class="admin__selects"></div>
 
-          <label class="admin__field">
-            <span>Giá cũ <small>(không bắt buộc)</small></span>
-            <input type="number" id="epfOldPrice" class="admin__input" min="0">
-          </label>
+                <label class="admin__field">
+                  <span>Giá <em>*</em></span>
+                  <input type="number" id="epfPrice" class="admin__input" min="0" placeholder="0" required>
+                </label>
 
-          <label class="admin__field">
-            <span>Đội</span>
-            <input type="text" id="epfTeam" class="admin__input">
-          </label>
+                <label class="admin__field">
+                  <span>Giá cũ <small>(không bắt buộc)</small></span>
+                  <input type="number" id="epfOldPrice" class="admin__input" min="0" placeholder="0">
+                </label>
+              </div>
+            </div>
 
-          <label class="admin__field">
-            <span>Giải</span>
-            <input type="text" id="epfLeague" class="admin__input">
-          </label>
+            <div class="admin__form-section">
+              <h3 class="admin__section-title">Phân loại</h3>
+              <div class="admin__form-grid">
+                <label class="admin__field">
+                  <span>Đội <em>*</em></span>
+                  <input type="text" id="epfTeam" class="admin__input" placeholder="Real Madrid" required>
+                </label>
 
-          <label class="admin__field">
-            <span>Mùa</span>
-            <input type="text" id="epfSeason" class="admin__input">
-          </label>
+                <label class="admin__field">
+                  <span>Giải <em>*</em></span>
+                  <input type="text" id="epfLeague" class="admin__input" placeholder="La Liga" required>
+                </label>
 
-          <div class="admin__field admin__field--full">
-            <span>Hình ảnh</span>
-            <div class="admin__dropzone" data-dropzone>
-              <input type="file" id="epfImage" accept="image/*" class="admin__file-input">
+                <label class="admin__field">
+                  <span>Mùa <em>*</em></span>
+                  <input type="text" id="epfSeason" class="admin__input" placeholder="2025-2026" required>
+                </label>
+              </div>
+            </div>
 
-              <label for="epfImage" class="admin__dropzone-empty">
-                <span class="admin__dropzone-icon"><i class="fa-solid fa-cloud-arrow-up"></i></span>
-                <strong>Kéo thả ảnh vào đây</strong>
-                <small>hoặc <u>bấm để chọn</u> · PNG, JPG, WEBP</small>
-              </label>
+            <div class="admin__form-section admin__form-section--media">
+              <h3 class="admin__section-title">Hình ảnh sản phẩm</h3>
+              <div class="admin__field admin__field--full">
+                <div class="admin__dropzone" data-dropzone>
+                  <input type="file" id="epfImage" accept="image/*" class="admin__file-input">
 
-              <div class="admin__dropzone-file" hidden>
-                <img id="epfPreview" alt="">
-                <div class="admin__dropzone-meta">
-                  <p class="admin__dropzone-name" id="epfImageName"></p>
-                  <p class="admin__dropzone-size"></p>
-                  <label for="epfImage" class="admin__dropzone-change">
-                    <i class="fa-solid fa-rotate"></i> Đổi ảnh
+                  <label for="epfImage" class="admin__dropzone-empty">
+                    <span class="admin__dropzone-icon"><i class="fa-solid fa-cloud-arrow-up"></i></span>
+                    <strong>Kéo thả ảnh chính vào đây</strong>
+                    <small>hoặc <u>bấm để chọn</u> · PNG, JPG, WEBP · Tối đa 5MB</small>
                   </label>
+
+                  <div class="admin__dropzone-file" hidden>
+                    <img id="epfPreview" alt="">
+                    <div class="admin__dropzone-meta">
+                      <p class="admin__dropzone-name" id="epfImageName"></p>
+                      <p class="admin__dropzone-size"></p>
+                      <label for="epfImage" class="admin__dropzone-change">
+                        <i class="fa-solid fa-rotate"></i> Đổi ảnh
+                      </label>
+                    </div>
+                    <button type="button" class="admin__dropzone-remove" aria-label="Xoá ảnh">
+                      <i class="fa-solid fa-xmark"></i>
+                    </button>
+                  </div>
                 </div>
-                <button type="button" class="admin__dropzone-remove" aria-label="Xoá ảnh">
-                  <i class="fa-solid fa-xmark"></i>
-                </button>
               </div>
             </div>
           </div>
@@ -325,7 +352,7 @@
 
         <div class="admin__dialog-actions">
           <button type="button" id="epfCancel" class="admin__cancel">Hủy</button>
-          <button type="button" id="epfSave" class="admin__save">Lưu</button>
+          <button type="button" id="epfSave" class="admin__save">Lưu thay đổi</button>
         </div>
       </form>
     </dialog>
