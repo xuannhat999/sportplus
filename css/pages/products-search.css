@@ -148,6 +148,43 @@
   opacity: 0.6;
 }
 
+/* PRICE FILTER (Giá) - range inputs */
+.filter-panel__options--price {
+  max-height: none;
+  overflow: visible;
+  padding-right: 0;
+}
+
+.filter-panel__price-range {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.filter-panel__price-input {
+  flex: 1 1 0;
+  min-width: 0;
+  padding: var(--space-sm);
+  font-size: var(--font-size-sm);
+  font-family: inherit;
+  color: var(--color-text);
+  background-color: transparent;
+  border: 1px solid color-mix(in srgb, var(--color-text) 30%, transparent);
+  border-radius: var(--radius);
+}
+
+.filter-panel__price-input:focus {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 1px;
+  border-color: var(--color-primary);
+}
+
+.filter-panel__price-sep {
+  flex: 0 0 auto;
+  font-size: var(--font-size-md);
+  opacity: 0.7;
+}
+
 /* RESULTS */
 .search-page__results {
   flex: 1;
@@ -246,5 +283,15 @@
   .search-page__results .all-products {
     grid-template-columns: repeat(5, minmax(170px, 1fr));
     overflow-x: auto;
+  }
+}
+
+@media (max-width: 600px) {
+  .filter-panel__price-range {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .filter-panel__price-sep {
+    text-align: center;
   }
 }

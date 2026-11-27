@@ -11,13 +11,6 @@
   const root = document.body.dataset.root || "";
   const searchUrl = root + "pages/products_search.html";
 
-  const PRICE_PRESETS = [
-    { label: "Dưới 500.000đ",           min: null,    max: 500000 },
-    { label: "500.000đ - 1.000.000đ",   min: 500000,  max: 1000000 },
-    { label: "1.000.000đ - 2.000.000đ", min: 1000000, max: 2000000 },
-    { label: "Trên 2.000.000đ",         min: 2000000, max: null }
-  ];
-
   const GROUPS = [
     { field: "brand",    label: "Hãng",        data: () => typeof BRANDS !== "undefined" ? BRANDS : null },
     { field: "category", label: "Thể loại",    data: () => typeof CATEGORIES !== "undefined" ? CATEGORIES : null },
@@ -83,47 +76,4 @@
       menu.appendChild(item);
     });
   });
-
-  /* ---------- Nhóm giá ---------- */
-  (function () {
-    const { menu } = makeGroup("price", "Giá");
-    menu.classList.add("header-filters__menu--price");
-
-    PRICE_PRESETS.forEach(p => {
-      const item = document.createElement("button");
-      item.type = "button";
-      item.className = "header-filters__item";
-      item.textContent = p.label;
-      item.addEventListener("click", () => go({ pmin: p.min, pmax: p.max }));
-      menu.appendChild(item);
-    });
-
-    const custom = document.createElement("div");
-    custom.className = "header-filters__price-custom";
-
-    const mk = (ph, aria) => {
-      const el = document.createElement("input");
-      el.type = "number";
-      el.min = "0";
-      el.placeholder = ph;
-      el.setAttribute("aria-label", aria);
-      return el;
-    };
-    const minInput = mk("Từ", "Giá thấp nhất");
-    const maxInput = mk("Đến", "Giá cao nhất");
-    const sep = document.createElement("span");
-    sep.textContent = "–";
-
-    const apply = () => {
-      let a = minInput.value === "" ? null : Number(minInput.value);
-      let b = maxInput.value === "" ? null : Number(maxInput.value);
-      if (a !== null && b !== null && a > b) [a, b] = [b, a];
-      go({ pmin: a, pmax: b });
-    };
-    [minInput, maxInput].forEach(el =>
-      el.addEventListener("keydown", e => { if (e.key === "Enter") apply(); }));
-
-    custom.append(minInput, sep, maxInput);
-    menu.appendChild(custom);
-  })();
 })();

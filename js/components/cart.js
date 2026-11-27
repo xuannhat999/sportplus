@@ -137,6 +137,8 @@ window.App = window.App || {};
     // thông tin giao hàng (1/3 bên trái) - dùng chung component với trang tài khoản
     App.setupAddressField(node, user);
     App.setupPayMethodField(node, user);
+    App.setupEmailField(node, user);
+    App.setupPhoneField(node, user);
 
     node.querySelector(".cart__count").textContent = `${items.length} sản phẩm trong giỏ`;
 

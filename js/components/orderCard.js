@@ -9,13 +9,6 @@ window.App = window.App || {};
     };
   }
 
-  function formatOrderDate(timestamp) {
-    const value = Number(timestamp);
-    if (!value) return "";
-
-    return new Date(value).toLocaleString("vi-VN");
-  }
-
   function getOrderStatusLabel(status) {
     return STATUS_LABEL[status] || status || "";
   }
@@ -64,10 +57,17 @@ window.App = window.App || {};
     const orderId = card.querySelector('[data-field="orderId"]');
     if (orderId) orderId.textContent = `#${order.id}`;
 
-    card.querySelector('[data-field="createdAt"]').textContent = formatOrderDate(order.createdAt);
+    card.querySelector('[data-field="createdAt"]').textContent = order.createdAt || "";
     card.querySelector('[data-field="total"]').textContent = formatPrice(order.total);
     card.querySelector('[data-field="address"]').textContent = order.address || "Chưa cập nhật";
     card.querySelector('[data-field="payMethod"]').textContent = getOrderPayMethodLabel(order.payMethod);
+
+    // Email / số điện thoại của người đặt (chỉ có ở một số template).
+    const buyer = typeof getUserById === "function" ? getUserById(order.userId) : null;
+    const emailEl = card.querySelector('[data-field="email"]');
+    if (emailEl) emailEl.textContent = order.email || buyer?.email || "Chưa cập nhật";
+    const phoneEl = card.querySelector('[data-field="phone"]');
+    if (phoneEl) phoneEl.textContent = order.phone || buyer?.phone || "Chưa cập nhật";
 
     const status = card.querySelector('[data-field="status"]');
     status.textContent = getOrderStatusLabel(order.status);

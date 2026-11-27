@@ -1,50 +1,23 @@
+const PRICE_PRESETS = [
+  { label: "Dưới 500.000đ", min: null, max: 500000 },
+  { label: "500.000đ - 1.000.000đ", min: 500000, max: 1000000 },
+  { label: "1.000.000đ - 2.000.000đ", min: 1000000, max: 2000000 },
+  { label: "Trên 2.000.000đ", min: 2000000, max: null }
+];
+
 const FILTER_FIELDS = [
   { field: "brand", label: "Hãng", values: () => BRANDS },
   { field: "category", label: "Thể loại", values: () => CATEGORIES, labels: () => CATEGORY_LABELS },
   { field: "kit_type", label: "Loại áo đấu", values: () => KIT_TYPES, labels: () => KIT_TYPE_LABELS },
   { field: "league", label: "Giải đấu", values: () => LEAGUES, labels: () => LEAGUE_LABELS },
   { field: "team", label: "Đội", values: () => TEAMS, labels: () => TEAM_LABELS },
-  { field: "season", label: "Mùa giải", values: () => SEASONS }
+  { field: "season", label: "Mùa giải", values: () => SEASONS },
+  { field: "price", label: "Giá", values: () => PRICE_PRESETS.map(item => item.label) }
 ];
 
-const FILTER_SORTERS = {
-  az: (a, b) => a.name.localeCompare(b.name),
-  za: (a, b) => b.name.localeCompare(a.name),
-  price_asc: (a, b) => a.price - b.price,
-  price_desc: (a, b) => b.price - a.price
-};
-
-const FILTER_DEFAULT_SORT = "az";
-
-// Lưới kết quả luôn 5 cột, mỗi trang tối đa 6 dòng
-const FILTER_PAGE_COLUMNS = 5;
-const FILTER_PAGE_ROWS = 5;
-const FILTER_PAGE_SIZE = FILTER_PAGE_COLUMNS * FILTER_PAGE_ROWS;
-
-function initProductFilters(products) {
+function initProductFilters() {
   const panel = document.getElementById("filter-panel");
   if (!panel) return;
-
-  const params = new URLSearchParams(location.search);
-
-  const sortParam = params.get("sort");
-  const validSort = sortParam && Object.prototype.hasOwnProperty.call(FILTER_SORTERS, sortParam);
-
-  const pageParam = Number.parseInt(params.get("page"), 10);
-  const validPage = !Number.isNaN(pageParam) && pageParam > 0 ? pageParam : 1;
-
-  const state = {
-    keyword: (params.get("q") || "").trim(),
-    sort: validSort ? sortParam : FILTER_DEFAULT_SORT,
-    page: validPage,
-    selected: {}
-  };
-
-  FILTER_FIELDS.forEach(item => {
-    const valid = item.values();
-    const picked = params.getAll(item.field).filter(value => valid.includes(value));
-    state.selected[item.field] = new Set(picked);
-  });
 
   function fieldBoxId(field) {
     return `filter-${field.replace(/_/g, "-")}`;
@@ -71,21 +44,34 @@ function initProductFilters(products) {
     }
   }
 
-  function updateFieldBadge(item) {
-    const toggle = panel.querySelector(`.filter-panel__toggle[aria-controls="${fieldBoxId(item.field)}"]`);
-    if (!toggle) return;
-
-    const badge = toggle.querySelector(".filter-panel__label-count");
-    if (!badge) return;
-
-    const count = state.selected[item.field].size;
-    badge.textContent = count;
-    badge.hidden = count === 0;
-  }
-
   function renderOptions(item) {
     const box = document.getElementById(fieldBoxId(item.field));
     if (!box) return;
+
+    if (item.field === "price") {
+      const wrap = document.createElement("div");
+      wrap.className = "filter-panel__price-range";
+
+      const mk = (placeholder, aria) => {
+        const el = document.createElement("input");
+        el.type = "number";
+        el.min = "0";
+        el.className = "filter-panel__price-input";
+        el.placeholder = placeholder;
+        el.setAttribute("aria-label", aria);
+        return el;
+      };
+
+      const minInput = mk("Từ", "Giá thấp nhất");
+      const sep = document.createElement("span");
+      sep.className = "filter-panel__price-sep";
+      sep.textContent = "-";
+      const maxInput = mk("Đến", "Giá cao nhất");
+
+      wrap.append(minInput, sep, maxInput);
+      box.replaceChildren(wrap);
+      return;
+    }
 
     box.replaceChildren(...item.values().map(value => {
       const label = document.createElement("label");
@@ -95,16 +81,6 @@ function initProductFilters(products) {
       input.type = "checkbox";
       input.name = `filter-${item.field}`;
       input.value = value;
-      input.checked = state.selected[item.field].has(value);
-      input.addEventListener("change", () => {
-        if (input.checked) {
-          state.selected[item.field].add(value);
-        } else {
-          state.selected[item.field].delete(value);
-        }
-        updateFieldBadge(item);
-        state.page = 1;
-      });
 
       const text = document.createElement("span");
       text.textContent = getFilterLabel(item, value);
@@ -112,10 +88,7 @@ function initProductFilters(products) {
       label.append(input, text);
       return label;
     }));
-
-    updateFieldBadge(item);
   }
-
 
   function initToggles() {
     const toggles = panel.querySelectorAll(".filter-panel__toggle");
@@ -134,11 +107,4 @@ function initProductFilters(products) {
 
   FILTER_FIELDS.forEach(renderOptions);
   initToggles();
-
-  FILTER_FIELDS.forEach(item => {
-    if (state.selected[item.field].size > 0) {
-      setGroupExpanded(item.field, true);
-    }
-  });
-
 }

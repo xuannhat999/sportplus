@@ -1,13 +1,15 @@
 const ORDER_DETAIL_SEED = {
   id: 101,
-  createdAt: "2026-10-01T10:00:00.000Z",
+  createdAt: "2026-10-01 10:00:00",
   status: "pending", // Các trạng thái có thể: pending, shipping, completed, cancelled
   payMethod: "online", // online hoặc cash
-  address: "123 Nguyễn Hữu Cảnh, Phường 22, Quận Bình Thạnh, Sài Gòn",
+  address: "123 Nguyen Hue, Quan 1, TP. Ho Chi Minh",
+  phone: "0960429570",
+  email: "admin1@myshop.vn",
   customer: {
     name: "Administrator",
-    email: "admin@sportplus.com",
-    phone: "0901234567"
+    email: "admin1@myshop.vn",
+    phone: "0960429570"
   },
   items: [
     {

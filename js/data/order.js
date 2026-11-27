@@ -6,9 +6,11 @@ const ORDERS_SEED = [
     ],
     total: 1000000,
     status: "pending",
-    createdAt: "2026-10-01T10:00:00.000Z",
+    createdAt: "2026-10-01 10:00:00",
     history: [],
-    address: "123 Nguyễn Hữu Cảnh, Bình Thạnh, Sài Gòn",
+    address: "123 Nguyen Hue, Quan 1, TP. Ho Chi Minh",
+    phone: "0960429570",
+    email: "admin1@myshop.vn",
     payMethod: "online",
     userId: 1
   },
@@ -19,9 +21,11 @@ const ORDERS_SEED = [
     ],
     total: 650000,
     status: "pending",
-    createdAt: "2026-10-02T14:30:00.000Z",
+    createdAt: "2026-10-02 14:30:00",
     history: [],
-    address: "456 Lê Văn Việt, TP. Thủ Đức, Sài Gòn",
+    address: "123 Nguyen Hue, Quan 1, TP. Ho Chi Minh",
+    phone: "0960429570",
+    email: "admin1@myshop.vn",
     payMethod: "cash",
     userId: 1
   }

@@ -69,6 +69,15 @@
   const productDialog = document.getElementById("productDialog");
   const productForm = document.getElementById("productForm");
   const pfCancel = document.getElementById("pfCancel");
+  const pfSave = document.getElementById("pfSave");
+
+  function closeProductDialog() {
+    if (typeof productDialog.close === "function") {
+      productDialog.close();
+    } else {
+      productDialog.removeAttribute("open");
+    }
+  }
 
   if (addProductBtn && productDialog) {
     addProductBtn.addEventListener("click", () => {
@@ -82,93 +91,87 @@
   }
 
   if (pfCancel && productDialog) {
-    pfCancel.addEventListener("click", () => {
-      if (typeof productDialog.close === "function") {
-        productDialog.close();
-      } else {
-        productDialog.removeAttribute("open");
-      }
-    });
+    pfCancel.addEventListener("click", closeProductDialog);
   }
 
+  if (pfSave && productDialog) {
+    pfSave.addEventListener("click", closeProductDialog);
+  }
+
+  // Chặn Enter tự submit form (không còn nút submit)
   if (productForm) {
-    productForm.addEventListener("submit", (e) => {
-      e.preventDefault();
-      // Chỉ hiển thị form, bấm nút không làm gì
-    });
+    productForm.addEventListener("submit", e => e.preventDefault());
   }
 
   const productsView = createListView({
-  getList: () => ProductService.getAll(),
-  pagerEl: document.getElementById("adminProductsPager"),
-  pageSize: 8,
-  renderPage(items, info) {
-    productsEmpty.hidden = info.total > 0;
-    productsEmpty.textContent = info.all ? "Không tìm thấy sản phẩm phù hợp." : "Chưa có sản phẩm nào.";
-    productsBody.replaceChildren(...items.map(createProductRow));
-  }
-});
+    getList: () => ProductService.getAll(),
+    pagerEl: document.getElementById("adminProductsPager"),
+    pageSize: 8,
+    renderPage(items, info) {
+      productsEmpty.hidden = info.total > 0;
+      productsEmpty.textContent = info.all ? "Không tìm thấy sản phẩm phù hợp." : "Chưa có sản phẩm nào.";
+      productsBody.replaceChildren(...items.map(createProductRow));
+    }
+  });
 
-function renderProductTable() {
-  return productsView.render(true);
-}
+  function renderProductTable() {
+    return productsView.render(true);
+  }
 
   /* ---------- Người dùng ---------- */
 
   function createUserRow(user) {
-  const tr = document.createElement("tr");
-  tr.dataset.id = user.id;
+    const tr = document.createElement("tr");
+    tr.dataset.id = user.id;
 
-  tr.appendChild(cell(user.id));
-  tr.appendChild(cell(user.name));
-  tr.appendChild(cell(user.email));
-  tr.appendChild(cell(getUserAddress(user)));
-  tr.appendChild(cell(user.role));
+    tr.appendChild(cell(user.id));
+    tr.appendChild(cell(user.name));
+    tr.appendChild(cell(user.email));
+    tr.appendChild(cell(getUserAddress(user)));
+    tr.appendChild(cell(user.role));
 
-  const statusTd = document.createElement("td");
-  const toggle = document.createElement("button");
-  toggle.type = "button";
-  toggle.className = "admin__toggle";
-  toggle.setAttribute("role", "switch");
+    const statusTd = document.createElement("td");
+    const toggle = document.createElement("button");
+    toggle.type = "button";
+    toggle.className = "admin__toggle";
+    toggle.setAttribute("role", "switch");
 
-  function paint() {
-    const active = !user.is_locked;
-    toggle.classList.toggle("is-on", active);
-    toggle.setAttribute("aria-checked", String(active));
-    toggle.innerHTML =
-      '<span class="admin__toggle-track"><span class="admin__toggle-dot"></span></span>' +
-      '<span class="admin__toggle-text">' + (active ? "Hoạt động" : "Đã khoá") + "</span>";
-    toggle.title = active ? "Bấm để khoá tài khoản" : "Bấm để mở khoá";
-  }
+    function paint() {
+      const active = !user.is_locked;
+      toggle.classList.toggle("is-on", active);
+      toggle.setAttribute("aria-checked", String(active));
+      toggle.innerHTML =
+        '<span class="admin__toggle-track"><span class="admin__toggle-dot"></span></span>' +
+        '<span class="admin__toggle-text">' + (active ? "Hoạt động" : "Đã khoá") + "</span>";
+      toggle.title = active ? "Bấm để khoá tài khoản" : "Bấm để mở khoá";
+    }
 
-  toggle.addEventListener("click", () => {
-    user.is_locked = !user.is_locked;
+    toggle.addEventListener("click", () => {
+      user.is_locked = !user.is_locked;
+      paint();
+    });
+
     paint();
-    // TODO: lưu lại nếu user_service có hàm cập nhật, ví dụ:
-    // UserService.update(user) hoặc ghi lại vào localStorage
-  });
+    statusTd.appendChild(toggle);
+    tr.appendChild(statusTd);
 
-  paint();
-  statusTd.appendChild(toggle);
-  tr.appendChild(statusTd);
-
-  return tr;
-}
+    return tr;
+  }
 
   const usersView = createListView({
-  getList: () => getUsers(),
-  pagerEl: document.getElementById("adminUsersPager"),
-  pageSize: 8,
-  renderPage(items, info) {
-    usersEmpty.hidden = info.total > 0;
-    usersEmpty.textContent = info.all ? "Không tìm thấy người dùng phù hợp." : "Chưa có người dùng nào.";
-    usersBody.replaceChildren(...items.map(createUserRow));
-  }
-});
+    getList: () => getUsers(),
+    pagerEl: document.getElementById("adminUsersPager"),
+    pageSize: 8,
+    renderPage(items, info) {
+      usersEmpty.hidden = info.total > 0;
+      usersEmpty.textContent = info.all ? "Không tìm thấy người dùng phù hợp." : "Chưa có người dùng nào.";
+      usersBody.replaceChildren(...items.map(createUserRow));
+    }
+  });
 
-function renderUserTable() {
-  return usersView.render(true);
-}
+  function renderUserTable() {
+    return usersView.render(true);
+  }
 
   /* ---------- Đơn hàng ---------- */
 
@@ -180,45 +183,45 @@ function renderUserTable() {
 
 
   function createStatusSelect(order) {
-  const td = document.createElement("td");
-  const select = document.createElement("select");
-  select.className = "admin__status";
-  select.setAttribute("aria-label", "Trạng thái đơn hàng");
+    const td = document.createElement("td");
+    const select = document.createElement("select");
+    select.className = "admin__status";
+    select.setAttribute("aria-label", "Trạng thái đơn hàng");
 
-  Object.keys(STATUS_LABEL).forEach(key => {
-    select.append(new Option(STATUS_LABEL[key], key));
-  });
+    Object.keys(STATUS_LABEL).forEach(key => {
+      select.append(new Option(STATUS_LABEL[key], key));
+    });
 
-  function paint() {
-    select.value = order.status;
-    select.dataset.status = order.status;
-  }
+    function paint() {
+      select.value = order.status;
+      select.dataset.status = order.status;
+    }
 
-  select.addEventListener("change", () => {
-    const next = select.value;
-    if (next === order.status) return;
+    select.addEventListener("change", () => {
+      const next = select.value;
+      if (next === order.status) return;
 
-    if (next === ORDER_STATUS.CANCELLED &&
+      if (next === ORDER_STATUS.CANCELLED &&
         !confirm(`Hủy đơn #${order.id}?`)) {
+        paint();
+        return;
+      }
+
+      order.status = next;
+
+      if (typeof OrderService.updateStatus === "function") {
+        OrderService.updateStatus(order.id, next);
+      } else if (typeof OrderService.update === "function") {
+        OrderService.update(order);
+      }
+
       paint();
-      return;
-    }
-
-    order.status = next;
-
-    if (typeof OrderService.updateStatus === "function") {
-      OrderService.updateStatus(order.id, next);
-    } else if (typeof OrderService.update === "function") {
-      OrderService.update(order);
-    }
+    });
 
     paint();
-  });
-
-  paint();
-  td.appendChild(select);
-  return td;
-}
+    td.appendChild(select);
+    return td;
+  }
   function createOrderRow(order) {
     const tr = document.createElement("tr");
     tr.dataset.id = order.id;
@@ -251,7 +254,7 @@ function renderUserTable() {
     };
   }
 
-  
+
 
   function fillSelect(select, values, placeholder) {
     if (!select) return;
@@ -302,57 +305,57 @@ function renderUserTable() {
   /* ---------- Thống kê ---------- */
 
   const stFrom = document.getElementById("stFrom");
-const stTo = document.getElementById("stTo");
-const stRun = document.getElementById("stRun");
+  const stTo = document.getElementById("stTo");
+  const stRun = document.getElementById("stRun");
 
-function computeCustomers() {
-  const from = stFrom && stFrom.value ? new Date(stFrom.value + "T00:00:00") : null;
-  const to = stTo && stTo.value ? new Date(stTo.value + "T23:59:59.999") : null;
-  const byUser = new Map();
+  function computeCustomers() {
+    const from = stFrom && stFrom.value ? new Date(stFrom.value + "T00:00:00") : null;
+    const to = stTo && stTo.value ? new Date(stTo.value + "T23:59:59.999") : null;
+    const byUser = new Map();
 
-  OrderService.getAll().forEach(order => {
-    if (order.status === ORDER_STATUS.CANCELLED) return; // bỏ đơn đã hủy
+    OrderService.getAll().forEach(order => {
+      if (order.status === ORDER_STATUS.CANCELLED) return; // bỏ đơn đã hủy
 
-    const d = new Date(order.createdAt);
-    if (from && d < from) return;
-    if (to && d > to) return;
+      const d = new Date(order.createdAt);
+      if (from && d < from) return;
+      if (to && d > to) return;
 
-    const key = Number(order.userId);
-    if (!byUser.has(key)) byUser.set(key, { userId: key, total: 0, orders: [] });
+      const key = Number(order.userId);
+      if (!byUser.has(key)) byUser.set(key, { userId: key, total: 0, orders: [] });
 
-    const entry = byUser.get(key);
-    entry.total += Number(order.total) || 0;
-    entry.orders.push(order);
+      const entry = byUser.get(key);
+      entry.total += Number(order.total) || 0;
+      entry.orders.push(order);
+    });
+
+    return [...byUser.values()]
+      .sort((a, b) => b.total - a.total)
+      .map((entry, i) => ({
+        ...entry,
+        rank: i + 1,
+        orders: entry.orders.sort((a, b) => Number(b.total) - Number(a.total))
+      }));
+  }
+
+  const statsView = createListView({
+    getList: computeCustomers,
+    pagerEl: document.getElementById("adminStatsPager"),
+    pageSize: 3,
+    renderPage(items, info) {
+      if (stNote) {
+        stNote.hidden = info.total > 0;
+        stNote.textContent = "Chưa có đơn hàng nào.";
+      }
+      stResult.replaceChildren(...items.map(entry => createCustomerBlock(entry, entry.rank)));
+    }
   });
 
-  return [...byUser.values()]
-    .sort((a, b) => b.total - a.total)
-    .map((entry, i) => ({
-      ...entry,
-      rank: i + 1,
-      orders: entry.orders.sort((a, b) => Number(b.total) - Number(a.total))
-    }));
-}
-
-const statsView = createListView({
-  getList: computeCustomers,
-  pagerEl: document.getElementById("adminStatsPager"),
-  pageSize: 3,
-  renderPage(items, info) {
-    if (stNote) {
-      stNote.hidden = info.total > 0;
-      stNote.textContent = "Chưa có đơn hàng nào.";
-    }
-    stResult.replaceChildren(...items.map(entry => createCustomerBlock(entry, entry.rank)));
+  function renderStats() {
+    return statsView.render(true);
   }
-});
 
-function renderStats() {
-  return statsView.render(true);
-}
+  if (stRun) stRun.addEventListener("click", () => statsView.render(true));
 
-if (stRun) stRun.addEventListener("click", () => statsView.render(true));
-  
 
   function createCustomerBlock(entry, rank) {
     const owner = getUserById(entry.userId);
@@ -395,7 +398,8 @@ if (stRun) stRun.addEventListener("click", () => statsView.render(true));
       tr.appendChild(cell(formatPrice(order.total)));
 
       const linkTd = document.createElement("td");
-      const link = document.createElement("span");
+      const link = document.createElement("a");
+      link.href = getAssetPath("pages/orders.html");
       link.textContent = "Xem chi tiết";
       link.className = "admin__link";
       linkTd.appendChild(link);
@@ -436,166 +440,165 @@ if (stRun) stRun.addEventListener("click", () => statsView.render(true));
   const epfPrice = document.getElementById("epfPrice");
   const epfOldPrice = document.getElementById("epfOldPrice");
   const epfTeam = document.getElementById("epfTeam");
-const epfLeague = document.getElementById("epfLeague");
-const epfSeason = document.getElementById("epfSeason");
+  const epfLeague = document.getElementById("epfLeague");
+  const epfSeason = document.getElementById("epfSeason");
   const epfSave = document.getElementById("epfSave");
   const epfCancel = document.getElementById("epfCancel");
 
   function createActionCell(product) {
-  const td = document.createElement("td");
+    const td = document.createElement("td");
 
-  const wrap = document.createElement("div");
-  wrap.className = "admin__actions";
+    const wrap = document.createElement("div");
+    wrap.className = "admin__actions";
 
-  const editBtn = document.createElement("button");
-  editBtn.type = "button";
-  editBtn.className = "admin__btn admin__btn--edit";
-  editBtn.title = "Sửa sản phẩm";
-  editBtn.setAttribute("aria-label", "Sửa");
-  editBtn.innerHTML = '<i class="fa-solid fa-pen-to-square"></i><span>Sửa</span>';
-  editBtn.addEventListener("click", () => {
+    const editBtn = document.createElement("button");
+    editBtn.type = "button";
+    editBtn.className = "admin__btn admin__btn--edit";
+    editBtn.title = "Sửa sản phẩm";
+    editBtn.setAttribute("aria-label", "Sửa");
+    editBtn.innerHTML = '<i class="fa-solid fa-pen-to-square"></i><span>Sửa</span>';
+    editBtn.addEventListener("click", () => {
+      if (!editDialog) return;
+      if (epfName) epfName.value = product.name ?? "";
+      if (epfPrice) epfPrice.value = product.price ?? "";
+      if (epfOldPrice) epfOldPrice.value = product.oldPrice ?? "";
+      if (epfTeam) epfTeam.value = product.team ?? "";
+      if (epfLeague) epfLeague.value = product.league ?? "";
+      if (epfSeason) epfSeason.value = product.season ?? "";
+      if (typeof editDialog.showModal === "function") {
+        editDialog.showModal();
+      } else {
+        editDialog.setAttribute("open", "");
+      }
+    });
+
+    const deleteBtn = document.createElement("button");
+    deleteBtn.type = "button";
+    deleteBtn.className = "admin__btn admin__btn--delete";
+    deleteBtn.title = "Xoá sản phẩm";
+    deleteBtn.setAttribute("aria-label", "Xoá");
+    deleteBtn.innerHTML = '<i class="fa-solid fa-trash-can"></i><span>Xoá</span>';
+    deleteBtn.addEventListener("click", () => {
+      // Chỉ hiển thị nút, không xử lý xoá
+    });
+
+    wrap.append(editBtn, deleteBtn);
+    td.appendChild(wrap);
+    return td;
+  }
+
+  function closeEditDialog() {
     if (!editDialog) return;
-    if (epfName) epfName.value = product.name ?? "";
-    if (epfPrice) epfPrice.value = product.price ?? "";
-    if (epfOldPrice) epfOldPrice.value = product.oldPrice ?? "";
-    if (epfTeam) epfTeam.value = product.team ?? "";
-    if (epfLeague) epfLeague.value = product.league ?? "";
-    if (epfSeason) epfSeason.value = product.season ?? "";
-    if (typeof editDialog.showModal === "function") {
-      editDialog.showModal();
+    if (typeof editDialog.close === "function") {
+      editDialog.close();
     } else {
-      editDialog.setAttribute("open", "");
+      editDialog.removeAttribute("open");
     }
-  });
-
-  const deleteBtn = document.createElement("button");
-  deleteBtn.type = "button";
-  deleteBtn.className = "admin__btn admin__btn--delete";
-  deleteBtn.title = "Xoá sản phẩm";
-  deleteBtn.setAttribute("aria-label", "Xoá");
-  deleteBtn.innerHTML = '<i class="fa-solid fa-trash-can"></i><span>Xoá</span>';
-  deleteBtn.addEventListener("click", () => {
-    // Chỉ hiển thị nút, không xử lý xoá
-  });
-
-  wrap.append(editBtn, deleteBtn);
-  td.appendChild(wrap);
-  return td;
-}
+  }
 
   if (epfSave) {
-    epfSave.addEventListener("click", () => {
-      // Chỉ hiển thị nút, bấm Lưu không làm gì
-    });
+    epfSave.addEventListener("click", closeEditDialog);
   }
 
   if (epfCancel) {
-    epfCancel.addEventListener("click", () => {
-      if (!editDialog) return;
-      if (typeof editDialog.close === "function") {
-        editDialog.close();
-      } else {
-        editDialog.removeAttribute("open");
-      }
-    });
+    epfCancel.addEventListener("click", closeEditDialog);
   }
 
+  // Chặn Enter tự submit form (không còn nút submit)
   if (editForm) {
-    editForm.addEventListener("submit", (e) => {
-      e.preventDefault();
-    });
+    editForm.addEventListener("submit", e => e.preventDefault());
   }
 
 
   /* ---------- Tìm kiếm + phân trang dùng chung ---------- */
 
-// bỏ dấu + chữ thường để tìm "ao" ra "Áo"
-function normalize(s) {
-  return String(s ?? "")
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .replace(/đ/g, "d").replace(/Đ/g, "D")
-    .toLowerCase()
-    .trim();
-}
-
-function createListView({ getList, match, renderPage, searchEl, pagerEl, pageSize = 8 }) {
-  let page = 1;
-
-  function render(resetPage) {
-    if (resetPage) page = 1;
-
-    const kw = normalize(searchEl ? searchEl.value : "");
-    const all = getList();
-    const filtered = kw ? all.filter(item => match(item, kw)) : all;
-
-    const pages = Math.max(1, Math.ceil(filtered.length / pageSize));
-    if (page > pages) page = pages;
-
-    const start = (page - 1) * pageSize;
-    renderPage(filtered.slice(start, start + pageSize), {
-      total: filtered.length,
-      all: all.length,
-      keyword: kw
-    });
-    renderPager(pages, filtered.length);
-    return filtered.length;
+  // bỏ dấu + chữ thường để tìm "ao" ra "Áo"
+  function normalize(s) {
+    return String(s ?? "")
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/đ/g, "d").replace(/Đ/g, "D")
+      .toLowerCase()
+      .trim();
   }
 
-  function goTo(p) {
-    page = p;
-    render();
+  function createListView({ getList, match, renderPage, searchEl, pagerEl, pageSize = 8 }) {
+    let page = 1;
+
+    function render(resetPage) {
+      if (resetPage) page = 1;
+
+      const kw = normalize(searchEl ? searchEl.value : "");
+      const all = getList();
+      const filtered = kw ? all.filter(item => match(item, kw)) : all;
+
+      const pages = Math.max(1, Math.ceil(filtered.length / pageSize));
+      if (page > pages) page = pages;
+
+      const start = (page - 1) * pageSize;
+      renderPage(filtered.slice(start, start + pageSize), {
+        total: filtered.length,
+        all: all.length,
+        keyword: kw
+      });
+      renderPager(pages, filtered.length);
+      return filtered.length;
+    }
+
+    function goTo(p) {
+      page = p;
+      render();
+    }
+
+    function pageButton(label, target, opts = {}) {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.className = "admin__page-btn" + (opts.active ? " is-active" : "");
+      b.textContent = label;
+      b.disabled = !!opts.disabled;
+      if (opts.aria) b.setAttribute("aria-label", opts.aria);
+      if (opts.active) b.setAttribute("aria-current", "page");
+      return b;
+    }
+
+    function renderPager(pages, total) {
+      if (!pagerEl) return;
+      pagerEl.replaceChildren();
+      pagerEl.hidden = pages <= 1;
+      if (pages <= 1) return;
+
+      const info = document.createElement("span");
+      info.className = "admin__page-info";
+      info.textContent = `Trang ${page}/${pages} · ${total} kết quả`;
+
+      const nav = document.createElement("div");
+      nav.className = "admin__page-list";
+      nav.appendChild(pageButton("‹", page - 1, { disabled: page === 1, aria: "Trang trước" }));
+
+      const nums = [...new Set([1, page - 1, page, page + 1, pages])]
+        .filter(n => n >= 1 && n <= pages)
+        .sort((a, b) => a - b);
+
+      let prev = 0;
+      nums.forEach(n => {
+        if (n - prev > 1) {
+          const dots = document.createElement("span");
+          dots.className = "admin__page-dots";
+          dots.textContent = "…";
+          nav.appendChild(dots);
+        }
+        nav.appendChild(pageButton(String(n), n, { active: n === page }));
+        prev = n;
+      });
+
+      nav.appendChild(pageButton("›", page + 1, { disabled: page === pages, aria: "Trang sau" }));
+      pagerEl.append(info, nav);
+    }
+
+    if (searchEl) searchEl.addEventListener("input", () => render(true));
+
+    return { render, goTo };
   }
-
-  function pageButton(label, target, opts = {}) {
-    const b = document.createElement("button");
-    b.type = "button";
-    b.className = "admin__page-btn" + (opts.active ? " is-active" : "");
-    b.textContent = label;
-    b.disabled = !!opts.disabled;
-    if (opts.aria) b.setAttribute("aria-label", opts.aria);
-    if (opts.active) b.setAttribute("aria-current", "page");
-    return b;
-  }
-
-  function renderPager(pages, total) {
-    if (!pagerEl) return;
-    pagerEl.replaceChildren();
-    pagerEl.hidden = pages <= 1;
-    if (pages <= 1) return;
-
-    const info = document.createElement("span");
-    info.className = "admin__page-info";
-    info.textContent = `Trang ${page}/${pages} · ${total} kết quả`;
-
-    const nav = document.createElement("div");
-    nav.className = "admin__page-list";
-    nav.appendChild(pageButton("‹", page - 1, { disabled: page === 1, aria: "Trang trước" }));
-
-    const nums = [...new Set([1, page - 1, page, page + 1, pages])]
-      .filter(n => n >= 1 && n <= pages)
-      .sort((a, b) => a - b);
-
-    let prev = 0;
-    nums.forEach(n => {
-      if (n - prev > 1) {
-        const dots = document.createElement("span");
-        dots.className = "admin__page-dots";
-        dots.textContent = "…";
-        nav.appendChild(dots);
-      }
-      nav.appendChild(pageButton(String(n), n, { active: n === page }));
-      prev = n;
-    });
-
-    nav.appendChild(pageButton("›", page + 1, { disabled: page === pages, aria: "Trang sau" }));
-    pagerEl.append(info, nav);
-  }
-
-  if (searchEl) searchEl.addEventListener("input", () => render(true));
-
-  return { render, goTo };
-}
 }
 
 

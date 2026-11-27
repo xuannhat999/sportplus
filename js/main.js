@@ -20,7 +20,7 @@ function initProductDetailPage() {
 }
 
 function initProductsSearchPage() {
-  initProductFilters(ProductService.getAll());
+  initProductFilters();
   renderProducts(ProductService.getRelatedProducts(25));
 }
 
